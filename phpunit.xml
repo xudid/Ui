@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <phpunit colors="true">
+    <testsuite name="attributes test">
+      <directory>
+      	tests  
+      </directory>
+     </testsuite>
+
+  </phpunit>
