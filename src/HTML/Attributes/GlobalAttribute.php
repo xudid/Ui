@@ -1,6 +1,6 @@
 <?php
 namespace Brick\Ui\HTML\Attributes;
-require("../../vendor/autoload.php");
+#require("../../vendor/autoload.php");
 
 use Brick\Utils\Enum;
 //use phpDocumentor\Reflection\Types\This;
