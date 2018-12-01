@@ -9,7 +9,10 @@
         }
     ],
     "autoload":{
-      "psr-4" : {"Brick\\Ui\\" : "src"}
+      "psr-4" : {"Brick\\" : "src"}
     },
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    }
 }

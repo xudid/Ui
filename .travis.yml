@@ -3,5 +3,4 @@ php:
  - '7.1'
  - '7.2'
 before_script:
-  - pwd
-  - ls
+  - composer dump-autoload -o
