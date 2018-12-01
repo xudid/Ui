@@ -1,8 +1,7 @@
 <?php
 namespace Brick\tests\Ui\Attributes;
-require "D:\diduxbox\\vendor\autoload.php";
 use Brick\Ui\HTML\Attributes\GlobalAttribute;
-use Brick\Utils\Enum;
+
 
 use PHPUnit\Framework\TestCase;
 
