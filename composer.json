@@ -1,0 +1,15 @@
+{
+    "name": "xudid/ui",
+    "description": "a package to generate html5 objects",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Didier Moindreau",
+            "email": "Didux74@gmail.com"
+        }
+    ],
+    "autoload":{
+      "psr-4" : {"Brick\\Ui\\" : "src"}
+    },
+    "require": {}
+}
