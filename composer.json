@@ -9,7 +9,7 @@
         }
     ],
     "autoload":{
-      "psr-4" : {"Brick\\" : "src"}
+      "psr-4" : {"Ui\\" : "src"}
     },
     "require": {},
     "require-dev": {
