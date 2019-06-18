@@ -1,38 +1,40 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains AreaAttribute class and its methods.
+ * @package Brick\Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+namespace Ui\HTML\Attributes;
+
+/**
+ *
+ * AreaAttribute class contains Link element attributes and common attributes
+ *
+ */
 class AreaAttribute extends GlobalAttribute
 {
-	const altAttribute = "alt";
-	const coordsAttribute = "coords";
-	const downloadAttribute = "download";
-	const hrefAttribute = "href";
-	const hreflangAttribute = "hreflang";
-	const mediaAttribute = "media";
-	const referrerpolicyAttribute ="referrerpolicy ";
-	const relAtttibute = "rel";
-	const shapeAttribute ="shape";
-	const targetAttribute = "target";
+    const ALT = "alt";
+    const COORDS = "coords";
 
-	protected $name = "";
+    const HREF = "href";
+    const HREF_LANG = "hreflang";
+    const PING = "ping";
 
-    protected $value = "";
+    const REL = "rel";
+    const SHAPE ="shape";
+    const TARGET = "target";
 
-    protected $validAttributes;
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>

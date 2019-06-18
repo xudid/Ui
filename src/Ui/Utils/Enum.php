@@ -1,12 +1,12 @@
 <?php
-namespace Brick\Utils;
+namespace Ui\Utils;
 
 use ReflectionClass;
 
 /**
  *
  * @author didux
- *        
+ *
  */
 class Enum
 {
@@ -27,4 +27,3 @@ class Enum
         return $this->value;
     }
 }
-

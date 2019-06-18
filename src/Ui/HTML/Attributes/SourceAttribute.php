@@ -1,35 +1,29 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains SourceAttribute class and its methods.
+ * @package Brick\Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+namespace Brick\Ui\HTML\Attributes;
+
+/**
+ *
+ * SourceAttribute class contains Link element attributes and common attributes
+ *
+ */
 class SourceAttribute extends GlobalAttribute
 {
-	const sizesAttribute = "sizes";
-	const srcsetAttribute = "srcset";
-	const srcAttribute = "src";
-	const typeAttribute = "type";
-	const mediaAttribute = "media";
+    const SIZES = "sizes";
+    const SRCSET = "srcset";
+    const SRC = "src";
+    const TYPE = "type";
+    const MEDIA = "media";
 
-
-
-	protected $name = "";
-
-    protected $value = "";
-
-    protected $validAttributes;
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>

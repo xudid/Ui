@@ -1,39 +1,41 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains ButtonAttribute class and its methods.
+ * @package Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+namespace Ui\HTML\Attributes;
+
+/**
+ *
+ * ButtonAttribute class contains Link element attributes and common attributes
+ *
+ */
 class ButtonAttribute extends GlobalAttribute
 {
-	const autofocusAttribute = "autofocus";
-	const disabledAttribute = "disabled";
-	const formAttribute = "form";
-	const formactionAttribute = "formaction";
-	const formenctypeAttribute = "formenctype";
-	const formmethodAttribute = "formmethod";
-	const formnovalidateAttribute = "formnovalidate";
-	const formtargetAttribute = "formtarget";
-	const nameAttribute = "name";
-	const typeAttribute = "type";
-	const valueAttribute = "value";
+    const AUTOFOCUS = "autofocus";
+    const DISABLED = "disabled";
+    const FORM = "form";
+    const FORM_ACTION = "formaction";
+    const FORM_ENCTYPE = "formenctype";
+    const FORM_METHOD = "formmethod";
+    const FORM_NO_VALIDATE = "formnovalidate";
+    const FORM_TARGET = "formtarget";
+    const NAME = "name";
+    const TYPE = "type";
+    const VALUE = "value";
 
-	protected $name = "";
-
-    protected $value = "";
-
-
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>

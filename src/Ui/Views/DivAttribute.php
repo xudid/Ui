@@ -1,18 +1,16 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
+namespace Brick\Attributes;
 /**
 *
 */
-class BaseAttribute extends GlobalAttribute
+class DivAttribute extends GlobalAttribute
 {
+
 	protected $name = "";
 
-    protected $value = "";
+  protected $value = "";
 
-    protected $validAttributes;
-
-   const hrefAttribute = "href";
-   const targetAttribute = "target";
+  protected $validAttributes;
 
 	function __construct($name,$value)
 	{
@@ -26,6 +24,5 @@ class BaseAttribute extends GlobalAttribute
         return $string;
     }
 }
-
 
 ?>

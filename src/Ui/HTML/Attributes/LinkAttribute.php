@@ -1,41 +1,42 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains LinkAttribute class and its methods.
+ * @package Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+namespace Ui\HTML\Attributes;
+
+/**
+ *
+ * LinkAttribute class contains Link element attributes and common attributes
+ *
+ */
 class LinkAttribute extends GlobalAttribute
 {
-	const asAttribute = "as";
-	const crossoriginAttribute = "crossorigin";
-	const hrefAttribute = "href";
-	const hreflangAttribute = "hreflang";
-	const integrityAttribute = "integrity";
-	const mediaAttribute = "media";
-	const methodsAttribute = "methods";
-	const referrerpolicyAttribute = "referrerpolicy";
-	const relAttribute = "rel";
-	const sizesAttribute = "sizes";
-	const titleAttribute = "title";
-	const typeAttribute = "type";
+    const _AS = "as";
+    const CROSS_ORIGIN = "crossorigin";
+    const HREF = "href";
+    const HREF_LANG = "hreflang";
+    const INTEGRITY = "integrity";
+    const MEDIA = "media";
+    const METHODS = "methods";
+    const REFERRER_POLICY = "referrerpolicy";
+    const REL = "rel";
+    const SIZES = "sizes";
+    const TITLE = "title";
+    const TYPE = "type";
 
-
-	protected $name = "";
-
-    protected $value = "";
-
-    protected $validAttributes;
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>

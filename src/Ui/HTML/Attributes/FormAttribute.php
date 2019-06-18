@@ -1,37 +1,38 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains FormAttribute class and its methods.
+ * @package Brick\Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+namespace Brick\Ui\HTML\Attributes;
+
+/**
+ *
+ * FormAttribute class contains Link element attributes and common attributes
+ *
+ */
 class FormAttribute extends GlobalAttribute
 {
-	const acceptcharsetAttribute = "accept-charset";
-	const actionAttribute = "action";
-	const autocompleteAttribute = "autocomplete";
-	const enctypeAttribute = "enctype";
-	const methodAttribute = "method";
-	const nameAttribute = "name";
-	const novalidateAttribute = "novalidate";
-	const targetAttribute = "target";
+    const ACCEPT_CHARSET = "accept-charset";
+    const ACTION = "action";
+    const AUTOCOMPLETE = "autocomplete";
+    const ENCTYPE = "enctype";
+    const METHOD = "method";
+    const NAME = "name";
+    const NOVALIDATE = "novalidate";
+    const TARGET = "target";
 
-
-	protected $name = "";
-
-    protected $value = "";
-
-
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>

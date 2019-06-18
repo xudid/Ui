@@ -1,5 +1,5 @@
 <?php
-namespace Brick\Ui\HTML\Tags;
+namespace Ui\HTML\Tags;
 
 class EndTag
 {
@@ -18,4 +18,3 @@ class EndTag
         return $string;
     }
 }
-?>

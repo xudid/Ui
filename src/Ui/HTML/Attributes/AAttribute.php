@@ -1,38 +1,39 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains AAttribute class and its methods.
+ * @package Brick\Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+
+namespace Ui\HTML\Attributes;
+
+/**
+ *
+ * AAttribute class contains Link element attributes and common attributes
+ *
+ */
 class AAttribute extends GlobalAttribute
 {
-	const downloadAttribute = "download";
-	const hrefAttribute = "href";
-	const hreflangAttribute = "hreflang";
-	const pingAttribute = "ping";
-	const referrerpolicyAttribute = "referrerpolicy";
-	const relAttribute = "rel";
-	const targetAttribute = "target" ;
-	const typeAttribute = "type" ;
+    const DOWNLOAD = "download";
+    const HREF = "href";
+    const HREF_LANG = "hreflang";
+    const PING = "ping";
+    //const REFERRER_POLICY = "referrerpolicy";
+    const REL = "rel";
+    const TARGET = "target" ;
+    const TYPE = "type" ;
 
-
-
-	protected $name = "";
-
-    protected $value = "";
-
-    protected $validAttributes;
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>

@@ -1,62 +1,64 @@
 <?php
-namespace Brick\Ui\HTML\Attributes;
 /**
-*
-*/
+ * This file contains InputAttribute class and its methods.
+ * @package Brick\Ui\HTML\Attributes
+ * @author Didier Moindreau
+ * @license
+ *
+ */
+namespace Ui\HTML\Attributes;
+
+/**
+ *
+ * InputAttribute class contains Link element attributes and common attributes
+ *
+ */
 class InputAttribute extends GlobalAttribute
 {
-	const typeAttribute = "type";
-	const acceptAttribute = "accept";
-	const autocompleteAttribute = "autocomplete";
-	const autofocusAttribute = "autofocus";
-	const captureAttribute = "capture";
-	const checkedAttribute = "checked";
-	const disabledAttribute = "disabled";
-	const formAttribute = "form";
-	const formactionAttribute = "formaction";
-	const formenctypeAttribute = "formenctype";
-	const formmethodAttribute = "formmethod";
-	const formtargetAttribute = "formtarget";
-	const heightAttribute = "height";
-	const inputmodeAttribute = "inputmode";
-	const listAttribute = "list";
-	const maxAttribute ="max";
-	const maxlengthAttriute = "maxlength";
-	const minAttribute = "min";
-	const minlengthAttribute = "minlength";
-	const multipleAttribute = "multiple";
-	const nameAttribute = "name";
-	const patternAttribute = "pattern";
-	const placeholderAttribute = "placeholder";
-	const readonlyAttribute = "readonly";
-	const requiredAttribute = "required";
-	const selectionDirectionAttribute = "selectionDirection" ;
-	const selectionEndAttribute = "selectionEnd";
-	const selectionStartAttribute = "selectionStart";
-    const sizeAttribute = "size";
-    const spellcheckAttribute = "spellcheck";
-    const srcAttribute = "src";
-    const stepAttribute  = "step";
-    const valueAttribute = "value";
-    const widthAttribute = "width";
+    const TYPE = "type";
+    const ACCEPT = "accept";
+    const AUTOCOMPLETE = "autocomplete";
+    const AUTOFOCUS = "autofocus";
+    const CAPTURE = "capture";
+    const CHECKED = "checked";
+    const DISABLED = "disabled";
+    const FORM = "form";
+    const FORM_ACTION = "formaction";
+    const FORM_ENCTYPE = "formenctype";
+    const FORM_METHOD = "formmethod";
+    const FORM_TARGET = "formtarget";
+    const HEIGHT = "height";
+    const INPUT_MODE = "inputmode";
+    const LIST = "list";
+    const MAX ="max";
+    const MAX_LENGTH = "maxlength";
+    const MIN = "min";
+    const MIN_LENGTH = "minlength";
+    const MULTIPLE = "multiple";
+    const NAME = "name";
+    const PATTERN = "pattern";
+    const PLACEHOLDER = "placeholder";
+    const READONLY = "readonly";
+    const REQUIRED = "required";
+    const SELECTION_DIRECTION = "selectionDirection" ;
+    const SELECTION_END = "selectionEnd";
+    const SELECTION_START = "selectionStart";
+    const SIZE = "size";
+    const SPELLCHECK = "spellcheck";
+    const SRC = "src";
+    const STEP  = "step";
+    const VALUE = "value";
+    const WIDTH = "width";
 
-	protected $name = "";
-
-    protected $value = "";
-
-    protected $validAttributes;
-
-	function __construct($name,$value)
-	{
-		parent::__construct($name,$value);
-        $this->value = $value;
-	}
-
-	public function __toString()
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
     {
-        $string = $this->name . '="' . $this->value . '"';
-        return $string;
+        parent::__construct($name, $value);
+        $this->value = $value;
     }
 }
-
-?>
