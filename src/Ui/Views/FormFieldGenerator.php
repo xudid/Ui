@@ -1,23 +1,23 @@
 <?php
 namespace Brick\Views;
 
-use Brick\HtmlElements\NestedHtmlElement\{Form,Fieldset,Legend,Section,P};
-use Brick\HtmlElements\EmptyElements\Br;
-use Brick\Ui\NamedFieldset;
-use Brick\Ui\TextInput;
-use Brick\Ui\DateInput;
-use Brick\Ui\ColorInput;
-use Brick\Ui\EmailInput;
-use Brick\Ui\FileInput;
-use Brick\Ui\PasswordInput;
-use Brick\Ui\SubmitButton;
-use Brick\Ui\ResetButton;
-use Brick\Ui\CheckBox;
-use Brick\Ui\RadioButton;
-use Brick\Ui\SelectOption;
-use Brick\Model\EntityInformationHolder;
+use Ui\HTML\Elements\NestedHtmlElement\{Form,Fieldset,Legend,Section,P};
+use Ui\HTML\Elements\EmptyElements\Br;
+use Ui\Widgets\NamedFieldset;
+use Ui\Widgets\Input\TextInput;
+use Ui\Widgets\Input\DateInput;
+use Ui\Widgets\Input\ColorInput;
+use Ui\Widgets\Input\EmailInput;
+use Ui\Widgets\Input\FileInput;
+use Ui\Widgets\Input\PasswordInput;
+use Ui\Widgets\Button\SubmitButton;
+use Ui\Widgets\Button\ResetButton;
+use Ui\Widgets\Button\CheckBox;
+use Ui\Widgets\Button\RadioButton;
+use Ui\Widgets\Input\SelectOption;
+use Ui\Model\EntityInformationHolder;
 
-use Brick\Views\FormFieldGenerator;
+use Ui\Widgets\Views\FormFieldGenerator;
 
 
 /**

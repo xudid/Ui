@@ -1,5 +1,5 @@
 <?php
-namespace Brick\Views;
+namespace Ui\Views;
 
 /**
  *Renvoie la réponse finale présenté à l'utilisateur
@@ -10,9 +10,9 @@ use Interop\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Interop\Http\Server\RequestHandlerInterface;
-use Brick\Ui\AppPage;
-use Brick\Utils\BString;
-use Brick\HtmlElements\NestedHtmlElement\{Script};
+use Ui\Views\AppPage;
+use Ui\Utils\BString;
+use Ui\HTML\Elements\NestedHtmlElement\{Script};
 /**
  *
  */

@@ -1,19 +1,19 @@
 <?php
 namespace Brick\Views;
-use Brick\HtmlElements\NestedHtmlElement\P;
-use Brick\HtmlElements\NestedHtmlElement\Div;
-use Brick\HtmlElements\EmptyElements\Br;
+use Ui\HTML\Elements\NestedHtmlElement\P;
+use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\EmptyElements\Br;
 
-use Brick\Views\EntityView;
-use Brick\Views\EntityPartialViewFactory;
-use Brick\Model\Association;
-use Brick\Model\EntityInformationHolder;
+use Ui\Widgets\Views\EntityView;
+use Ui\Widgets\Views\EntityPartialViewFactory;
+use Ui\Model\Association;
+use Ui\Model\EntityInformationHolder;
 
-use Brick\Ui\DivRowTable;
-use Brick\Ui\TableLegend;
-use Brick\Ui\CollapsibleList;
-use Brick\Ui\CollapsibleItem;
-use Brick\Ui\{Button,SubmitButton};
+use Ui\Widgets\Table\DivRowTable;
+use Ui\Widgets\Table\TableLegend;
+use Ui\Widgets\Accordeon\CollapsibleList;
+use Ui\Widgets\Accordeon\CollapsibleItem;
+use Ui\Widgets\Button\{Button,SubmitButton};
 
 use Brick\Views\TableColumn;
 

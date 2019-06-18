@@ -1,22 +1,21 @@
 <?php
 namespace Brick\Views;
-use Brick\HtmlElements\NestedHtmlElement\{Form,P};
+use Ui\HTML\Elements\NestedHtmlElement\{Form,P};
 
-use Brick\HtmlElements\EmptyElements\Br;
+use Ui\HTML\Elements\EmptyElements\Br;
 
-use Brick\HtmlElements\NestedHtmlElement\Div;
-
-
-use Brick\Ui\{SubmitButton};
+use Ui\HTML\Elements\NestedHtmlElement\Div;
 
 
-use Brick\Model\Association;
-use Brick\Model\EntityInformationHolder;
+use Ui\Widgets\Button\{SubmitButton};
 
-use Brick\Ui\DivRowTable;
-use Brick\Ui\TableLegend;
 
-use Brick\Views\TableColumn;
+use Ui\Model\Association;
+use Ui\Model\EntityInformationHolder;
+
+use Ui\Widgets\Table\DivRowTable;
+use Ui\Widgets\Table\TableLegend;
+use Ui\Widgets\Table\TableColumn;
 
 use Doctrine\ORM\PersistentCollection;
 

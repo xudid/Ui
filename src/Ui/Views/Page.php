@@ -1,12 +1,13 @@
 <?php
 namespace Ui\Views;
 
-use Ui\HTML\Elements\NestedHtmlElement\{NestedHtmlElement,
-																					Script,
-																					HtmlElement,
-																					BodyElement,
-																					HeadElement
-																				};
+use Ui\HTML\Elements\NestedHtmlElement\{
+		NestedHtmlElement,
+		Script,
+		HtmlElement,
+		BodyElement,
+		HeadElement
+	};
 
 use Ui\Attributes\GlobalAttribute;
 class Page extends NestedHtmlElement{

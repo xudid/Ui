@@ -1,5 +1,5 @@
 <?php
-namespace Brick\Views;
+namespace Ui\Views;
 use Brick\HtmlElements\NestedHtmlElement\Section;
 use Brick\HtmlElements\NestedHtmlElement\P;
 use Brick\HtmlElements\EmptyElements\Br;

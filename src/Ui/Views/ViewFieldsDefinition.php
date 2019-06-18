@@ -1,5 +1,5 @@
 <?php
-namespace Brick\Views;
+namespace Ui\Views;
 /**
  * [ViewFieldsDefinition description]
  */

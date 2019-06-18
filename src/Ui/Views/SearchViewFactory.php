@@ -1,17 +1,17 @@
 <?php
-namespace Brick\Views;
-use Brick\Model\EntityInformationHolder;
-use Brick\HtmlElements\NestedHtmlElement\Form;
-use Brick\HtmlElements\NestedHtmlElement\Div;
-use Brick\HtmlElements\NestedHtmlElement\P;
-use Brick\HtmlElements\EmptyElements\Br;
+namespace Ui\Views;
+use Ui\Model\EntityInformationHolder;
+use Ui\HTML\Elements\NestedHtmlElement\Form;
+use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\NestedHtmlElement\P;
+use Ui\HTML\Elements\EmptyElements\Br;
 
-use Brick\Ui\TextInput;
-use Brick\Ui\SelectOption;
-use Brick\Ui\SubmitButton;
-use Brick\Ui\CheckBox;
-use Brick\Ui\CollapsibleList;
-use Brick\Ui\CollapsibleItem;
+use Ui\Widgets\Input\TextInput;
+use Ui\Widgets\Input\SelectOption;
+use Ui\Widgets\Button\SubmitButton;
+use Ui\Widgets\Button\CheckBox;
+use Ui\Widgets\Lists\CollapsibleList;
+use Ui\Widgets\Lists\CollapsibleItem;
 
 class SearchViewFactory
 {

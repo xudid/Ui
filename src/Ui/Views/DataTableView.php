@@ -1,7 +1,7 @@
 <?php
 namespace Ui\Views;
 use Ui\Widgets\Table\DivRowTable;
-use Ui\Widgets\TableTableLegend;
+use Ui\Widgets\Table\TableLegend;
 use Ui\Model\EntityInformationHolder;
 
 use Ui\HTML\Elements\NestedHtmlElement\Div;
