@@ -1,9 +1,9 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
+namespace Ui\HTML\Elements\EmptyElements;
 
 class Param extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "param";
 	protected $startTag =null;
 
 
