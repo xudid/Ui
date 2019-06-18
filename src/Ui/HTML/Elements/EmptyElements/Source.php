@@ -1,9 +1,9 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
+namespace Ui\HTML\Elements\EmptyElements;
 
 class Source extends EmptyElement{
 
-	private $elementName = "Source";
+	private $elementName = "source";
 	protected $startTag =null;
 
 

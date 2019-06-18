@@ -5,7 +5,7 @@ class Link extends EmptyElement
 {
 	public function __construct($href)
 	{
-		parent::__construct("Link");
+		parent::__construct("link");
 
 		if(isset($href))
 		{
