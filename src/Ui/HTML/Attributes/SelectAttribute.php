@@ -1,12 +1,12 @@
 <?php
 /**
  * This file contains SelectAttribute class and its methods.
- * @package Brick\Ui\HTML\Attributes
+ * @package Ui\HTML\Attributes
  * @author Didier Moindreau
  * @license
  *
  */
-namespace Brick\Ui\HTML\Attributes;
+namespace Ui\HTML\Attributes;
 
 /**
 * SelectAttribute class contains Select element attributes

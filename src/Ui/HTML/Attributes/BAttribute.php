@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains LinkAttribute class and its methods.
- * @package Brick\Ui\HTML\Attributes
+ * @package Ui\HTML\Attributes
  * @author Didier Moindreau
  * @license
  *

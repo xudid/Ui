@@ -17,7 +17,7 @@ class BodyAttribute extends GlobalAttribute
 {
   /**
    * This file contains ButtonAttribute class and its methods.
-   * @package Brick\Ui\HTML\Attributes
+   * @package Ui\HTML\Attributes
    * @author Didier Moindreau
    * @license
    *
