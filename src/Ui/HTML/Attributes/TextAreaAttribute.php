@@ -1,4 +1,6 @@
 <?php
+namespace Ui\HTML\Attributes;
+
 /**
  * This file contains TextAreaAttribute class and its methods.
  * @package Ui\HTML\Attributes
@@ -6,7 +8,6 @@
  * @license
  *
  */
-namespace Ui\HTML\Attributes;
 
 /**
  *

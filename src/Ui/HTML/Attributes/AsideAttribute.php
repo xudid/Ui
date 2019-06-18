@@ -1,4 +1,6 @@
 <?php
+namespace Ui\HTML\Attributes;
+
 /**
  * This file contains AsideAttribute class and its methods.
  * @package Ui\HTML\Attributes
@@ -7,7 +9,6 @@
  *
  */
 
-namespace Ui\HTML\Attributes;
 
 /**
  *

@@ -1,4 +1,5 @@
 <?php
+namespace Ui\HTML\Attributes;
 /**
  * This file contains ButtonAttribute class and its methods.
  * @package Ui\HTML\Attributes
@@ -6,7 +7,7 @@
  * @license
  *
  */
-namespace Ui\HTML\Attributes;
+
 
 /**
  *
