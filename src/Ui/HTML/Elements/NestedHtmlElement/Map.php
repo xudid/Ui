@@ -1,7 +1,7 @@
 <?php
 namespace Ui\HTML\Elements\NestedHtmlElement;
 use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
-u
+
 class Map extends NestedHtmlElement{
 
 
