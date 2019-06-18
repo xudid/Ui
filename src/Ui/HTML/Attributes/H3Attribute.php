@@ -1,4 +1,5 @@
 s<?php
+namespace Ui\HTML\Attributes;
 /**
  * This file contains H3Attribute class and its methods.
  * @package Ui\HTML\Attributes
@@ -6,7 +7,7 @@ s<?php
  * @license
  *
  */
-namespace Ui\HTML\Attributes;
+
 
 /**
  *
