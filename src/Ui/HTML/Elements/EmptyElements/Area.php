@@ -1,14 +1,14 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\AreaStartTag;
+namespace Ui\HTML\Elements\EmptyElements;
+
 class Area extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "area";
 	protected $startTag =null;
 
 
 	public function __construct($shape){
-		$this->startTag = new AreaStartTag();
+		parent::__construct($this->elementName);
 		if(isset($shape)){$this->startTag->setAttribute("shape", $shape);}
 		else{$this->startTag->setAttribute("shape", "default");}
 	}

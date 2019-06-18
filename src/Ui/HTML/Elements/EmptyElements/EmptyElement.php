@@ -14,7 +14,7 @@ use Ui\HTML\Tags\EndTag;
 class EmptyElement
 {
 
-    private $elementName = "";
+    private $elementName = null;
 
     protected $startTag = null;
 

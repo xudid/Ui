@@ -1,14 +1,14 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\EmbedStartTag;
+namespace Ui\HTML\Elements\EmptyElements;
+
 class Embed extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "embed";
 	protected $startTag =null;
 
 
 	public function __construct(){
-		$this->startTag = new EmbedStartTag();
+		parent::__construct($this->elementName);
 		
 	}
 

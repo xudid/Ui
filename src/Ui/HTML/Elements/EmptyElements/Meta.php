@@ -4,12 +4,12 @@ use Ui\HTML\Tags\StartTag;
 use Ui\HTML\Tags\EndTag;
 class Meta extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "meta";
 	protected $startTag =null;
 
 
 	public function __construct(){
-		$this->startTag = new StartTag("meta");
+	parent::__construct($this->elementName);
 		
 	}
 

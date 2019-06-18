@@ -1,16 +1,14 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\HrStartTag;
-use Brick\Attributes\HrAttribute;
+namespace Ui\HTML\Elements\EmptyElements;
+
 class Hr extends EmptyElement{
 
 	
-	protected $startTag =null;
+	protected $startTag ="hr";
 
 
 	public function __construct(){
-		$this->startTag = new HrStartTag();
-		
+		parent::__construct($this->elementName);
 	}
 
 	public function __toString(){

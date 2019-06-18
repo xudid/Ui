@@ -1,6 +1,6 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\BaseStartTag;
+namespace Ui\HTML\Elements\EmptyElements;
+
 /**
 *
 */
@@ -8,10 +8,11 @@ class Base extends EmptyElement
 {
 
 	protected $startTag = null;
+	private $elementName = "base";
 
 	function __construct($href,$target)
 	{
-		$this->startTag = new BaseStartTag();
+		parent::__construct($this->elementName);
 		if(isset($href))$this->startTag->setAttribute("href",$href);
 		if(isset($target))$this->startTag->setAttribute("target",$href);
 	}

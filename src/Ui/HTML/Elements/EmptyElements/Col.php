@@ -1,14 +1,14 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\ColStartTag;
+namespace Ui\HTML\Elements\EmptyElements;
+
 class Col extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "col";
 	protected $startTag =null;
 
 
 	public function __construct(){
-		$this->startTag = new ColStartTag();
+		parent::__construct($this->elementName);
 		
 	}
 

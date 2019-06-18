@@ -1,6 +1,6 @@
 <?php
 namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\ParamStartTag;
+
 class Param extends EmptyElement{
 
 	private $elementName = null;
@@ -8,7 +8,7 @@ class Param extends EmptyElement{
 
 
 	public function __construct(){
-		$this->startTag = new ParamStartTag();
+		parent::__construct($this->elementName);
 		
 	}
 

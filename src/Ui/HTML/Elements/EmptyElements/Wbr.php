@@ -1,14 +1,14 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\WbrStartTag;
+namespace Ui\HTML\Elements\EmptyElements;
+
 class Wbr extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "wbr";
 	protected $startTag =null;
 
 
 	public function __construct(){
-		$this->startTag = new WbrStartTag();
+		parent::__construct($this->elementName);
 		
 	}
 

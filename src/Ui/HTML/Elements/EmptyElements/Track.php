@@ -1,14 +1,14 @@
 <?php
-namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\TrackStartTag;
+namespace Ui\HTML\Elements\EmptyElements;
+
 class Track extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "track";
 	protected $startTag =null;
 
 
 	public function __construct(){
-		$this->startTag = new TrackStartTag();
+		parent::__construct($this->elementName);
 		
 	}
 

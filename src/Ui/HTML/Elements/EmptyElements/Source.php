@@ -1,14 +1,14 @@
 <?php
 namespace Brick\HtmlElements\EmptyElements;
-use Brick\tags\EmptyElementTags\SourceStartTag;
+
 class Source extends EmptyElement{
 
-	private $elementName = null;
+	private $elementName = "Source";
 	protected $startTag =null;
 
 
 	public function __construct(){
-		$this->startTag = new SourceStartTag();
+		parent::__construct($this->elementName);
 		
 	}
 
