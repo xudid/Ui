@@ -6,7 +6,7 @@
  * @license
  *
  */
-namespace Brick\Ui\HTML\Attributes;
+namespace Ui\HTML\Attributes;
 
 /**
  *
