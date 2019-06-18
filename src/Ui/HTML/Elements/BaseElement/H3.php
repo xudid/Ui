@@ -1,5 +1,5 @@
 <?php
-namespace Brick\HtmlElements\BaseElement;
+namespace Ui\HTML\Elements\BaseElement;
 class H3 extends BaseElement{
 
 	private $elementName ="h3";
