@@ -1,12 +1,13 @@
-<?php namespace Brick\Views;?>
+<?php 
+namespace Ui\Views;?>
 
 <style>
   .head {background-color:lightgray;color:#000000;display: table-header-group;font-weight:bold;text-align:center;}
   .cell {display: table-cell;padding: 0.5rem; border: 1px solid #999;border-radius: 3px;}
 </style>
 <?php
-use Brick\HtmlElements\NestedHtmlElement\Div;
-use Brick\HtmlElements\NestedHtmlElement\Header;
+use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\NestedHtmlElement\Header;
 /**
  *
  */

@@ -1,11 +1,11 @@
 <?php
-namespace Brick\Views;
+namespace Ui\Views;
 
-use Brick\Views\EntityView;
-use Brick\Model\EntityInformationHolder;
-use Brick\HtmlElements\NestedHtmlElement\P;
-use Brick\Ui\CollapsibleItem;
-use Brick\HtmlElements\EmptyElements\Br;
+use Ui\Views\EntityView;
+use Ui\Model\EntityInformationHolder;
+use Ui\HTML\Elements\NestedHtmlElement\P;
+use Ui\Widgets\Accordeon\CollapsibleItem;
+use Ui\HTML\Elements\EmptyElements\Br;
 
 /**
  *
