@@ -2,7 +2,7 @@
 namespace Ui\HTML\Elements\NestedHtmlElement;
 use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
 
-class Object extends NestedHtmlElement{
+class Obj extends NestedHtmlElement{
 
 
 	private $elementName = "object";
