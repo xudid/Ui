@@ -1,17 +1,17 @@
 <?php 
-namespace Brick\HtmlElements\NestedHtmlElement;
-use Brick\HtmlElements\NestedHtmlElement\NestedHtmlElement;
-use Brick\Tags\AudioStartTag;
+namespace Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
+
 class Audio extends NestedHtmlElement{
 
 
 	private $elementName = "audio";
-	protected $startTag = null;
+	
 
 
 	public function __construct(){
 		parent::__construct($this->elementName);
-		$this->startTag = new AudioStartTag();
+		
 	}
 
 	public function setAttribute($name, $value){

@@ -1,7 +1,7 @@
 <?php
 namespace Ui\HTML\Elements\NestedHtmlElement;
 use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
-use Ui\HTML\Tags\StartTag;
+
 class Label extends NestedHtmlElement{
 
 
@@ -11,7 +11,7 @@ class Label extends NestedHtmlElement{
 
 	public function __construct($text){
 		parent::__construct($this->elementName);
-		//$this->startTag = new LabelStartTag();
+		
 		if(isset($text)){
 			$this->addElement($text);
 		}

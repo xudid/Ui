@@ -1,7 +1,7 @@
 <?php
-namespace Brick\HtmlElements\NestedHtmlElement;
-use Brick\HtmlElements\NestedHtmlElement\NestedHtmlElement;
-use Brick\Tags\ScriptStartTag;
+namespace Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
+
 class Script extends NestedHtmlElement{
 
 
@@ -11,7 +11,6 @@ class Script extends NestedHtmlElement{
 
 	public function __construct($source,$outsource=true){
 		parent::__construct($this->elementName);
-		$this->startTag = new ScriptStartTag();
 		if($outsource)
 		{
 			if(isset($source))

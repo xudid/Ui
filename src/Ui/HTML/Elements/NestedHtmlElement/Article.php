@@ -1,6 +1,7 @@
 <?php 
-namespace Brick\HtmlElements\NestedHtmlElement;
-use Brick\HtmlElements\NestedHtmlElement\NestedHtmlElement;
+namespace Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
+
 class Article extends NestedHtmlElement{
 
 

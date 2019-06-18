@@ -11,7 +11,7 @@ class Ul extends NestedHtmlElement{
 
 	public function __construct(){
 		parent::__construct($this->elementName);
-		//$this->startTag = new StartTag();
+		
 	}
 
 	public function setAttribute($name, $value){

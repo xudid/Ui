@@ -11,7 +11,7 @@ class Li extends NestedHtmlElement{
 
 	public function __construct($text=null){
 		parent::__construct($this->elementName);
-		//$this->startTag = new LiStartTag();
+		
 		if(isset($text)){$this->addElement($text);}
 	}
 

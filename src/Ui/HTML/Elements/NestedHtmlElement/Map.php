@@ -1,7 +1,7 @@
 <?php
-namespace Brick\HtmlElements\NestedHtmlElement;
-use Brick\HtmlElements\NestedHtmlElement\NestedHtmlElement;
-use Brick\Tags\MapStartTag;
+namespace Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
+u
 class Map extends NestedHtmlElement{
 
 
@@ -11,7 +11,7 @@ class Map extends NestedHtmlElement{
 
 	public function __construct($name){
 		parent::__construct($this->elementName);
-		$this->startTag = new MapStartTag();
+		
 		$this->startTag->setAttribute("name", $name);
 	}
 

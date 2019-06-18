@@ -1,7 +1,7 @@
 <?php 
-namespace Brick\HtmlElements\NestedHtmlElement;
-use Brick\HtmlElements\NestedHtmlElement\NestedHtmlElement;
-use Brick\Tags\VideoStartTag;
+namespace Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
+
 class Video extends NestedHtmlElement{
 
 
@@ -11,7 +11,7 @@ class Video extends NestedHtmlElement{
 
 	public function __construct(){
 		parent::__construct($this->elementName);
-		$this->startTag = new VideoStartTag();
+		
 	}
 
 	public function setAttribute($name, $value){

@@ -10,7 +10,7 @@ class Form extends NestedHtmlElement{
 
 	public function __construct(){
 		parent::__construct($this->elementName);
-		//$this->startTag = new FormStartTag();
+		
 	}
 
 	public function setClass($class){

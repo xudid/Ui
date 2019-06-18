@@ -1,7 +1,7 @@
 <?php 
-namespace Brick\HtmlElements\NestedHtmlElement;
-use Brick\HtmlElements\NestedHtmlElement\NestedHtmlElement;
-use Brick\Tags\ObjectStartTag;
+namespace Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\NestedHtmlElement\NestedHtmlElement;
+
 class Object extends NestedHtmlElement{
 
 
@@ -11,7 +11,7 @@ class Object extends NestedHtmlElement{
 
 	public function __construct(){
 		parent::__construct($this->elementName);
-		$this->startTag = new ObjectStartTag();
+		
 	}
 
 	public function setAttribute($name, $value){
