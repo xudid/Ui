@@ -1,8 +1,8 @@
 <?php
 namespace Ui\Views;
-use Brick\HtmlElements\NestedHtmlElement\Section;
-use Brick\HtmlElements\NestedHtmlElement\P;
-use Brick\HtmlElements\EmptyElements\Br;
+use Ui\HTML\Elements\NestedHtmlElement\Section;
+use Ui\HTML\Elements\NestedHtmlElement\P;
+use Ui\HTML\Elements\EmptyElements\Br;
 
 class EntityView extends Section {
 
