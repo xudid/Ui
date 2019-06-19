@@ -34,4 +34,4 @@ class CollapsibleItem extends Li
     $this->content->addElement($content);
   }
 }
- ?>
+ 

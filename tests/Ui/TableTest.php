@@ -20,7 +20,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 				$class = $matches[1];
 				$class = preg_replace("#/#",'\\', $class);
 				$skip[] = ["Ui/Widgets/Table/DivRowTable" =>true];
-				if (array_key_exists($class, $skip)) {
+				if (!array_key_exists($class, $skip)) {
 					$class1 = new ReflectionClass($class);
 				$constructor = $class1->getConstructor();
 				$parameters = $constructor->getParameters();

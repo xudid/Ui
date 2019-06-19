@@ -1,5 +1,6 @@
 <?php
 namespace Ui\HTML\Attributes;
+use Ui\HTML\Attributes\GlobalAttribute;
 
 /**
  * This file contains AAttribute class and its methods.

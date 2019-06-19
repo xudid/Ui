@@ -2,6 +2,7 @@
     "name": "xudid/ui",
     "description": "a package to generate html5 objects",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Didier Moindreau",
@@ -9,7 +10,7 @@
         }
     ],
     "autoload":{
-      "psr-4" : {"Ui\\" : "src"}
+      "psr-4" : {"Ui\\" : "src/Ui"}
     },
     "require": {
         "psr/http-server-middleware": "^1.0"

@@ -1,7 +1,7 @@
 <?php
-//require_once __DIR__ . '/../vendor/autoload.php';
+//require_once __DIR__ . '/../../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
-use Ui\Widgets\Input\TextInput;
+use Ui\Widgets\Accordeon\CollapsibleItem;
 
 /**
  * 
@@ -19,10 +19,11 @@ class AccordeonTest extends \PHPUnit\Framework\TestCase
 			if (array_key_exists("1", $matches)) {
 				$class = $matches[1];
 				$class = preg_replace("#/#",'\\', $class);
+				var_dump(__LINE__.$class);
 				$class1 = new ReflectionClass($class);
 				$constructor = $class1->getConstructor();
 				$parameters = $constructor->getParameters();
-				//var_dump($class);
+				
 				$count = count($parameters);
 				//var_dump($count);
 				$i=0;
