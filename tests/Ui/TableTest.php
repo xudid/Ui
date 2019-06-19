@@ -19,12 +19,13 @@ class TableTest extends \PHPUnit\Framework\TestCase
 			if (array_key_exists("1", $matches)) {
 				$class = $matches[1];
 				$class = preg_replace("#/#",'\\', $class);
-				$skip[] = ["Ui/Widgets/Table/DivRowTable" =>true];
-				if (!array_key_exists($class, $skip)) {
+				$skip[] = ["Ui\Widgets\Table\DivRowTable" =>true];
+				var_dump($class);
+				if (array_key_exists($class, $skip)) {
 					$class1 = new ReflectionClass($class);
 				$constructor = $class1->getConstructor();
 				$parameters = $constructor->getParameters();
-				//var_dump($class);
+				
 				$count = count($parameters);
 				//var_dump($count);
 				$i=0;
