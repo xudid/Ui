@@ -6,7 +6,7 @@ namespace Ui\Views;
  */
 //use function Http\Response\send;
 use GuzzleHttp\Psr7\Response;
-use Interop\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Interop\Http\Server\RequestHandlerInterface;
