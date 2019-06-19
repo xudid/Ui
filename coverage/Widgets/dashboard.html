@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/didux/Developpement/Ui/src/Ui/Widgets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../.css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../.css/nv.d3.min.css" rel="stylesheet" type="text/css">
+  <link href="../.css/style.css" rel="stylesheet" type="text/css">
+  <link href="../.css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/home/didux/Developpement/Ui/src/Ui</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Widgets</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Table/TableColumn.php.html#7">Ui\Widgets\Table\TableColumn</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#10">Ui\Widgets\Table\DivRowTable</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableLegend.php.html#8">Ui\Widgets\Table\TableLegend</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#9">Ui\Widgets\Input\TextArea</a></td><td class="text-right">18%</td></tr>
+       <tr><td><a href="Button/Button.php.html#8">Ui\Widgets\Button\Button</a></td><td class="text-right">25%</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#7">Ui\Widgets\Button\ViewListButton</a></td><td class="text-right">26%</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#7">Ui\Widgets\Button\SearchButton</a></td><td class="text-right">26%</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#7">Ui\Widgets\Button\MenuButton</a></td><td class="text-right">26%</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#7">Ui\Widgets\Button\DelButton</a></td><td class="text-right">26%</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#7">Ui\Widgets\Button\AddButton</a></td><td class="text-right">26%</td></tr>
+       <tr><td><a href="Input/TextInput.php.html#7">Ui\Widgets\Input\TextInput</a></td><td class="text-right">27%</td></tr>
+       <tr><td><a href="Input/EmailInput.php.html#7">Ui\Widgets\Input\EmailInput</a></td><td class="text-right">27%</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#7">Ui\Widgets\Input\PasswordInput</a></td><td class="text-right">28%</td></tr>
+       <tr><td><a href="Button/SubmitButton.php.html#7">Ui\Widgets\Button\SubmitButton</a></td><td class="text-right">30%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#13">Ui\Widgets\Views\AppPage</a></td><td class="text-right">36%</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#8">Ui\Widgets\Input\SelectOption</a></td><td class="text-right">37%</td></tr>
+       <tr><td><a href="Button/RadioButton.php.html#5">Ui\Widgets\Button\RadioButton</a></td><td class="text-right">41%</td></tr>
+       <tr><td><a href="Views/NavBar.php.html#11">Ui\Widgets\Views\NavBar</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Button/CheckBox.php.html#8">Ui\Widgets\Button\CheckBox</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Accordeon/CollapsibleList.php.html#11">Ui\Widgets\Accordeon\CollapsibleList</a></td><td class="text-right">60%</td></tr>
+       <tr><td><a href="Accordeon/CollapsibleItem.php.html#10">Ui\Widgets\Accordeon\CollapsibleItem</a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Lists/OrderedItemList.php.html#8">Ui\Widgets\Lists\OrderedItemList</a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="Lists/ItemList.php.html#8">Ui\Widgets\Lists\ItemList</a></td><td class="text-right">71%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Table/DivRowTable.php.html#10">Ui\Widgets\Table\DivRowTable</a></td><td class="text-right">992</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#13">Ui\Widgets\Views\AppPage</a></td><td class="text-right">41</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#8">Ui\Widgets\Input\SelectOption</a></td><td class="text-right">34</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#9">Ui\Widgets\Input\TextArea</a></td><td class="text-right">33</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#7">Ui\Widgets\Button\AddButton</a></td><td class="text-right">26</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#7">Ui\Widgets\Button\ViewListButton</a></td><td class="text-right">26</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#7">Ui\Widgets\Button\SearchButton</a></td><td class="text-right">26</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#7">Ui\Widgets\Button\MenuButton</a></td><td class="text-right">26</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#7">Ui\Widgets\Button\DelButton</a></td><td class="text-right">26</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#7">Ui\Widgets\Input\PasswordInput</a></td><td class="text-right">24</td></tr>
+       <tr><td><a href="Button/Button.php.html#8">Ui\Widgets\Button\Button</a></td><td class="text-right">21</td></tr>
+       <tr><td><a href="Button/CheckBox.php.html#8">Ui\Widgets\Button\CheckBox</a></td><td class="text-right">15</td></tr>
+       <tr><td><a href="Button/SubmitButton.php.html#7">Ui\Widgets\Button\SubmitButton</a></td><td class="text-right">13</td></tr>
+       <tr><td><a href="Button/RadioButton.php.html#5">Ui\Widgets\Button\RadioButton</a></td><td class="text-right">10</td></tr>
+       <tr><td><a href="Views/NavBar.php.html#11">Ui\Widgets\Views\NavBar</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Lists/ItemList.php.html#8">Ui\Widgets\Lists\ItemList</a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Lists/OrderedItemList.php.html#8">Ui\Widgets\Lists\OrderedItemList</a></td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Accordeon/CollapsibleItem.php.html#27"><abbr title="Ui\Widgets\Accordeon\CollapsibleItem::setHeader">setHeader</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lists/ItemList.php.html#22"><abbr title="Ui\Widgets\Lists\ItemList::addItem">addItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#112"><abbr title="Ui\Widgets\Table\DivRowTable::setTableSection">setTableSection</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#103"><abbr title="Ui\Widgets\Table\DivRowTable::getCorpTableDiv">getCorpTableDiv</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#88"><abbr title="Ui\Widgets\Table\DivRowTable::getTableHeader">getTableHeader</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#78"><abbr title="Ui\Widgets\Table\DivRowTable::getTableHeadersTitle">getTableHeadersTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#53"><abbr title="Ui\Widgets\Table\DivRowTable::getTableLegendDiv">getTableLegendDiv</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#40"><abbr title="Ui\Widgets\Table\DivRowTable::getColGroupDiv">getColGroupDiv</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#24"><abbr title="Ui\Widgets\Table\DivRowTable::getCell">getCell</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Lists/OrderedItemList.php.html#38"><abbr title="Ui\Widgets\Lists\OrderedItemList::setNumberType">setNumberType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextInput.php.html#33"><abbr title="Ui\Widgets\Input\TextInput::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#155"><abbr title="Ui\Widgets\Table\DivRowTable::getTableRow">getTableRow</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextInput.php.html#28"><abbr title="Ui\Widgets\Input\TextInput::setValue">setValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextInput.php.html#23"><abbr title="Ui\Widgets\Input\TextInput::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextInput.php.html#18"><abbr title="Ui\Widgets\Input\TextInput::SetPlaceholder">SetPlaceholder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#31"><abbr title="Ui\Widgets\Input\TextArea::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#26"><abbr title="Ui\Widgets\Input\TextArea::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#21"><abbr title="Ui\Widgets\Input\TextArea::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#35"><abbr title="Ui\Widgets\Input\SelectOption::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#30"><abbr title="Ui\Widgets\Input\SelectOption::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#23"><abbr title="Ui\Widgets\Input\SelectOption::setCheckedOption">setCheckedOption</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#116"><abbr title="Ui\Widgets\Table\DivRowTable::getTableRowFromObject">getTableRowFromObject</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#188"><abbr title="Ui\Widgets\Table\DivRowTable::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#31"><abbr title="Ui\Widgets\Input\PasswordInput::setValue">setValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableLegend.php.html#41"><abbr title="Ui\Widgets\Table\TableLegend::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/NavBar.php.html#26"><abbr title="Ui\Widgets\Views\NavBar::addMenu">addMenu</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#146"><abbr title="Ui\Widgets\Views\AppPage::setSideBarTitle">setSideBarTitle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#136"><abbr title="Ui\Widgets\Views\AppPage::setContentView">setContentView</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#117"><abbr title="Ui\Widgets\Views\AppPage::addSideBarItem">addSideBarItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#88"><abbr title="Ui\Widgets\Views\AppPage::addNavBarItem">addNavBarItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#78"><abbr title="Ui\Widgets\Views\AppPage::setCss">setCss</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#70"><abbr title="Ui\Widgets\Views\AppPage::getAppPage">getAppPage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableLegend.php.html#55"><abbr title="Ui\Widgets\Table\TableLegend::getPosition">getPosition</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableLegend.php.html#50"><abbr title="Ui\Widgets\Table\TableLegend::getContent">getContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#126"><abbr title="Ui\Widgets\Table\TableColumn::isBaseIdSet">isBaseIdSet</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#233"><abbr title="Ui\Widgets\Table\DivRowTable::__toString">__toString</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#115"><abbr title="Ui\Widgets\Table\TableColumn::setBaseId">setBaseId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#104"><abbr title="Ui\Widgets\Table\TableColumn::getBaseId">getBaseId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#95"><abbr title="Ui\Widgets\Table\TableColumn::mustDisplay">mustDisplay</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#85"><abbr title="Ui\Widgets\Table\TableColumn::hideHeader">hideHeader</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#76"><abbr title="Ui\Widgets\Table\TableColumn::isEditable">isEditable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#66"><abbr title="Ui\Widgets\Table\TableColumn::setColumnEditable">setColumnEditable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#58"><abbr title="Ui\Widgets\Table\TableColumn::getHeader">getHeader</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#53"><abbr title="Ui\Widgets\Table\TableColumn::getName">getName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Table/TableColumn.php.html#43"><abbr title="Ui\Widgets\Table\TableColumn::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#36"><abbr title="Ui\Widgets\Input\PasswordInput::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#24"><abbr title="Ui\Widgets\Input\PasswordInput::setPlaceholder">setPlaceholder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accordeon/CollapsibleItem.php.html#32"><abbr title="Ui\Widgets\Accordeon\CollapsibleItem::setContent">setContent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/CheckBox.php.html#28"><abbr title="Ui\Widgets\Button\CheckBox::__toString">__toString</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#17"><abbr title="Ui\Widgets\Button\MenuButton::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#39"><abbr title="Ui\Widgets\Button\DelButton::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#33"><abbr title="Ui\Widgets\Button\DelButton::setOnClick">setOnClick</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#27"><abbr title="Ui\Widgets\Button\DelButton::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#22"><abbr title="Ui\Widgets\Button\DelButton::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#17"><abbr title="Ui\Widgets\Button\DelButton::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/CheckBox.php.html#40"><abbr title="Ui\Widgets\Button\CheckBox::withLabel">withLabel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/CheckBox.php.html#35"><abbr title="Ui\Widgets\Button\CheckBox::setChecked">setChecked</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/Button.php.html#32"><abbr title="Ui\Widgets\Button\Button::setOnClick">setOnClick</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#27"><abbr title="Ui\Widgets\Button\MenuButton::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/Button.php.html#27"><abbr title="Ui\Widgets\Button\Button::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/Button.php.html#22"><abbr title="Ui\Widgets\Button\Button::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/Button.php.html#17"><abbr title="Ui\Widgets\Button\Button::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#39"><abbr title="Ui\Widgets\Button\AddButton::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#33"><abbr title="Ui\Widgets\Button\AddButton::setOnClick">setOnClick</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#27"><abbr title="Ui\Widgets\Button\AddButton::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#22"><abbr title="Ui\Widgets\Button\AddButton::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#17"><abbr title="Ui\Widgets\Button\AddButton::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accordeon/CollapsibleList.php.html#21"><abbr title="Ui\Widgets\Accordeon\CollapsibleList::addItem">addItem</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#22"><abbr title="Ui\Widgets\Button\MenuButton::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#33"><abbr title="Ui\Widgets\Button\MenuButton::setOnClick">setOnClick</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#17"><abbr title="Ui\Widgets\Input\PasswordInput::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SubmitButton.php.html#27"><abbr title="Ui\Widgets\Button\SubmitButton::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/EmailInput.php.html#29"><abbr title="Ui\Widgets\Input\EmailInput::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/EmailInput.php.html#25"><abbr title="Ui\Widgets\Input\EmailInput::setValue">setValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/EmailInput.php.html#21"><abbr title="Ui\Widgets\Input\EmailInput::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Input/EmailInput.php.html#17"><abbr title="Ui\Widgets\Input\EmailInput::SetPlaceholder">SetPlaceholder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#39"><abbr title="Ui\Widgets\Button\ViewListButton::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#33"><abbr title="Ui\Widgets\Button\ViewListButton::setOnClick">setOnClick</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#27"><abbr title="Ui\Widgets\Button\ViewListButton::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#22"><abbr title="Ui\Widgets\Button\ViewListButton::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#17"><abbr title="Ui\Widgets\Button\ViewListButton::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SubmitButton.php.html#22"><abbr title="Ui\Widgets\Button\SubmitButton::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#39"><abbr title="Ui\Widgets\Button\MenuButton::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SubmitButton.php.html#17"><abbr title="Ui\Widgets\Button\SubmitButton::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#39"><abbr title="Ui\Widgets\Button\SearchButton::setFormAction">setFormAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#33"><abbr title="Ui\Widgets\Button\SearchButton::setOnClick">setOnClick</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#27"><abbr title="Ui\Widgets\Button\SearchButton::setId">setId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#22"><abbr title="Ui\Widgets\Button\SearchButton::setName">setName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#17"><abbr title="Ui\Widgets\Button\SearchButton::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/RadioButton.php.html#34"><abbr title="Ui\Widgets\Button\RadioButton::withLabel">withLabel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/RadioButton.php.html#29"><abbr title="Ui\Widgets\Button\RadioButton::setChecked">setChecked</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Button/RadioButton.php.html#22"><abbr title="Ui\Widgets\Button\RadioButton::__toString">__toString</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Views/NavBar.php.html#42"><abbr title="Ui\Widgets\Views\NavBar::setClass">setClass</abbr></a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Table/DivRowTable.php.html#116"><abbr title="Ui\Widgets\Table\DivRowTable::getTableRowFromObject">getTableRowFromObject</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#155"><abbr title="Ui\Widgets\Table\DivRowTable::getTableRow">getTableRow</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#53"><abbr title="Ui\Widgets\Table\DivRowTable::getTableLegendDiv">getTableLegendDiv</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#117"><abbr title="Ui\Widgets\Views\AppPage::addSideBarItem">addSideBarItem</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Views/AppPage.php.html#88"><abbr title="Ui\Widgets\Views\AppPage::addNavBarItem">addNavBarItem</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#188"><abbr title="Ui\Widgets\Table\DivRowTable::__construct">__construct</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#88"><abbr title="Ui\Widgets\Table\DivRowTable::getTableHeader">getTableHeader</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#23"><abbr title="Ui\Widgets\Input\SelectOption::setCheckedOption">setCheckedOption</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#24"><abbr title="Ui\Widgets\Table\DivRowTable::getCell">getCell</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Button/AddButton.php.html#17"><abbr title="Ui\Widgets\Button\AddButton::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#26"><abbr title="Ui\Widgets\Input\TextArea::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#78"><abbr title="Ui\Widgets\Table\DivRowTable::getTableHeadersTitle">getTableHeadersTitle</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Table/DivRowTable.php.html#40"><abbr title="Ui\Widgets\Table\DivRowTable::getColGroupDiv">getColGroupDiv</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#31"><abbr title="Ui\Widgets\Input\TextArea::setName">setName</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/TextArea.php.html#21"><abbr title="Ui\Widgets\Input\TextArea::setId">setId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/Button.php.html#17"><abbr title="Ui\Widgets\Button\Button::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#35"><abbr title="Ui\Widgets\Input\SelectOption::setName">setName</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/SelectOption.php.html#30"><abbr title="Ui\Widgets\Input\SelectOption::setId">setId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#24"><abbr title="Ui\Widgets\Input\PasswordInput::setPlaceholder">setPlaceholder</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Input/PasswordInput.php.html#17"><abbr title="Ui\Widgets\Input\PasswordInput::setId">setId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/ViewListButton.php.html#17"><abbr title="Ui\Widgets\Button\ViewListButton::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/SubmitButton.php.html#17"><abbr title="Ui\Widgets\Button\SubmitButton::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/SearchButton.php.html#17"><abbr title="Ui\Widgets\Button\SearchButton::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/RadioButton.php.html#22"><abbr title="Ui\Widgets\Button\RadioButton::__toString">__toString</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/MenuButton.php.html#17"><abbr title="Ui\Widgets\Button\MenuButton::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/DelButton.php.html#17"><abbr title="Ui\Widgets\Button\DelButton::setClass">setClass</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Button/CheckBox.php.html#28"><abbr title="Ui\Widgets\Button\CheckBox::__toString">__toString</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Views/NavBar.php.html#26"><abbr title="Ui\Widgets\Views\NavBar::addMenu">addMenu</abbr></a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 6.1.4</a> using <a href="https://secure.php.net/" target="_top">PHP 7.3.3</a> with <a href="https://xdebug.org/">Xdebug 2.7.2</a> and <a href="https://phpunit.de/">PHPUnit 7.5.12</a> at Wed Jun 19 13:38:08 CEST 2019.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../.js/jquery.min.js" type="text/javascript"></script>
+  <script src="../.js/d3.min.js" type="text/javascript"></script>
+  <script src="../.js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([3,0,1,9,3,3,0,2,2,0,0,6], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([93,0,0,0,0,0,0,0,0,0,0,26], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[66.666666666666657192763523198664188385009765625,3,"<a href=\"Accordeon\/CollapsibleItem.php.html#10\">Ui\\Widgets\\Accordeon\\CollapsibleItem<\/a>"],[60,2,"<a href=\"Accordeon\/CollapsibleList.php.html#11\">Ui\\Widgets\\Accordeon\\CollapsibleList<\/a>"],[26.666666666666667850904559600166976451873779296875,7,"<a href=\"Button\/AddButton.php.html#7\">Ui\\Widgets\\Button\\AddButton<\/a>"],[25,6,"<a href=\"Button\/Button.php.html#8\">Ui\\Widgets\\Button\\Button<\/a>"],[44.4444444444444428654605871997773647308349609375,7,"<a href=\"Button\/CheckBox.php.html#8\">Ui\\Widgets\\Button\\CheckBox<\/a>"],[26.666666666666667850904559600166976451873779296875,7,"<a href=\"Button\/DelButton.php.html#7\">Ui\\Widgets\\Button\\DelButton<\/a>"],[26.666666666666667850904559600166976451873779296875,7,"<a href=\"Button\/MenuButton.php.html#7\">Ui\\Widgets\\Button\\MenuButton<\/a>"],[41.1764705882352899379839072935283184051513671875,5,"<a href=\"Button\/RadioButton.php.html#5\">Ui\\Widgets\\Button\\RadioButton<\/a>"],[100,1,"<a href=\"Button\/ResetButton.php.html#7\">Ui\\Widgets\\Button\\ResetButton<\/a>"],[26.666666666666667850904559600166976451873779296875,7,"<a href=\"Button\/SearchButton.php.html#7\">Ui\\Widgets\\Button\\SearchButton<\/a>"],[30,5,"<a href=\"Button\/SubmitButton.php.html#7\">Ui\\Widgets\\Button\\SubmitButton<\/a>"],[26.666666666666667850904559600166976451873779296875,7,"<a href=\"Button\/ViewListButton.php.html#7\">Ui\\Widgets\\Button\\ViewListButton<\/a>"],[100,3,"<a href=\"Input\/ClickableImage.php.html#8\">Ui\\Widgets\\Input\\ClickableImage<\/a>"],[100,1,"<a href=\"Input\/ColorInput.php.html#7\">Ui\\Widgets\\Input\\ColorInput<\/a>"],[100,1,"<a href=\"Input\/DateInput.php.html#7\">Ui\\Widgets\\Input\\DateInput<\/a>"],[27.272727272727269820506990072317421436309814453125,5,"<a href=\"Input\/EmailInput.php.html#7\">Ui\\Widgets\\Input\\EmailInput<\/a>"],[100,1,"<a href=\"Input\/FileInput.php.html#7\">Ui\\Widgets\\Input\\FileInput<\/a>"],[28.5714285714285693984493263997137546539306640625,7,"<a href=\"Input\/PasswordInput.php.html#7\">Ui\\Widgets\\Input\\PasswordInput<\/a>"],[37.5,10,"<a href=\"Input\/SelectOption.php.html#8\">Ui\\Widgets\\Input\\SelectOption<\/a>"],[18.181818181818183433051672182045876979827880859375,7,"<a href=\"Input\/TextArea.php.html#9\">Ui\\Widgets\\Input\\TextArea<\/a>"],[27.272727272727269820506990072317421436309814453125,5,"<a href=\"Input\/TextInput.php.html#7\">Ui\\Widgets\\Input\\TextInput<\/a>"],[71.4285714285714306015506736002862453460693359375,3,"<a href=\"Lists\/ItemList.php.html#8\">Ui\\Widgets\\Lists\\ItemList<\/a>"],[71.4285714285714306015506736002862453460693359375,3,"<a href=\"Lists\/OrderedItemList.php.html#8\">Ui\\Widgets\\Lists\\OrderedItemList<\/a>"],[0,31,"<a href=\"Table\/DivRowTable.php.html#10\">Ui\\Widgets\\Table\\DivRowTable<\/a>"],[0,10,"<a href=\"Table\/TableColumn.php.html#7\">Ui\\Widgets\\Table\\TableColumn<\/a>"],[0,3,"<a href=\"Table\/TableLegend.php.html#8\">Ui\\Widgets\\Table\\TableLegend<\/a>"],[36.95652173913043014863433199934661388397216796875,11,"<a href=\"Views\/AppPage.php.html#13\">Ui\\Widgets\\Views\\AppPage<\/a>"],[100,1,"<a href=\"Views\/NamedFieldset.php.html#7\">Ui\\Widgets\\Views\\NamedFieldset<\/a>"],[44.4444444444444428654605871997773647308349609375,4,"<a href=\"Views\/NavBar.php.html#11\">Ui\\Widgets\\Views\\NavBar<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"Accordeon\/CollapsibleItem.php.html#15\">Ui\\Widgets\\Accordeon\\CollapsibleItem::__construct<\/a>"],[0,1,"<a href=\"Accordeon\/CollapsibleItem.php.html#27\">Ui\\Widgets\\Accordeon\\CollapsibleItem::setHeader<\/a>"],[0,1,"<a href=\"Accordeon\/CollapsibleItem.php.html#32\">Ui\\Widgets\\Accordeon\\CollapsibleItem::setContent<\/a>"],[100,1,"<a href=\"Accordeon\/CollapsibleList.php.html#14\">Ui\\Widgets\\Accordeon\\CollapsibleList::__construct<\/a>"],[0,1,"<a href=\"Accordeon\/CollapsibleList.php.html#21\">Ui\\Widgets\\Accordeon\\CollapsibleList::addItem<\/a>"],[100,1,"<a href=\"Button\/AddButton.php.html#10\">Ui\\Widgets\\Button\\AddButton::__construct<\/a>"],[0,2,"<a href=\"Button\/AddButton.php.html#17\">Ui\\Widgets\\Button\\AddButton::setClass<\/a>"],[0,1,"<a href=\"Button\/AddButton.php.html#22\">Ui\\Widgets\\Button\\AddButton::setName<\/a>"],[0,1,"<a href=\"Button\/AddButton.php.html#27\">Ui\\Widgets\\Button\\AddButton::setId<\/a>"],[0,1,"<a href=\"Button\/AddButton.php.html#33\">Ui\\Widgets\\Button\\AddButton::setOnClick<\/a>"],[0,1,"<a href=\"Button\/AddButton.php.html#39\">Ui\\Widgets\\Button\\AddButton::setFormAction<\/a>"],[100,1,"<a href=\"Button\/Button.php.html#11\">Ui\\Widgets\\Button\\Button::__construct<\/a>"],[0,2,"<a href=\"Button\/Button.php.html#17\">Ui\\Widgets\\Button\\Button::setClass<\/a>"],[0,1,"<a href=\"Button\/Button.php.html#22\">Ui\\Widgets\\Button\\Button::setName<\/a>"],[0,1,"<a href=\"Button\/Button.php.html#27\">Ui\\Widgets\\Button\\Button::setFormAction<\/a>"],[0,1,"<a href=\"Button\/Button.php.html#32\">Ui\\Widgets\\Button\\Button::setOnClick<\/a>"],[100,3,"<a href=\"Button\/CheckBox.php.html#14\">Ui\\Widgets\\Button\\CheckBox::__construct<\/a>"],[0,2,"<a href=\"Button\/CheckBox.php.html#28\">Ui\\Widgets\\Button\\CheckBox::__toString<\/a>"],[0,1,"<a href=\"Button\/CheckBox.php.html#35\">Ui\\Widgets\\Button\\CheckBox::setChecked<\/a>"],[0,1,"<a href=\"Button\/CheckBox.php.html#40\">Ui\\Widgets\\Button\\CheckBox::withLabel<\/a>"],[100,1,"<a href=\"Button\/DelButton.php.html#10\">Ui\\Widgets\\Button\\DelButton::__construct<\/a>"],[0,2,"<a href=\"Button\/DelButton.php.html#17\">Ui\\Widgets\\Button\\DelButton::setClass<\/a>"],[0,1,"<a href=\"Button\/DelButton.php.html#22\">Ui\\Widgets\\Button\\DelButton::setName<\/a>"],[0,1,"<a href=\"Button\/DelButton.php.html#27\">Ui\\Widgets\\Button\\DelButton::setId<\/a>"],[0,1,"<a href=\"Button\/DelButton.php.html#33\">Ui\\Widgets\\Button\\DelButton::setOnClick<\/a>"],[0,1,"<a href=\"Button\/DelButton.php.html#39\">Ui\\Widgets\\Button\\DelButton::setFormAction<\/a>"],[100,1,"<a href=\"Button\/MenuButton.php.html#10\">Ui\\Widgets\\Button\\MenuButton::__construct<\/a>"],[0,2,"<a href=\"Button\/MenuButton.php.html#17\">Ui\\Widgets\\Button\\MenuButton::setClass<\/a>"],[0,1,"<a href=\"Button\/MenuButton.php.html#22\">Ui\\Widgets\\Button\\MenuButton::setName<\/a>"],[0,1,"<a href=\"Button\/MenuButton.php.html#27\">Ui\\Widgets\\Button\\MenuButton::setId<\/a>"],[0,1,"<a href=\"Button\/MenuButton.php.html#33\">Ui\\Widgets\\Button\\MenuButton::setOnClick<\/a>"],[0,1,"<a href=\"Button\/MenuButton.php.html#39\">Ui\\Widgets\\Button\\MenuButton::setFormAction<\/a>"],[100,1,"<a href=\"Button\/RadioButton.php.html#11\">Ui\\Widgets\\Button\\RadioButton::__construct<\/a>"],[0,2,"<a href=\"Button\/RadioButton.php.html#22\">Ui\\Widgets\\Button\\RadioButton::__toString<\/a>"],[0,1,"<a href=\"Button\/RadioButton.php.html#29\">Ui\\Widgets\\Button\\RadioButton::setChecked<\/a>"],[0,1,"<a href=\"Button\/RadioButton.php.html#34\">Ui\\Widgets\\Button\\RadioButton::withLabel<\/a>"],[100,1,"<a href=\"Button\/ResetButton.php.html#10\">Ui\\Widgets\\Button\\ResetButton::__construct<\/a>"],[100,1,"<a href=\"Button\/SearchButton.php.html#10\">Ui\\Widgets\\Button\\SearchButton::__construct<\/a>"],[0,2,"<a href=\"Button\/SearchButton.php.html#17\">Ui\\Widgets\\Button\\SearchButton::setClass<\/a>"],[0,1,"<a href=\"Button\/SearchButton.php.html#22\">Ui\\Widgets\\Button\\SearchButton::setName<\/a>"],[0,1,"<a href=\"Button\/SearchButton.php.html#27\">Ui\\Widgets\\Button\\SearchButton::setId<\/a>"],[0,1,"<a href=\"Button\/SearchButton.php.html#33\">Ui\\Widgets\\Button\\SearchButton::setOnClick<\/a>"],[0,1,"<a href=\"Button\/SearchButton.php.html#39\">Ui\\Widgets\\Button\\SearchButton::setFormAction<\/a>"],[100,1,"<a href=\"Button\/SubmitButton.php.html#10\">Ui\\Widgets\\Button\\SubmitButton::__construct<\/a>"],[0,2,"<a href=\"Button\/SubmitButton.php.html#17\">Ui\\Widgets\\Button\\SubmitButton::setClass<\/a>"],[0,1,"<a href=\"Button\/SubmitButton.php.html#22\">Ui\\Widgets\\Button\\SubmitButton::setName<\/a>"],[0,1,"<a href=\"Button\/SubmitButton.php.html#27\">Ui\\Widgets\\Button\\SubmitButton::setFormAction<\/a>"],[100,1,"<a href=\"Button\/ViewListButton.php.html#10\">Ui\\Widgets\\Button\\ViewListButton::__construct<\/a>"],[0,2,"<a href=\"Button\/ViewListButton.php.html#17\">Ui\\Widgets\\Button\\ViewListButton::setClass<\/a>"],[0,1,"<a href=\"Button\/ViewListButton.php.html#22\">Ui\\Widgets\\Button\\ViewListButton::setName<\/a>"],[0,1,"<a href=\"Button\/ViewListButton.php.html#27\">Ui\\Widgets\\Button\\ViewListButton::setId<\/a>"],[0,1,"<a href=\"Button\/ViewListButton.php.html#33\">Ui\\Widgets\\Button\\ViewListButton::setOnClick<\/a>"],[0,1,"<a href=\"Button\/ViewListButton.php.html#39\">Ui\\Widgets\\Button\\ViewListButton::setFormAction<\/a>"],[100,3,"<a href=\"Input\/ClickableImage.php.html#16\">Ui\\Widgets\\Input\\ClickableImage::__construct<\/a>"],[100,1,"<a href=\"Input\/ColorInput.php.html#10\">Ui\\Widgets\\Input\\ColorInput::__construct<\/a>"],[100,1,"<a href=\"Input\/DateInput.php.html#10\">Ui\\Widgets\\Input\\DateInput::__construct<\/a>"],[100,1,"<a href=\"Input\/EmailInput.php.html#10\">Ui\\Widgets\\Input\\EmailInput::__construct<\/a>"],[0,1,"<a href=\"Input\/EmailInput.php.html#17\">Ui\\Widgets\\Input\\EmailInput::SetPlaceholder<\/a>"],[0,1,"<a href=\"Input\/EmailInput.php.html#21\">Ui\\Widgets\\Input\\EmailInput::setId<\/a>"],[0,1,"<a href=\"Input\/EmailInput.php.html#25\">Ui\\Widgets\\Input\\EmailInput::setValue<\/a>"],[0,1,"<a href=\"Input\/EmailInput.php.html#29\">Ui\\Widgets\\Input\\EmailInput::setName<\/a>"],[100,1,"<a href=\"Input\/FileInput.php.html#10\">Ui\\Widgets\\Input\\FileInput::__construct<\/a>"],[100,1,"<a href=\"Input\/PasswordInput.php.html#10\">Ui\\Widgets\\Input\\PasswordInput::__construct<\/a>"],[0,2,"<a href=\"Input\/PasswordInput.php.html#17\">Ui\\Widgets\\Input\\PasswordInput::setId<\/a>"],[0,2,"<a href=\"Input\/PasswordInput.php.html#24\">Ui\\Widgets\\Input\\PasswordInput::setPlaceholder<\/a>"],[0,1,"<a href=\"Input\/PasswordInput.php.html#31\">Ui\\Widgets\\Input\\PasswordInput::setValue<\/a>"],[0,1,"<a href=\"Input\/PasswordInput.php.html#36\">Ui\\Widgets\\Input\\PasswordInput::setName<\/a>"],[100,3,"<a href=\"Input\/SelectOption.php.html#12\">Ui\\Widgets\\Input\\SelectOption::__construct<\/a>"],[0,3,"<a href=\"Input\/SelectOption.php.html#23\">Ui\\Widgets\\Input\\SelectOption::setCheckedOption<\/a>"],[0,2,"<a href=\"Input\/SelectOption.php.html#30\">Ui\\Widgets\\Input\\SelectOption::setId<\/a>"],[0,2,"<a href=\"Input\/SelectOption.php.html#35\">Ui\\Widgets\\Input\\SelectOption::setName<\/a>"],[100,1,"<a href=\"Input\/TextArea.php.html#14\">Ui\\Widgets\\Input\\TextArea::__construct<\/a>"],[0,2,"<a href=\"Input\/TextArea.php.html#21\">Ui\\Widgets\\Input\\TextArea::setId<\/a>"],[0,2,"<a href=\"Input\/TextArea.php.html#26\">Ui\\Widgets\\Input\\TextArea::setClass<\/a>"],[0,2,"<a href=\"Input\/TextArea.php.html#31\">Ui\\Widgets\\Input\\TextArea::setName<\/a>"],[100,1,"<a href=\"Input\/TextInput.php.html#10\">Ui\\Widgets\\Input\\TextInput::__construct<\/a>"],[0,1,"<a href=\"Input\/TextInput.php.html#18\">Ui\\Widgets\\Input\\TextInput::SetPlaceholder<\/a>"],[0,1,"<a href=\"Input\/TextInput.php.html#23\">Ui\\Widgets\\Input\\TextInput::setId<\/a>"],[0,1,"<a href=\"Input\/TextInput.php.html#28\">Ui\\Widgets\\Input\\TextInput::setValue<\/a>"],[0,1,"<a href=\"Input\/TextInput.php.html#33\">Ui\\Widgets\\Input\\TextInput::setName<\/a>"],[100,2,"<a href=\"Lists\/ItemList.php.html#12\">Ui\\Widgets\\Lists\\ItemList::__construct<\/a>"],[0,1,"<a href=\"Lists\/ItemList.php.html#22\">Ui\\Widgets\\Lists\\ItemList::addItem<\/a>"],[100,2,"<a href=\"Lists\/OrderedItemList.php.html#26\">Ui\\Widgets\\Lists\\OrderedItemList::__construct<\/a>"],[0,1,"<a href=\"Lists\/OrderedItemList.php.html#38\">Ui\\Widgets\\Lists\\OrderedItemList::setNumberType<\/a>"],[0,3,"<a href=\"Table\/DivRowTable.php.html#24\">Ui\\Widgets\\Table\\DivRowTable::getCell<\/a>"],[0,2,"<a href=\"Table\/DivRowTable.php.html#40\">Ui\\Widgets\\Table\\DivRowTable::getColGroupDiv<\/a>"],[0,4,"<a href=\"Table\/DivRowTable.php.html#53\">Ui\\Widgets\\Table\\DivRowTable::getTableLegendDiv<\/a>"],[0,2,"<a href=\"Table\/DivRowTable.php.html#78\">Ui\\Widgets\\Table\\DivRowTable::getTableHeadersTitle<\/a>"],[0,3,"<a href=\"Table\/DivRowTable.php.html#88\">Ui\\Widgets\\Table\\DivRowTable::getTableHeader<\/a>"],[0,1,"<a href=\"Table\/DivRowTable.php.html#103\">Ui\\Widgets\\Table\\DivRowTable::getCorpTableDiv<\/a>"],[0,1,"<a href=\"Table\/DivRowTable.php.html#112\">Ui\\Widgets\\Table\\DivRowTable::setTableSection<\/a>"],[0,6,"<a href=\"Table\/DivRowTable.php.html#116\">Ui\\Widgets\\Table\\DivRowTable::getTableRowFromObject<\/a>"],[0,5,"<a href=\"Table\/DivRowTable.php.html#155\">Ui\\Widgets\\Table\\DivRowTable::getTableRow<\/a>"],[0,3,"<a href=\"Table\/DivRowTable.php.html#188\">Ui\\Widgets\\Table\\DivRowTable::__construct<\/a>"],[0,1,"<a href=\"Table\/DivRowTable.php.html#233\">Ui\\Widgets\\Table\\DivRowTable::__toString<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#43\">Ui\\Widgets\\Table\\TableColumn::__construct<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#53\">Ui\\Widgets\\Table\\TableColumn::getName<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#58\">Ui\\Widgets\\Table\\TableColumn::getHeader<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#66\">Ui\\Widgets\\Table\\TableColumn::setColumnEditable<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#76\">Ui\\Widgets\\Table\\TableColumn::isEditable<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#85\">Ui\\Widgets\\Table\\TableColumn::hideHeader<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#95\">Ui\\Widgets\\Table\\TableColumn::mustDisplay<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#104\">Ui\\Widgets\\Table\\TableColumn::getBaseId<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#115\">Ui\\Widgets\\Table\\TableColumn::setBaseId<\/a>"],[0,1,"<a href=\"Table\/TableColumn.php.html#126\">Ui\\Widgets\\Table\\TableColumn::isBaseIdSet<\/a>"],[0,1,"<a href=\"Table\/TableLegend.php.html#41\">Ui\\Widgets\\Table\\TableLegend::__construct<\/a>"],[0,1,"<a href=\"Table\/TableLegend.php.html#50\">Ui\\Widgets\\Table\\TableLegend::getContent<\/a>"],[0,1,"<a href=\"Table\/TableLegend.php.html#55\">Ui\\Widgets\\Table\\TableLegend::getPosition<\/a>"],[100,1,"<a href=\"Views\/AppPage.php.html#40\">Ui\\Widgets\\Views\\AppPage::__construct<\/a>"],[0,1,"<a href=\"Views\/AppPage.php.html#70\">Ui\\Widgets\\Views\\AppPage::getAppPage<\/a>"],[0,1,"<a href=\"Views\/AppPage.php.html#78\">Ui\\Widgets\\Views\\AppPage::setCss<\/a>"],[0,3,"<a href=\"Views\/AppPage.php.html#88\">Ui\\Widgets\\Views\\AppPage::addNavBarItem<\/a>"],[0,3,"<a href=\"Views\/AppPage.php.html#117\">Ui\\Widgets\\Views\\AppPage::addSideBarItem<\/a>"],[0,1,"<a href=\"Views\/AppPage.php.html#136\">Ui\\Widgets\\Views\\AppPage::setContentView<\/a>"],[0,1,"<a href=\"Views\/AppPage.php.html#146\">Ui\\Widgets\\Views\\AppPage::setSideBarTitle<\/a>"],[100,1,"<a href=\"Views\/NamedFieldset.php.html#10\">Ui\\Widgets\\Views\\NamedFieldset::__construct<\/a>"],[100,1,"<a href=\"Views\/NavBar.php.html#15\">Ui\\Widgets\\Views\\NavBar::__construct<\/a>"],[0,2,"<a href=\"Views\/NavBar.php.html#26\">Ui\\Widgets\\Views\\NavBar::addMenu<\/a>"],[0,1,"<a href=\"Views\/NavBar.php.html#42\">Ui\\Widgets\\Views\\NavBar::setClass<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface ;
 use Psr\Http\Message\ResponseInterface;
-use Interop\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Ui\Views\AppPage;
 use Ui\Utils\BString;
 use Ui\HTML\Elements\NestedHtmlElement\{Script};
