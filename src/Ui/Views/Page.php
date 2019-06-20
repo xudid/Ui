@@ -37,6 +37,11 @@ class Page extends NestedHtmlElement{
 			return $this;
 	}
 
+	public function body()
+	{
+		return $this->body;
+	}
+
 	public function setBase($base){
 		$this->head->setBase($base);
 		return $this;
