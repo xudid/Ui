@@ -10,7 +10,7 @@ use Ui\HTML\Elements\NestedHtmlElement\{
 	};
 
 use Ui\HTML\Attributes\GlobalAttribute;
-
+use Ui\HTML\Elements\EmptyElements\Link;
 /**
  * Class Page
  * @package Ui\Views
@@ -50,7 +50,7 @@ class Page extends NestedHtmlElement{
 	 * @param $base
 	 * @return $this
 	 */
-	public function setBase($base){
+	public function setBase(string $base){
 		$this->head->setBase($base);
 		return $this;
 	}
@@ -59,7 +59,7 @@ class Page extends NestedHtmlElement{
 	 * @param $lang
 	 * @return $this
 	 */
-	public function setLang($lang){
+	public function setLang(string $lang){
 			$this->htmle->setAttribute(GlobalAttribute::LANG,$lang);
 			return $this;
 	}
@@ -68,7 +68,7 @@ class Page extends NestedHtmlElement{
 	 * @param $title
 	 * @return $this
 	 */
-	public function setTitle($title){
+	public function setTitle(string $title){
 			$this->head->setTitle($title);
 			return $this;
 	}
@@ -105,7 +105,7 @@ class Page extends NestedHtmlElement{
 	 * @return $this
 	 */
 	public function addLink($css) {
-            $this->head->addLink($css);
+	        $this->head->addLink($css);
             return $this;
 
 	}
@@ -128,6 +128,10 @@ class Page extends NestedHtmlElement{
 		$string = $string.$this->htmle->__toString() ;
 		return $string;
 	}
+
+    /**
+     * @Deprecated use __toString() instead
+     */
 	public function render(){
 		$this->renderDoctype();
 

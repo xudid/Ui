@@ -1,5 +1,6 @@
 <?php
 namespace  Ui\HTML\Elements\NestedHtmlElement;
+use Ui\HTML\Elements\EmptyElements\Link;
 use Ui\HTML\Elements\EmptyElements\Meta;
 
 
@@ -12,7 +13,7 @@ class HeadElement extends NestedHtmlElement{
 	protected $charset="utf-8";
 	private $meta =[];
 	private $scripts = [];
-	private $link = [];
+	private $links = [];
 	private $base =null ;
 
 	private function renderTitle(){
@@ -34,7 +35,7 @@ class HeadElement extends NestedHtmlElement{
 
 	private function renderLink(){
 		$string="";
-    	foreach($this->link as $value){
+    	foreach($this->links as $value){
         $string = $string.$value."\r\n";
     	}
     	return $string;
@@ -103,7 +104,7 @@ class HeadElement extends NestedHtmlElement{
 
 	public function addLink($link){
 
-    $this->link[] = $link;
+    $this->links[] = new Link($link);
 
 	}
 
