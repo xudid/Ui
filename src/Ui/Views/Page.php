@@ -60,7 +60,7 @@ class Page extends NestedHtmlElement{
 	 * @return $this
 	 */
 	public function setLang($lang){
-			$this->htmle->setAttribute(GlobalAttribute::langAttribute,$lang);
+			$this->htmle->setAttribute(GlobalAttribute::LANG,$lang);
 			return $this;
 	}
 
