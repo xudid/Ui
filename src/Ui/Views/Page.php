@@ -110,6 +110,16 @@ class Page extends NestedHtmlElement{
 
 	}
 
+    /**
+     * Import css in the page head
+     * @param string $css : the css file path or URI
+     * @return self
+     */
+	public function importCss(string $css){
+        $this->head->addLink($css,"stylesheet");
+        return $this;
+    }
+
 	/**
 	 * @param $meta
 	 * @return $this

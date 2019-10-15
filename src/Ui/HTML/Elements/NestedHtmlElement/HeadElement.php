@@ -69,7 +69,7 @@ class HeadElement extends NestedHtmlElement{
 
         }
 
-        if(count($this->link)>0){
+        if(count($this->links)>0){
             $this->contentString = $this->contentString.$this->renderLink() ;
         }
 
@@ -102,9 +102,9 @@ class HeadElement extends NestedHtmlElement{
 
 	}
 
-	public function addLink($link){
+	public function addLink($link,$rel){
 
-    $this->links[] = new Link($link);
+    $this->links[] = new Link($link,$rel);
 
 	}
 

@@ -21,7 +21,7 @@ class Link extends EmptyElement
 
 		if(isset($href))
 		{
-			$this->startTag->setAttribute("rel", $href);
+			$this->startTag->setAttribute("rel", $rel);
 			$this->startTag->setAttribute("href", $href);
 		}
 		return $this;
