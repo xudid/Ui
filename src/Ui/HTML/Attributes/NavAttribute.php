@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains NavAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * NavAttribute class contains Link element attributes and common attributes
- *
+ * NavAttribute class contains Nav element attributes and common attributes
  */
 class NavAttribute extends GlobalAttribute
 {

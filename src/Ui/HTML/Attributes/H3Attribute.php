@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains H3Attribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * H3Attribute class contains Link element attributes and common attributes
- *
+ * H3Attribute class contains H3 element attributes and common attributes
  */
 class H3Attribute extends GlobalAttribute
 {

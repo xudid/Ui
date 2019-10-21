@@ -1,8 +1,8 @@
 <?php
 namespace Ui\Views;
-use Ui\HTML\Elements\NestedHtmlElement\Section;
-use Ui\HTML\Elements\NestedHtmlElement\P;
-use Ui\HTML\Elements\EmptyElements\Br;
+use Ui\HTML\Elements\Nested\Section;
+use Ui\HTML\Elements\Nested\P;
+use Ui\HTML\Elements\Empties\Br;
 
 class EntityView extends Section {
 
@@ -35,7 +35,7 @@ class EntityView extends Section {
       $this->startTag->setAttribute("class",$class);
     }
 
-    public function __toString() {
+    public function __toString():string {
         return parent::__toString();
     }
 

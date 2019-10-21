@@ -5,15 +5,9 @@ namespace Ui\HTML\Attributes;
  * This file contains AddressAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
+ * AddressAttribute class contains Address element attributes and common attributes
  */
 
-/**
- *
- * AddressAttribute class contains Address element attributes and common attributes
- *
- */
 class AddressAttribute extends GlobalAttribute
 {
 

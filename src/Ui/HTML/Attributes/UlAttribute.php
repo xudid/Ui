@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains UlAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * UlAttribute class contains HTML elements common attributes
- *
+ * UlAttribute class contains HTML elements common attributes and his
  */
 class UlAttribute extends GlobalAttribute
 {

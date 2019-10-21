@@ -5,15 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains TrackAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * TrackAttribute class contains Link element attributes and common attributes
- *
+ * TrackAttribute class contains Track element attributes and common attributes
  */
 class TrackAttribute extends GlobalAttribute
 {

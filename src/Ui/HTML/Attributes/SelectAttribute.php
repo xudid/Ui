@@ -5,14 +5,9 @@ namespace Ui\HTML\Attributes;
  * This file contains SelectAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
+ * SelectAttribute class contains Select element attributes
+ * and GlobalAttributes
  */
-
-/**
-* SelectAttribute class contains Select element attributes
-* and GlobalAttributes
-*/
 class SelectAttribute extends GlobalAttribute
 {
     const AUTOFOCUS = "autofocus";

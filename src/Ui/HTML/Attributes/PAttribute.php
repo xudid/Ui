@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains PAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * PAttribute class contains Link element attributes and common attributes
- *
+ * PAttribute class contains P attributes and common attributes
  */
 class PAttribute extends GlobalAttribute
 {

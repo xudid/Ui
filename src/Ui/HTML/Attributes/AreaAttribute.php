@@ -5,24 +5,15 @@ namespace Ui\HTML\Attributes;
  * This file contains AreaAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
  * AreaAttribute class contains Link element attributes and common attributes
- *
  */
 class AreaAttribute extends GlobalAttribute
 {
     const ALT = "alt";
     const COORDS = "coords";
-
     const HREF = "href";
     const HREF_LANG = "hreflang";
     const PING = "ping";
-
     const REL = "rel";
     const SHAPE ="shape";
     const TARGET = "target";

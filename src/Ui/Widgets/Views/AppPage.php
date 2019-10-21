@@ -1,14 +1,15 @@
 <?php
 namespace Ui\Widgets\Views;
 use Ui\Views\Page;
-use Ui\HTML\Elements\EmptyElements\Link;
+use Ui\HTML\Elements\Empties\Link;
 use Ui\Widgets\Views\NavBar;
 
-use Ui\HTML\Elements\NestedHtmlElement\{Header,A,Nav,Div};
+use Ui\HTML\Elements\Nested\{Header,A,Nav,Div};
 
 
 /**
- *
+ * Class AppPage
+ * @package Ui\Widgets\Views
  */
 class AppPage extends Page
 {
@@ -21,8 +22,11 @@ class AppPage extends Page
    */
   private $navbar = null;
 
+    /**
+     * @var object $sidebar
+     */
 
-	private $sidebar =null;
+  private $sidebar =null;
 
   /**
    *  @var string $sideBarTitle
@@ -37,36 +41,37 @@ class AppPage extends Page
    */
 	private $footer =null;
 
-  function __construct()
+    /**
+     * AppPage constructor.
+     */
+  public function __construct()
   {
     parent::__construct();
 
     $this->maindiv = new Div();
-    $this->maindiv->addCssClass("main");
-    $this->addBodyElement($this->maindiv);
+    $this->maindiv->setClass("main");
+    $this->addToBody($this->maindiv);
 
     $this->navbar = new NavBar();
-    $this->navbar->addCssClass("navbar");
-    $this->maindiv->addElement($this->navbar);
+    $this->navbar->setClass("navbar");
+    $this->maindiv->add($this->navbar);
     $div = new Div();
-    $div->addCssClass("second");
+    $div->setClass("second");
     $this->sidebar = new Div();
-    $this->sidebar->addCssClass("sidebar");
-    // $this->sidebar->addElement("<h2>$this->sideBarTitle</h2>");
-    $div->addElement($this->sidebar);
-    $this->maindiv->addElement($div);
+    $this->sidebar->setClass("sidebar");
+    // $this->sidebar->add("<h2>$this->sideBarTitle</h2>");
+    $div->add($this->sidebar);
+    $this->maindiv->add($div);
 
     $this->contentView = new Div();
-    $this->contentView->addCssClass("content");
-    $div->addElement($this->contentView);
-
-
-
+    $this->contentView->setClass("content");
+    $div->add($this->contentView);
     return $this;
   }
-  /**
-   *
-   */
+
+    /**
+     *
+     */
   public function getAppPage()
   {
 
@@ -74,76 +79,78 @@ class AppPage extends Page
 
 /**
  * @param string $css file path
+ * @return self
  */
   public function setCss($css)
   {
     parent::addLink((new Link($css))->setAttribute("rel","stylesheet"));
-
-
+    return $this;
   }
 
 /**
  * @param object $menuItem
+ * @return self
  */
   public function addNavBarItem($type,$path,$display,$alt="",$displayside){
     switch ($type) {
       case 'text':
       $item = new A($path);
-      $item->addElement($display);
+      $item->add($display);
       $this->navbar->addMenu($item,$displayside);
-      //$this->navbar->addElement($item);
+      //$this->navbar->add($item);
         break;
       case 'icon':
       $item = new ClickableImage($path,$display,$alt);
 
       $this->navbar->addMenu($item,$displayside);
-      //$this->navbar->addElement($item);
+      //$this->navbar->add($item);
         break;
 
       default:
 
         break;
     }
-
-
-
+    return $this;
   }
 /**
  * @param string $Itemdisplay
  * @param string $itemUrl
  * @param string $itemType
  * @param string $itemalt
+ * @return self
  */
   public function addSideBarItem($Itemdisplay,$itemUrl,$itemType ="button",$itemalt =""){
     $item = null;
     if($itemType === "button"){
       $item = new A('/'.$itemUrl);
-      $item->addElement($Itemdisplay);
+      $item->add($Itemdisplay);
     }
     if($itemType === "img"){
       $item = new ClickableImage('/'.$itemUrl,$Itemdisplay,$itemalt);
 
     }
-    $item->addCssClass("sidebar_button");
-    $this->sidebar->addElement($item);
-    $this->sidebar->addElement("<br>");
+    $item->setCss("sidebar_button");
+    $this->sidebar->add($item);
+    $this->sidebar->add("<br>");
+    return $this;
 
   }
 
-  /**
-   * @param object $view
-   */
+    /**
+     * @param object $view
+     * @return self
+     */
   public function setContentView($view){
-
-    $this->contentView->addElement($view);
-
+    $this->contentView->add($view);
     return $this;
   }
 
 /**
  * @param string $title
+ * @return self
  */
   public function setSideBarTitle($title){
     $this->sideBarTitle=$title;
+    return $this;
   }
 }

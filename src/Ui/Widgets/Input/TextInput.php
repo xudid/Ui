@@ -1,6 +1,6 @@
 <?php
 namespace Ui\Widgets\Input;
-use Ui\HTML\Elements\EmptyElements\Input;
+use Ui\HTML\Elements\Empties\Input;
 /**
 *
 */

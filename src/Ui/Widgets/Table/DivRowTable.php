@@ -1,9 +1,9 @@
 <?php
 namespace Ui\Widgets\Table;
 
-use Ui\HTML\Elements\NestedHtmlElement\Div;
-use Ui\HTML\Elements\NestedHtmlElement\Section;
-use Ui\HTML\Elements\NestedHtmlElement\Header;
+use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\Section;
+use Ui\HTML\Elements\Nested\Header;
 
 
 
@@ -45,7 +45,7 @@ class DivRowTable {
         {
             $col = new Div();
             $col->setClass("col");
-            $div->addElement($col);
+            $div->add($col);
         }
         return $div;
     }
@@ -56,7 +56,7 @@ class DivRowTable {
         $div->setClass("legende_top");
         $row = new Div();
         $row->setClass("row");
-        $div->addElement($row);
+        $div->add($row);
         foreach ($this->legends as $key => $l) {
           $legend = new Div();
           if($l->getPosition()==TableLegend::TOP_LEFT)
@@ -67,8 +67,8 @@ class DivRowTable {
           {
             $legend->setClass("legende_right");
           }
-          $legend->addElement($l->getContent());
-          $row->addElement($legend);
+          $legend->add($l->getContent());
+          $row->add($legend);
         }
 
 
@@ -93,7 +93,7 @@ class DivRowTable {
         {
           if($col->mustDisplay())
           {
-            $header->addElement($this->getCell(\ucfirst($col->getHeader()),false));
+            $header->add($this->getCell(\ucfirst($col->getHeader()),false));
           }
 
         }
@@ -138,7 +138,7 @@ class DivRowTable {
          {
            $cell->setId($column->getBaseId().$rowIndex);
          }
-         $row->addElement($cell);
+         $row->add($cell);
 
 
 
@@ -171,7 +171,7 @@ class DivRowTable {
           {
             $cell->setId($column->getBaseId().$rowIndex);
           }
-          $row->addElement($cell);
+          $row->add($cell);
         }
         return $row;
     }
@@ -204,13 +204,13 @@ class DivRowTable {
 
         $colgroupDiv = $this->getColGroupDiv();
 
-        $this->tableSection->addElement($colgroupDiv);
+        $this->tableSection->add($colgroupDiv);
 
-        $this->tableSection->addElement($this->getTableLegendDiv());
+        $this->tableSection->add($this->getTableLegendDiv());
 
-        $this->tableSection->addElement($this->getTableHeader());
+        $this->tableSection->add($this->getTableHeader());
 
-        $this->tableSection->addElement($this->getCorpTableDiv());
+        $this->tableSection->add($this->getCorpTableDiv());
 
         $datacount = count($this->DataArray);
 
@@ -219,11 +219,11 @@ class DivRowTable {
             $val = $this->DataArray[$i] ;
             if(is_object($val))
             {
-              $this->dataDiv ->addElement($this->getTableRowFromObject($val,$i));
+              $this->dataDiv ->add($this->getTableRowFromObject($val,$i));
             }
             else
             {
-              $this->dataDiv ->addElement($this->getTableRow($val,$i));
+              $this->dataDiv ->add($this->getTableRow($val,$i));
             }
 
           }
@@ -239,4 +239,3 @@ class DivRowTable {
 
 
   }
-?>

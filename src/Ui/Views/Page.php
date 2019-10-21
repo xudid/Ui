@@ -1,21 +1,21 @@
 <?php
 namespace Ui\Views;
 
-use Ui\HTML\Elements\NestedHtmlElement\{
-		NestedHtmlElement,
+use Ui\HTML\Elements\Nested\{
+		Nested,
 		Script,
-		HtmlElement,
-		BodyElement,
-		HeadElement
+		Html,
+		Body,
+		Head
 	};
 
 use Ui\HTML\Attributes\GlobalAttribute;
-use Ui\HTML\Elements\EmptyElements\Link;
+use Ui\HTML\Elements\Empties\Link;
 /**
  * Class Page
  * @package Ui\Views
  */
-class Page extends NestedHtmlElement{
+class Page extends Nested{
 
 	protected $doctype="html";
 	private $htmle = null;
@@ -36,13 +36,13 @@ class Page extends NestedHtmlElement{
 	public function __construct(){
 
 
-			$this->htmle = new HtmlElement();
+			$this->htmle = new Html();
 
-			$this->head = new HeadElement();
-			$this->body = new BodyElement();
+			$this->head = new Head();
+			$this->body = new Body();
 
-			$this->htmle->addElement($this->head);
-			$this->htmle->addElement($this->body);
+			$this->htmle->add($this->head);
+			$this->htmle->add($this->body);
 			return $this;
 	}
 
@@ -65,8 +65,8 @@ class Page extends NestedHtmlElement{
 	}
 
 	/**
-	 * @param $title
-	 * @return $this
+	 * @param string $title
+	 * @return self
 	 */
 	public function setTitle(string $title){
 			$this->head->setTitle($title);
@@ -74,11 +74,11 @@ class Page extends NestedHtmlElement{
 	}
 
 	/**
-	 * @param $element
-	 * @return $this
+	 * @param mixed$element
+	 * @return self
 	 */
-	public function addBodyElement($element){
-			$this->body->addElement($element);
+	public function addToBody($element){
+			$this->body->add($element);
 			return $this;
 	}
 
@@ -132,7 +132,7 @@ class Page extends NestedHtmlElement{
 	/**
 	 * @return string
 	 */
-	public function __toString(){
+	public function __toString():string{
 		$string ="";
 		$string = $string.$this->renderDoctype();
 		$string = $string.$this->htmle->__toString() ;
@@ -160,4 +160,3 @@ class Page extends NestedHtmlElement{
 	$this->renderHtmlCloseBalise();
 	}
 }
-?>

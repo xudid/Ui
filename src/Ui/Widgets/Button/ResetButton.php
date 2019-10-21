@@ -1,6 +1,6 @@
 <?php
 namespace Ui\Widgets\Button;
-use Ui\HTML\Elements\NestedHtmlElement\Button;
+use Ui\HTML\Elements\Nested\Button;
 /**
 * 
 */

@@ -6,8 +6,8 @@ namespace Ui\Views;?>
   .cell {display: table-cell;padding: 0.5rem; border: 1px solid #999;border-radius: 3px;}
 </style>
 <?php
-use Ui\HTML\Elements\NestedHtmlElement\Div;
-use Ui\HTML\Elements\NestedHtmlElement\Header;
+use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\Header;
 /**
  *
  */

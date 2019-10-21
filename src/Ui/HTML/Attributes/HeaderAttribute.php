@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains HeaderAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * HeaderAttribute class contains Link element attributes and common attributes
- *
+ * HeaderAttribute class contains Header element attributes and common attributes
  */
 class HeaderAttribute extends GlobalAttribute
 {

@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains H1Attribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * H1Attribute class contains Link element attributes and common attributes
- *
+ * H1Attribute class contains H1 element attributes and common attributes
  */
 class H1Attribute extends GlobalAttribute
 {

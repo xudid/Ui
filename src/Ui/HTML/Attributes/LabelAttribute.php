@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains LabelAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * LabelAttribute class contains Link element attributes and common attributes
- *
+ * Attribute class contains Link Label attributes and common attributes
  */
 class LabelAttribute extends GlobalAttribute
 {

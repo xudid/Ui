@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ImgAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * ImgAttribute class contains Link element attributes and common attributes
- *
+ * ImgAttribute class contains Img element attributes and common attributes
  */
 class ImgAttribute extends GlobalAttribute
 {

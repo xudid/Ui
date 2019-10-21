@@ -3,9 +3,9 @@ namespace Ui\Views;
 
 use Ui\Views\EntityView;
 use Ui\Model\EntityInformationHolder;
-use Ui\HTML\Elements\NestedHtmlElement\P;
+use Ui\HTML\Elements\Nested\P;
 use Ui\Widgets\Accordeon\CollapsibleItem;
-use Ui\HTML\Elements\EmptyElements\Br;
+use Ui\HTML\Elements\Empties\Br;
 
 /**
  *

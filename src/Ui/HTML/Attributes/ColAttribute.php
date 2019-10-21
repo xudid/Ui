@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ColAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * ColAttribute class contains Link element attributes and common attributes
- *
+ * ColAttribute class contains Col element attributes and common attributes
  */
 class ColAttribute extends GlobalAttribute
 {

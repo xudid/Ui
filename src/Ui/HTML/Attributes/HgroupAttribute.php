@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains HgroupAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * HgroupAttribute class contains Link element attributes and common attributes
- *
+ * HgroupAttribute class contains Hgroup element attributes and common attributes
  */
 class HgroupAttribute extends GlobalAttribute
 {

@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains SectionAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * SectionAttribute class contains Link element attributes and common attributes
- *
+ * SectionAttribute class contains Section element attributes and common attributes
  */
 class SectionAttribute extends GlobalAttribute
 {

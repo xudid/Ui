@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains MetaAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * MetaAttribute class contains Link element attributes and common attributes
- *
+ * MetaAttribute class contains Meta element attributes and common attributes
  */
 class MetaAttribute extends GlobalAttribute
 {

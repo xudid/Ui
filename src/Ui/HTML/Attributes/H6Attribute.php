@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains H6Attribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * H6Attribute class contains Link element attributes and common attributes
- *
+ * H6Attribute class contains H6 element attributes and common attributes
  */
 class H6Attribute extends GlobalAttribute
 {

@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains HtmlAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
  * HtmlAttribute class contains Html element attributes and common attributes
- *
  */
 class HtmlAttribute extends GlobalAttribute
 {

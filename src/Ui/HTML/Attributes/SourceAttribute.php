@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains SourceAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * SourceAttribute class contains Link element attributes and common attributes
- *
+ * SourceAttribute class contains Source element attributes and common attributes
  */
 class SourceAttribute extends GlobalAttribute
 {

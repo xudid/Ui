@@ -1,10 +1,10 @@
 <?php
 namespace Brick\Views;
-use Ui\HTML\Elements\NestedHtmlElement\{Form,P};
+use Ui\HTML\Elements\Nested\{Form,P};
 
-use Ui\HTML\Elements\EmptyElements\Br;
+use Ui\HTML\Elements\Empties\Br;
 
-use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\Nested\Div;
 
 
 use Ui\Widgets\Button\{SubmitButton};

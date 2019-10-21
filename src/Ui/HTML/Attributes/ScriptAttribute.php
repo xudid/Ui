@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ScriptAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * ScriptAttribute class contains Link element attributes and common attributes
- *
+ * ScriptAttribute class contains Script element attributes and common attributes
  */
 class ScriptAttribute extends GlobalAttribute
 {

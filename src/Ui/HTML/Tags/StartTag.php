@@ -12,9 +12,11 @@ namespace Ui\HTML\Tags;
 use Ui\Attributes\GlobalAttribute;
 
 /**
-* StarTag acts as the start of an HTML element and hold the attributes
-*
-*/
+ * Class StartTag
+ * @package Ui\HTML\Tags
+ * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
+ * StarTag acts as the start of an HTML element and hold the attributes
+ */
 class StartTag
 {
   /** @var string Must contain the HTML element name */
@@ -29,7 +31,7 @@ class StartTag
       *
       * @param string $tagname the HTML element name
       *
-      * @return void
+      * @return self
       */
     public function __construct($tagname)
     {
@@ -39,9 +41,6 @@ class StartTag
 
     /**
       * Return the HTML element as a string
-      *
-      *
-      *
       * @return string
       */
     public function __toString()
@@ -54,15 +53,12 @@ class StartTag
                 foreach ($v as $key => $value) {
                     $classes .='"'.$value.'" ';
                 }
-
-
                 $string = $string." ".$classes;
             } else {
                 $string = $string ." ".$v;
             }
         }
         $string = $string . ">";
-
         return $string;
     }
 
@@ -83,14 +79,13 @@ class StartTag
 
     /**
       * Add a value to the "class" attribute
-      *
       * @param string $class the css class name we want to add
-      *
-      *
       * @return self
+      *Todo manage class by name with add and remove ? rename this method ?
       */
     public function addCssClass(string $class)
     {
         $this->attributes["class"][]= $class;
+        return $this;
     }
 }

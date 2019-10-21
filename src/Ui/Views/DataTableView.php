@@ -4,7 +4,7 @@ use Ui\Widgets\Table\DivRowTable;
 use Ui\Widgets\Table\TableLegend;
 use Ui\Model\EntityInformationHolder;
 
-use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\Nested\Div;
 
 class DataTableView{
 
@@ -93,7 +93,7 @@ class DataTableView{
 
     public function __toString(){
       $this->drt = new DivRowTable($this->legends,
-                                   $columns,
+                                   $this->columns,
                                    $this->data,
                                    $this->rowsclickable,
                                    $this->baseurl);

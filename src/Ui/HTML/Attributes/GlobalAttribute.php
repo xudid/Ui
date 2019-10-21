@@ -1,25 +1,16 @@
 <?php
 namespace Ui\HTML\Attributes;
-/**
- * This file contains GlobalAttribute class and its methods.
- * @package Ui\HTML\Attributes
- * @author Didier Moindreau
- * @license
- *
- */
-
 
 use Ui\Utils\Enum;
 
 /**
- *
+ * This file contains GlobalAttribute class and its methods.
+ * @package Ui\HTML\Attributes
+ * @author Didier Moindreau
  * GlobalAttribute class contains HTML elements common attributes
- *
  */
 class GlobalAttribute extends Enum
 {
-
-
     const ACCESSKEY = "accesskey";
     const _CLASS = "class";
     const CONTENT_EDITABLE = "contenteditable";
@@ -35,7 +26,6 @@ class GlobalAttribute extends Enum
     const TAB_INDEX = "tabindex";
     const TITLE = "title";
     const TRANSLATE = "translate";
-
     const ON_ABORT="onabort"  ;
     const ON_AFTER_PRINT="onafterprint"  ;
     const ON_BEFORE_PRINT="onbeforeprint"  ;
@@ -132,6 +122,7 @@ class GlobalAttribute extends Enum
 
     /**
      * Return the Attribute as a string
+     * @return string
      */
     public function __toString()
     {

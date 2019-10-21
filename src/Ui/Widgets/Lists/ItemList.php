@@ -1,28 +1,36 @@
 <?php
 namespace Ui\Widgets\Lists;
-use Ui\HTML\Elements\NestedHtmlElement\Ul;
-use Ui\HTML\Elements\NestedHtmlElement\Li;
+use Ui\HTML\Elements\Nested\Ul;
+use Ui\HTML\Elements\Nested\Li;
+
 /**
- *
+ * Class ItemList
+ * @package Ui\Widgets\Lists
  */
 class ItemList extends Ul
 {
   private $items=null;
 
-  function __construct(array $items=[])
+  /**
+   * ItemList constructor.
+   * @param array $items
+   */
+  public function __construct(array $items=[])
   {
     parent::__construct();
     $this->items = $items;
     foreach($this->items as $item){
-      $this->addElement(new Li($item));
+      $this->add(new Li($item));
     }
     return $this;
   }
 
+  /**
+   * @param $item
+   */
   public function addItem($item)
   {
-    $this->addElement(new Li($item));
+    $this->add(new Li($item));
   }
 }
 
-?>

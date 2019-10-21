@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains H5Attribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * H5Attribute class contains Link element attributes and common attributes
- *
+ * H5Attribute class contains Link H5 attributes and common attributes
  */
 class H5Attribute extends GlobalAttribute
 {

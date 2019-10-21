@@ -1,6 +1,6 @@
 <?php
 namespace Ui\Widgets\Table;
-use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\Nested\Div;
 
 /**
  *

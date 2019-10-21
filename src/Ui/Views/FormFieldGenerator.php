@@ -1,16 +1,15 @@
 <?php
 namespace Brick\Views;
 
-use Ui\HTML\Elements\NestedHtmlElement\{Form,Fieldset,Legend,Section,P};
-use Ui\HTML\Elements\EmptyElements\Br;
-use Ui\Widgets\NamedFieldset;
+//use Ui\HTML\Elements\Nested\{Form,Fieldset,Legend,Section,P};
+use Ui\HTML\Elements\Empties\Br;
+use Ui\Widgets\Views\NamedFieldset;
 use Ui\Widgets\Input\TextInput;
 use Ui\Widgets\Input\DateInput;
 use Ui\Widgets\Input\ColorInput;
 use Ui\Widgets\Input\EmailInput;
 use Ui\Widgets\Input\FileInput;
 use Ui\Widgets\Input\PasswordInput;
-use Ui\Widgets\Button\SubmitButton;
 use Ui\Widgets\Button\ResetButton;
 use Ui\Widgets\Button\CheckBox;
 use Ui\Widgets\Button\RadioButton;
@@ -113,7 +112,7 @@ class FormFieldGenerator
               {
 
                 $input = $this->getTextInput($value);
-                $nf->addElement($input);
+                $nf->add($input);
                 if($this->eih->hasEntity())
                 {
                   $val = $this->eih->getEntityFieldValue($value);
@@ -121,7 +120,7 @@ class FormFieldGenerator
                 }
                 if(!$this->inline)
                 {
-                  $nf->addElement(new Br());
+                  $nf->add(new Br());
                 }
                   break;
               }
@@ -129,7 +128,7 @@ class FormFieldGenerator
               case "email":
               {
                 $input = $this->getEmailInput($value);
-                $nf->addElement($input);
+                $nf->add($input);
                 if($this->eih->hasEntity())
                 {
                   $val = $this->eih->getEntityFieldValue($value);
@@ -137,14 +136,14 @@ class FormFieldGenerator
                 }
                 if(!$this->inline)
                 {
-                  $nf->addElement(new Br());
+                  $nf->add(new Br());
                 }
                   break;
               }
               case "password":
               {
                 $input = $this->getPasswordInput($value);
-                $nf->addElement($input);
+                $nf->add($input);
                 if($this->eih->hasEntity())
                 {
                   $val = $this->eih->getEntityFieldValue($value);
@@ -152,7 +151,7 @@ class FormFieldGenerator
                 }
                 if(!$this->inline)
                 {
-                  $nf->addElement(new Br());
+                  $nf->add(new Br());
                 }
                   break;
               }
@@ -164,14 +163,14 @@ class FormFieldGenerator
                 if($this->eih->hasEntity())
                 {
                   $val = $this->eih->getEntityFieldValue($value);
-                  $input->setValue($val);
+                  $selOption->setValue($val);
                   $index = array_keys($options,$val);
                   $selOption->setCheckedOption($index[0]);
                 }
-                $nf->addElement($selOption);
+                $nf->add($selOption);
                 if(!$this->inline)
                 {
-                  $nf->addElement(new Br());
+                  $nf->add(new Br());
                 }
                       break;
               }
@@ -194,7 +193,7 @@ class FormFieldGenerator
     return $input;
   }
 
-  private function getDateInput()
+  private function getDateInput($value)
   {
     $display = $this->eih->getDisplayFor($value);
     $fieldname = strtolower($this->shortClassName)."_".$value;
@@ -205,18 +204,16 @@ class FormFieldGenerator
     return $input;
   }
 
-  private function getColorInput()
+  private function getColorInput($value)
   {
-    $display = $this->eih->getDisplayFor($value);
     $fieldname = strtolower($this->shortClassName)."_".$value;
     $input = new ColorInput();
     $input->setName($fieldname);
-    $input->SetPlaceholder($display);
     $input->setId($fieldname);
     return $input;
   }
 
-private function getFileInput()
+private function getFileInput($value)
 {
   $display = $this->eih->getDisplayFor($value);
   $fieldname = strtolower($this->shortClassName)."_".$value;
@@ -257,7 +254,7 @@ private function getFileInput()
     return $input;
   }
 
-  private function getRadioButton()
+  private function getRadioButton($value)
   {
     $display = $this->eih->getDisplayFor($value);
     $fieldname = strtolower($this->shortClassName)."_".$value;
@@ -268,7 +265,7 @@ private function getFileInput()
     return $input;
   }
 
-  private function getCheckBox()
+  private function getCheckBox($value)
   {
     $display = $this->eih->getDisplayFor($value);
     $fieldname = strtolower($this->shortClassName)."_".$value;
@@ -279,7 +276,7 @@ private function getFileInput()
     return $input;
   }
 
-  private function getResetButton()
+  private function getResetButton($value)
   {
     $display = $this->eih->getDisplayFor($value);
     $fieldname = strtolower($this->shortClassName)."_".$value;
@@ -292,6 +289,3 @@ private function getFileInput()
 
 }
 
-
-
- ?>

@@ -12,7 +12,7 @@ class ButtonTest extends TestCase
     public function testCanConstruct()
     {
         $basedir = "src/";
-        $path  = "src/Ui/Widgets/Button/*.php";
+        $path  = "../../src/Ui/Widgets/Button/*.php";
         $files = glob($path);
         foreach ($files as $key => $file) {
             preg_match("#src/([/\w]+)\.php$#", $file, $matches);
@@ -22,27 +22,17 @@ class ButtonTest extends TestCase
                 $class1 = new ReflectionClass($class);
                 $constructor = $class1->getConstructor();
                 $parameters = $constructor->getParameters();
-                
                 $count = count($parameters);
-                
                 $i=0;
                 $params = [];
                 while ($i<$count) {
                     $param = $parameters[$i];
                     $name = $param->getName();
                     $param->isArray()?$params[$i] = ["test1","test2"] : $params[$i] = $name;
-                    
-                    
                     $i++;
                 }
-                
-                
-                
-                
                 $reflection_class = new ReflectionClass($class);
                 $object = $reflection_class->newInstanceArgs($params);
-                
-
                 $this->assertInstanceOf(($class), $object);
             }
         }

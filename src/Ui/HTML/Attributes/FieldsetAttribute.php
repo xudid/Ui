@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains FieldsetAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * FieldsetAttribute class contains Link element attributes and common attributes
- *
+ * FieldsetAttribute class contains Fieldset element attributes and common attributes
  */
 class FieldsetAttribute extends GlobalAttribute
 {

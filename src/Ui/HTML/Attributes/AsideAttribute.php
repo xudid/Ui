@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains AsideAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * AsideAttribute class contains Link element attributes and common attributes
+ * AsideAttribute class contains Aside element attributes and common attributes
  *
  */
 class AsideAttribute extends GlobalAttribute

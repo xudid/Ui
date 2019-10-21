@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains TextAreaAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
  * TextAreaAttribute class contains TextArea element attributes and common attributes
- *
  */
 class TextAreaAttribute extends GlobalAttribute
 {
