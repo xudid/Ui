@@ -1,0 +1,25 @@
+.table {
+    display: table;
+    width: 100%;
+}
+
+.legende_top {display: table-caption;caption-side: top;}
+.legende_left {display: table-cell;text-align: left;}
+.legende_right {display: table-cell;text-align: right;}
+
+.legende_bottom {display: table-caption;caption-side: bottom;}
+.legende_bottom_left {display: table-caption;caption-side: bottom;text-align: left;}
+.legende_bottom_right {display: table-caption;caption-side: bottom;text-align: right;}
+
+.head {display: table-header-group;text-align:center;}
+.foot {display: table-footer-group;}
+.row {display: table-row;}
+.row:nth-child(odd) {background: #7777aa;color: white;}
+.row:nth-child(even) {background: #5555aa;color: white; }
+.row:hover {background: #00aa33;cursor:pointer; }
+.col {display: table-column;}
+.corp {display: table-row-group }
+.colgroup {display: table-column-group;}
+.cell {
+    display: table-cell;padding: 0.5rem; border: 1px solid #999;
+}

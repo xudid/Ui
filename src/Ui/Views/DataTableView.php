@@ -1,6 +1,6 @@
 <?php
 namespace Ui\Views;
-use Ui\Widgets\Table\DivRowTable;
+use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableLegend;
 use Ui\Model\EntityInformationHolder;
 
@@ -92,7 +92,7 @@ class DataTableView{
     }
 
     public function __toString(){
-      $this->drt = new DivRowTable($this->legends,
+      $this->drt = new DivTable($this->legends,
                                    $this->columns,
                                    $this->data,
                                    $this->rowsclickable,
@@ -168,7 +168,7 @@ class DataTableView{
       }
       $view = new Div();
       $view->addCssClass("form");
-      $this->drt = new DivRowTable($this->legends,$columns,$dataToDisplay ,$this->rowsclickable,$this->baseurl);
+      $this->drt = new DivTable($this->legends,$columns,$dataToDisplay ,$this->rowsclickable,$this->baseurl);
       $view->addElement(  $this->drt);
       return $view->__toString();
     }

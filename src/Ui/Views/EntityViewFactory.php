@@ -9,7 +9,7 @@ use Ui\Widgets\Views\EntityPartialViewFactory;
 use Ui\Model\Association;
 use Ui\Model\EntityInformationHolder;
 
-use Ui\Widgets\Table\DivRowTable;
+use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableLegend;
 use Ui\Widgets\Accordeon\CollapsibleList;
 use Ui\Widgets\Accordeon\CollapsibleItem;
@@ -163,7 +163,7 @@ class EntityViewFactory{
          $title = ($ei->getDisplayFor($shortClassName))."s";
          $columns = $this->generateTableColumns($ei);
 
-         $drt = new DivRowTable([new TableLegend($title, TableLegend::TOP_LEFT)],
+         $drt = new DivTable([new TableLegend($title, TableLegend::TOP_LEFT)],
          $columns,
          $collection ,false," ");
 
@@ -220,7 +220,7 @@ class EntityViewFactory{
             }
             $data[]=$dpart;
           }
-          $drt = new DivRowTable([new TableLegend($eih1->getDisplayFor($class), TableLegend::TOP_LEFT)], $columns, $data , false, "");
+          $drt = new DivTable([new TableLegend($eih1->getDisplayFor($class), TableLegend::TOP_LEFT)], $columns, $data , false, "");
           $display = $eih1->getDisplayFor($eih1->getShortClassName());
           $this->addAssociationView($drt,$display);
 

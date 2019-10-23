@@ -13,7 +13,7 @@ use Ui\Widgets\Button\{SubmitButton};
 use Ui\Model\Association;
 use Ui\Model\EntityInformationHolder;
 
-use Ui\Widgets\Table\DivRowTable;
+use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableLegend;
 use Ui\Widgets\Table\TableColumn;
 
@@ -171,7 +171,7 @@ private function processManyTypeAssociation(Association $association)
         $collection = $val->getValues();
         $ei = new EntityInformationHolder($classname);
         $title = $ei->getDisplayFor($ei->getShortClassName());
-        $drt = new DivRowTable([new TableLegend($title, TableLegend::TOP_LEFT)],
+        $drt = new DivTable([new TableLegend($title, TableLegend::TOP_LEFT)],
         [new TableColumn("name", "Roles")],
         $collection ,false," ");
         $this->frm->addElement($drt);

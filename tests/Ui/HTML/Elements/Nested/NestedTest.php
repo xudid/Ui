@@ -79,8 +79,8 @@ class NestedTest extends TestCase
     {
         $nested = new Ui\HTML\Elements\Nested\Nested("div");
         $string = $nested->__toString();
-        $this->assertContains("<div>",$string);
-        $this->assertContains("</div>",$string);
+        $this->assertStringContainsString("<div>",$string);
+        $this->assertStringContainsString("</div>",$string);
     }
 
     public function testSetClasses()

@@ -2,7 +2,9 @@
 namespace Ui\Widgets\Table;
 
 /**
- *
+ * Class TableColumn
+ * @package Ui\Widgets\Table
+ * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
 class TableColumn
 {
@@ -127,8 +129,5 @@ class TableColumn
   {
     return (strlen($this->baseId)>0);
   }
-
-
 }
 
- ?>
