@@ -15,7 +15,7 @@ class Div extends Nested{
 	public function __construct(){
 		parent::__construct("div");
 	}
-	public function setClass($class){
+	public function setClass(string $class){
  	 $this->startTag->setAttribute("class",$class);
   }
 
