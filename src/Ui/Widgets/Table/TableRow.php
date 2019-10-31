@@ -3,6 +3,7 @@ namespace Ui\Widgets\Table;
 
 use Ui\HTML\Elements\Nested\Div;
 
+//Todo create a RowFactory and a  RowFactoryInterface with setRowClickAction setRowClass setRowCss setRowColumns ?
 class TableRow extends Div{
 
     /**
@@ -26,16 +27,19 @@ class TableRow extends Div{
      * @var int $colCount;
      */
     private int $colCount;
+    private bool $rowsclickable;
 
-    public function __construct(array $columns, $val, int $rowIndex, string $baseUrl)
+    public function __construct(array $columns, $val, int $rowIndex, string $baseUrl="", bool $rowsclickable=false)
     {
         parent::__construct();
-        $this->setClass("row");
+
+        $this->setClass("div-row");
         $this->val = $val;
         $this->rowIndex = $rowIndex;
         $this->columns = $columns;
         $this->colCount = count($this->columns);
         $this->baseUrl = $baseUrl;
+        $this->rowsclickable = $rowsclickable;
         if(is_object($val))
         {
             $this->getTableRowFromObject();
@@ -45,11 +49,12 @@ class TableRow extends Div{
             $this->getTableRow();
         }
         return $this;
+
     }
 
     public function setClass(string $class)
     {
-        parent::setClass("row ".$class);
+        parent::setClass("div-row ".$class);
         return $this;
     }
 
@@ -76,10 +81,12 @@ class TableRow extends Div{
                 $cell->setId($column->getBaseId() . $this->rowIndex);
             }
             $this->add($cell);
+            //Todo create a default row click action
+            //Todo allow to provide a row click action
             if ($hasgetId && $this->rowsclickable) {
                 $method = new \ReflectionMethod($this->val, "getId");
                 $id = $method->invoke($this->val);
-                $this->setOnClick("location.href='" . $this->baseurl . "/" . $id . "'");
+                $this->setOnClick("location.href='" . $this->baseUrl . "/" . $id . "'");
             }
         }
     }
@@ -88,7 +95,7 @@ class TableRow extends Div{
        if(array_key_exists("id" , $this->val)&&$this->rowsclickable)
         {
             $id = $this->val["id"];
-            $this->setOnClick("location.href='".$this->baseurl."/".$id."'");
+            $this->setOnClick("location.href='".$this->baseUrl."/".$id."'");
         }
         for($i=0;$i<$this->colCount;$i++)
         {

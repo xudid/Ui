@@ -1,5 +1,5 @@
 <?php
-namespace Xudid\MetaData\Holder;
+namespace Ui\Views\Holder;
 
 interface InformationHolderInterface
 {
@@ -9,4 +9,5 @@ interface InformationHolderInterface
     public function getSettersName();
     public function hasAssociation();
     public function getAssociations();
+    public function getFields():array;
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Xudid\MetaData\Field;
+namespace Ui\Model;
 
 
 class Field

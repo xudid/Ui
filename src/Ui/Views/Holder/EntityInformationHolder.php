@@ -1,31 +1,52 @@
 <?php
-namespace Xudid\MetaData\Holder;
+namespace Ui\Views\Holder;
+
+use ReflectionException;
+use ReflectionMethod;
 
 class EntityInformationHolder extends ClassInformationHolder
 {
-    private $className;
+    protected $entity;
+
 
     /**
      * EntityInformationHolder constructor.
      * @param $className
+     * @throws ReflectionException
      */
-    public function __construct($className)
+    public function __construct($entity)
     {
-        $this->className = setClassName($className);
+            try {
+                parent::__construct($entity);
+            } catch (ReflectionException $e) {
+                throw new \InvalidArgumentException("EntityInformationHolder can't find medata on null Entity\n");
+            }
     }
 
-    private function setClassName($className)
+    public function hasEntity(){
+        return true;
+    }
+
+    public function getEntityFieldValue($fieldName)
     {
-        if (is_string($className)) {
-            $this->classname = $className;
-            $s = \str_replace('\\', '/', $className);
-            $c = \explode("/", $s);
-            $this->shortClassName = \end($c);
-        } else {
-            $this->classname = $this->reflectionClass->getName();
-            $this->shortClassName = $this->reflectionClass->getShortName();
-            $this->entity = $className;
+        $methodName = "get" . ucfirst($fieldName);
+
+        if(in_array($methodName, $this->getGettersName()))
+        {
+            try {
+                $method = new ReflectionMethod($this->entity, $methodName);
+                $val = $method->invoke($this->entity);
+                return $val;
+            } catch (ReflectionException $e) {
+            }
+
         }
-
     }
+
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+
 }

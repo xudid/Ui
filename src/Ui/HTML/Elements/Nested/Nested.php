@@ -66,16 +66,16 @@ class Nested extends Base implements \ArrayAccess
     }
     private function generateContentString()
     {
-        $this->contentString = $this->startTag."\r\n";
+        $this->contentString = $this->startTag;
         if(count($this->childElements)>0)
         {
           foreach ($this->childElements as $e)
           {
             $this->contentString = $this->contentString.$e ;
           }
-            $this->contentString = $this->contentString."\r\n" ;
+            $this->contentString = $this->contentString ;
         }
-        $this->contentString = $this->contentString.$this->endTag."\r\n";
+        $this->contentString = $this->contentString.$this->endTag;
 
     }
 //implements ArrayAccess interface

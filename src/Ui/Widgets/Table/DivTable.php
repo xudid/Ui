@@ -2,6 +2,7 @@
 
 namespace Ui\Widgets\Table;
 
+use Ui\HTML\Elements\Empties\Hr;
 use Ui\HTML\Elements\Nested\Section;
 
 
@@ -23,6 +24,10 @@ class DivTable
     private bool $rowsclickable = false;
     private string $baseurl = "";
     private array $rowcss = [];
+    /**
+     * @var string
+     */
+    private string $legendcss;
 
 
     /**
@@ -33,6 +38,8 @@ class DivTable
      * @param bool $rowsclickable
      * @param string $baseurl
      */
+    //Todo create a ColumnFactory and a ColumnFactoryIntercace
+    //Todo create a TableFactory and a TableFactoryIntercace
     public function __construct(array $legends,
                                 array $columns,
                                 array $DataArray,
@@ -46,18 +53,20 @@ class DivTable
         $this->DataArray = $DataArray;
         $this->rowsclickable = $rowsclickable;
         $this->baseurl = $baseurl;
-        $this->rowcss["odd"] = " row-odd-colors";
-        $this->rowcss["even"] = " row-even-colors";
-        $this->rowcss["header"]= "row-head-colors";
+        $this->rowcss["odd"] = " ";
+        $this->rowcss["even"] = "";
+        $this->rowcss["header"]= "bg-primary text-white";
+        $this->legendcss="bg-primary text-white";
+
 
         $colgroupDiv = new ColGroup($this->colCount);
-        $this->tableSection = (new Section())->setClass("table");
+        $this->tableSection = (new Section())->setClass("div-table bg-dark text-white");
 
-
+        $this->tableSection->add((new TableLegends($this->legends))->setClass($this->legendcss));
 
         $this->tableSection->add($colgroupDiv);
 
-        $this->tableSection->add((new TableLegends($this->legends))->setClass("legend-top-colors"));
+
 
 
         $this->tableSection->add((new TableHeader($this->columns))->setClass($this->rowcss["header"]));
@@ -68,10 +77,11 @@ class DivTable
 
         $datacount = count($this->DataArray);
 
+        //Todo use the RowFactory
         for ($i = 0; $i < $datacount; $i++) {
             $val = $this->DataArray[$i];
             $parity = $i%2===0?'even':'odd';
-            $this->dataDiv->add((new TableRow($this->columns, $val, $i, $this->baseurl))->setClass($this->rowcss[$parity]));
+            $this->dataDiv->add((new TableRow($this->columns, $val, $i, $this->baseurl,$this->rowsclickable))->setClass($this->rowcss[$parity]));
         }
     }
 

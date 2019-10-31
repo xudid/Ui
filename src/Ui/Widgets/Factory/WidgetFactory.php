@@ -1,5 +1,5 @@
 <?php
-namespace Xudid\Factory;
+namespace Ui\Widgets\Factory;
 
 use Ui\Widgets\Button\CheckBox;
 use Ui\Widgets\Button\RadioButton;
@@ -9,6 +9,7 @@ use Ui\Widgets\Input\DateInput;
 use Ui\Widgets\Input\EmailInput;
 use Ui\Widgets\Input\PasswordInput;
 use Ui\Widgets\Input\SelectOption;
+use Ui\Widgets\Input\TextArea;
 use Ui\Widgets\Input\TextInput;
 
 class WidgetFactory
@@ -26,7 +27,7 @@ class WidgetFactory
     {
         $this->input = new TextInput();
         $this->initNameAndId($id,$name);
-        $this->input->SetPlaceholder($this->display);
+        $this->input->SetPlaceholder($display);
         return $this->input;
     }
 
@@ -67,6 +68,14 @@ class WidgetFactory
         return $this->input;
     }
 
+    public function getTextarea($name, $id=null,$value="")
+    {
+        $this->input = new TextArea();
+        $this->input->add($value);
+        $this->initNameAndId($id,$name);
+        return $this->input;
+    }
+
     public function getRadioButton($name,$id=null)
     {
         $this->input = new RadioButton();
@@ -90,6 +99,7 @@ class WidgetFactory
 
     private function initNameAndId($id,$name)
     {
+        $id = $id===null?$name:$id;
         $this->input->setName($name);
         $this->input->setId($id);
     }

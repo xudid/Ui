@@ -17,10 +17,7 @@ class BaseTest extends TestCase
         $this->assertContains('id="test"',$base->__toString());
     }
 
-    public function testSetClass()
-    {
 
-    }
 
     public function testSetId()
     {
@@ -36,10 +33,7 @@ class BaseTest extends TestCase
         $this->assertContains("<b></b>",$string);
     }
 
-    public function testSetClasses()
-    {
 
-    }
 
     public function test__construct()
     {
@@ -55,8 +49,5 @@ class BaseTest extends TestCase
         $this->assertContains("<b>test</b>",$string);
     }
 
-    public function testAddClass()
-    {
 
-    }
 }

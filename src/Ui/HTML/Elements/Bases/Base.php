@@ -69,7 +69,7 @@ class Base
      * @param $class
      * @return self
      */
-    public function setClass($class)
+    public function setClass(string $class)
     {
      if(isset($class))
      $this->startTag->setAttribute("class",$class);

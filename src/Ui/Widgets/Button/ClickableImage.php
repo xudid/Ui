@@ -1,11 +1,11 @@
 <?php
-namespace Ui\Widgets\Input;
+namespace Ui\Widgets\Button;
 use Ui\HTML\Elements\Empties\Img;
 use Ui\HTML\Elements\Nested\A;
 
 /**
  * Class ClickableImage
- * @package Ui\Widgets\Input
+ * @package Ui\Widgets\Button
  */
 class ClickableImage extends A
 {

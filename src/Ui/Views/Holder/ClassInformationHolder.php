@@ -1,9 +1,10 @@
 <?php
 
-namespace Xudid\MetaData\Holder;
+namespace Ui\Views\Holder;
 
 use Exception;
-use Xudid\MetaData\Field\Field;
+use phpDocumentor\Reflection\Types\Object_;
+use Ui\Model\Field;
 
 /**
  * Class ClassInformationHolder
@@ -28,7 +29,7 @@ class ClassInformationHolder implements InformationHolderInterface
      * @var string $className
      */
 
-    private $className;
+    protected  string $className;
 
     /**
      * @var array $fieldnames
@@ -39,25 +40,40 @@ class ClassInformationHolder implements InformationHolderInterface
 
     /**
      * ClassInformationHolder constructor.
-     * @param string $className
+     * @param string|Object_ $className
      * @throws \ReflectionException
      */
 
-    public function __construct(string $className)
+    public function __construct($className)
     {
-        $this->setClassName($className);
         $this->reflectionClass = new \ReflectionClass($className);
-        $this->findFields($this->getClassName());
-        $this->findAssociations();
+        $this->setClassName($className);
+
+        $this->findFields();
+        $this->hasAssociation = false;
+        try {
+            $this->hasAssociation= $this->findAssociations();
+        } catch (Exception $e) {
+            //TODO manage Exception
+        }
+    }
+
+    public function hasEntity(){
+        return false;
     }
 
     private function setClassName($className)
     {
+
         if (is_string($className)) {
             $this->className = $className;
             $s = \str_replace('\\', '/', $className);
             $c = \explode("/", $s);
             $this->shortClassName = \end($c);
+        } else {
+            $this->className = $this->reflectionClass->getName();
+            $this->shortClassName = $this->reflectionClass->getShortName();
+            $this->entity = $className;
         }
 
     }
@@ -65,7 +81,7 @@ class ClassInformationHolder implements InformationHolderInterface
     /**
      * @return array
      */
-    private function findFields(): array
+    protected function findFields(): array
     {
         $filednames = [];
         if ($this->className != "Doctrine\ORM\PersistentCollection") {
@@ -112,9 +128,9 @@ class ClassInformationHolder implements InformationHolderInterface
         return $this->className;
     }
 
-    private function findAssociations()
+    protected function findAssociations()
     {
-        $isassociation = false;
+        $hasAsociation = false;
         foreach ($this->fields as $field) {
             $fieldname = $field->getName();
             try {
@@ -123,26 +139,59 @@ class ClassInformationHolder implements InformationHolderInterface
                 $field->setDocComment($docComment);
                 $pattern = "#@[a-zA-Z0-9, ()_].*#";
                 preg_match_all($pattern, $docComment, $matches, PREG_PATTERN_ORDER);
+
                 foreach ($matches as $key => $comments) {
                     foreach ($comments as $key => $comment) {
-                        if (preg_match("#^@var#", $comment, $parts)) {
-                            //TODO process @var to get the var Type
+                        if (preg_match("#^@var[\s]+([\w\\\\]+)[\s]+[$\w]+#", $comment, $parts)) {
+                            $field->setType($parts[1]);
                         } else {
-                            if (preg_match("#^@(ManyToMany)\([\w]+=\"([a-zA-Z]*)\"|
-                                                   (ManyToOne)\([\w]+=\"([a-zA-Z]*)\"|
-                                                    OneToMany\([\w]+=\"([a-zA-Z]*)\"#",
-                                                    $comment, $parts)) {
+                            if (preg_match('#^@(ManyToOne)\([\w]+="([\w\\\\]+)#',$comment, $parts)) {
+
                                 if (array_key_exists(1, $parts) && array_key_exists(2, $parts)) {
-                                    $associationType = $parts[1];
-                                    $associationClass = $parts[2];
-                                    $field->setIsAssociation();
-                                    $field->setAssociationClass($associationClass);
-                                    $field->setAssociationType($associationType);
+                                    $hasAsociation = true;
+                                    $this->addAssociation($field, $parts[1], $parts[2]);
                                 } else {
                                     throw new Exception("Malformed Association annotation in : " .
                                                                     $this->className . " for field :" . $fieldname);
                                 }
                             }
+
+                            if (preg_match('#^@(ManyToMany)\([\w]+="([\w\\\\]+)#',$comment, $parts)) {
+
+                                if (array_key_exists(1, $parts) && array_key_exists(2, $parts)) {
+                                    $hasAsociation = true;
+                                    $this->addAssociation($field, $parts[1], $parts[2]);
+
+                                } else {
+                                    throw new Exception("Malformed Association annotation in : " .
+                                        $this->className . " for field :" . $fieldname);
+                                }
+                            }
+
+                            if (preg_match('#^@(OneToMany)\([\w]+="([\w\\\\]+)#',$comment, $parts)) {
+
+                                if (array_key_exists(1, $parts) && array_key_exists(2, $parts)) {
+                                    $hasAsociation = true;
+                                    $this->addAssociation($field, $parts[1], $parts[2]);
+
+                                } else {
+                                    throw new Exception("Malformed Association annotation in : " .
+                                        $this->className . " for field :" . $fieldname);
+                                }
+                            }
+
+                            if (preg_match('#^@(OneToOne)\([\w]+="([\w\\\\]+)#',$comment, $parts)) {
+
+                                if (array_key_exists(1, $parts) && array_key_exists(2, $parts)) {
+                                    $hasAsociation = true;
+                                    $this->addAssociation($field, $parts[1], $parts[2]);
+
+                                } else {
+                                    throw new Exception("Malformed Association annotation in : " .
+                                        $this->className . " for field :" . $fieldname);
+                                }
+                            }
+
                         }
 
                     }
@@ -151,7 +200,15 @@ class ClassInformationHolder implements InformationHolderInterface
                 //Property doesn't exist
             }
         }
-        return $isassociation;
+        return $hasAsociation;
+    }
+
+    private function addAssociation(Field $field, string $associationType, string $associationClass)
+    {
+        $field->setIsAssociation();
+        $field->setAssociationClass($associationClass);
+        $field->setAssociationType($associationType);
+        $this->associations[] = $field;
     }
 
     public function getShortClassName()

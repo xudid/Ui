@@ -1,13 +1,19 @@
 <?php
-namespace Xudid\Generator;
+namespace Ui\Views\Generator;
 
 
 
-use Xudid\Factory\WidgetFactory;
+use Ui\HTML\Elements\Empties\Br;
+use Ui\Model\DefaultFieldDefinitionResolver;
+use Ui\Model\DefaultFormFilterResolver;
+use Ui\Model\FieldDefinitionResolver;
+use Ui\Views\Holder\ClassInformationHolder;
+use Ui\Views\Holder\EntityInformationHolder;
+use Ui\Views\Holder\InformationHolderInterface;
+use Ui\Views\ViewFieldsDefinitionInterface;
+use Ui\Views\ViewFilterInterface;
+use Ui\Widgets\Factory\WidgetFactory;
 use Ui\Widgets\Views\NamedFieldset;
-use Xudid\MetaData\ClassInformationHolder;
-
-
 
 
 /**
@@ -20,174 +26,205 @@ use Xudid\MetaData\ClassInformationHolder;
  */
 class FormFieldGenerator
 {
-  private $classname = "";
-  private $shortClassName="";
-  private $entity = null;
+    private $classname = "";
+    private $shortClassName="";
+    private $entity = null;
 
-  private $getMethodNames = null;
-  private $accessFilter=null;
-  private $ffds = null;
-  private $writables =[];
-  private $viewables =[];
-  private $inline = false;
-  private $informationHolder=null;
-  private $fields = [];
-  /**
-   * @var WidgetFactory
-   */
-  private $widdgetFactory;
+    private $getMethodNames = null;
+    private $accessFilter=null;
+    private $ffds = null;
+    private $writables =[];
+    private $viewables =[];
+    private $inline = false;
+    private ?InformationHolderInterface $informationHolder=null;
+    private array $fields = [];
+    private ?WidgetFactory $factory = null;
+    /**
+     * @var WidgetFactory
+     */
+    private $widdgetFactory;
+    /**
+     * @var NamedFieldset
+     */
+    private NamedFieldset $namedFieldset;
 
-  /**
-   * Initialise the FormFieldGenerator
-   * @param mixed $entity  the name of the class or
-   * the object to process
-   *
-   * @param [type] $accessFilter contains
-   * the fields name that we must include in the form
-   * we get them from the "getWritables()" method
-   * on it
-   */
-  function __construct($entity, $accessFilter)
-  {
-    $this->widdgetFactory = new WidgetFactory();
-    if (is_string($entity)) {
-      $this->informationHolder = new ClassInformationHolder($entity);
-    } else {
-      $this->informationHolder = new EntityInformationHolder($entity);
-    }
-    $this->classname = $this->informationHolder->getClassName();
-    $this->shortClassName = $this->informationHolder->getShortClassName();
-    $this->fields = $this->informationHolder->getFields();
 
-        $this->setAccessFilter($accessFilter);
-    $this->ffds = $this->informationHolder->getFormFieldDefinitions();
-    $this->colNames = $this->informationHolder->getColumnNames();
-    $this->writables = $this->getWritables();
-  }
-
-  /**
-   * setAccessFilter init the FormFieldGenerator accessfilter
-   * @param [type] $accessFilter can be null "default" or an AccessFilter
-   * Interface implementation
-   */
-  private function setAccessFilter($accessFilter)
-  {
-    if($accessFilter == null)
+    /**
+     * Initialise the FormFieldGenerator
+     * @param mixed $entity  the name of the class or
+     * the object to process
+     *
+     * @param [type] $accessFilter contains
+     * the fields name that we must include in the form
+     * we get them from the "getWritables()" method
+     * on it
+     */
+    function __construct($entity, $accessFilter, ViewFieldsDefinitionInterface $fieldsDefinitions = null)
     {
-      $this->accessFilter = null;
-    }
-    if($accessFilter == "default")
-    {
-      $this->accessFilter =
-                    $this->informationHolder->getEntityAccessFilter();
-    }
-    else
-    {
-      $this->accessFilter = $accessFilter;
 
-    }
-  }
+        $this->widdgetFactory = new WidgetFactory();
+        try {
+            //Init InformationHolderInterface
+            if (is_string($entity)) {
+               $this->informationHolder = new ClassInformationHolder($entity);
+            } else {
+                 $this->informationHolder = new EntityInformationHolder($entity);
+            }
 
-  private function getWritables()
-  {
-      $result = array();
-      if(isset($this->accessFilter))
-      {
-        $result= $this->accessFilter->getWritables();
-      }
-      return $result;
-  }
+            //Init class names
+            $this->classname = $this->informationHolder->getClassName();
+            $this->shortClassName = $this->informationHolder->getShortClassName();
+            $this->namedFieldset = new NamedFieldset("$this->shortClassName");
 
-  public function getPartialForm($parent)
-  {
-    foreach ($this->fields as $k =>$field)
-    {
-      $fieldName = $field->getName();
-      if(in_array($fieldName,$this->writables))
-      {
+            //Retrieve fields
+            $this->fields = $this->informationHolder->getFields();
 
-        switch ($this->ffds->getInputTypeFor($fieldName))
-        {
+            //Setting AccessFilter
+            $this->setAccessFilter($accessFilter);
 
-          case "input":
-          {
+            //Setting FieldsDefinitions
+            if ($fieldsDefinitions !== null) {
+                $this->ffds = $fieldsDefinitions;
 
-            $input = $this->getTextInput($fieldName);
-            $parent->addElement($input);
-            if($this->informationHolder->hasEntity())
-            {
-              $val = $this->informationHolder->getEntityFieldValue($fieldName);
-              $input->setValue($val);
+            } else {
+                $ffdsClassName= DefaultFieldDefinitionResolver::getFieldDefinitions($this->classname);
+                $this->ffds = new $ffdsClassName($this->classname);
             }
-            if(!$this->inline)
-            {
-              $parent->addElement(new Br());
-            }
-            break;
-          }
 
-          case "email":
-          {
-            $input = $this->getEmailInput($fieldName);
-            $parent->addElement($input);
-            if($this->informationHolder->hasEntity())
-            {
-              $val = $this->informationHolder->getEntityFieldValue($fieldName);
-              $input->setValue($val);
-            }
-            if(!$this->inline)
-            {
-              $parent->addElement(new Br());
-            }
-            break;
-          }
-          case "password":
-          {
-            $input = $this->getPasswordInput($fieldName);
-            $parent->addElement($input);
-            if($this->informationHolder->hasEntity())
-            {
-              $val = $this->informationHolder->getEntityFieldValue($fieldName);
-              $input->setValue($val);
-            }
-            if(!$this->inline)
-            {
-              $parent->addElement(new Br());
-            }
-            break;
-          }
-
-          case "select":
-          {
-            $options = $this->ffds->getDataForListInput($fieldName);
-            $selOption = $this->getSelectOption($fieldName, $options);
-            if($this->informationHolder->hasEntity())
-            {
-              $val = $this->informationHolder->getEntityFieldValue($fieldName);
-              $index = array_keys($options,$val);
-              $selOption->setCheckedOption($index[0]);
-            }
-            $parent->addElement($selOption);
-            if(!$this->inline)
-            {
-              $parent->addElement(new Br());
-            }
-            break;
-          }
+            //Init writables
+            $this->writables = $this->getWritables();
+        }catch (\ReflectionException $e) {
+            print_r(__FILE__.__LINE__." ".$e->getMessage()."\n");
         }
-      }
     }
 
+    /**
+     * setAccessFilter init the FormFieldGenerator accessfilter
+     * @param [type] $accessFilter can be null "default" or an AccessFilter
+     * Interface implementation
+     */
+    private function setAccessFilter($accessFilter)
+    {
+        if($accessFilter == null)
+        {
+            $this->accessFilter = null;
+        }
+        if($accessFilter === "default")
+        {
+            $accessFilterName =  DefaultFormFilterResolver::getFilter($this->classname);
+            $this->accessFilter = new $accessFilterName();
 
-    //$nf = new NamedFieldset($this->informationHolder->getDisplayFor($this->shortClassName));
-    //$this->colNames = $this->informationHolder->getColumnNames();
-    foreach ($this->colNames as $colName)
+        }
+        else
+        {
+            $this->accessFilter = $accessFilter;
+
+        }
+    }
+
+    private function getWritables()
+    {
+        $result = array();
+        if(isset($this->accessFilter))
+        {
+            $result= $this->accessFilter->getWritables();
+        }
+        return $result;
+    }
+
+    public function getPartialForm()
     {
 
-   }
-   //return $section;
-   return $parent;
-  }
+        foreach ($this->fields as $k =>$field)
+        {
+            $fieldName = $field->getName();
+            if(in_array($fieldName,$this->writables))
+            {
+
+                switch ($this->ffds->getInputTypeFor($fieldName))
+                {
+
+                    case "email":
+                    {
+                        $input = $this->widdgetFactory->getEmailInput($fieldName);
+                        $this->addInputToForm($input,$fieldName);
+
+                        break;
+                    }
+                    case "password":
+                    {
+                        $input = $this->widdgetFactory->getPasswordInput($fieldName);
+                        $this->addInputToForm($input,$fieldName);
+                        break;
+                    }
+
+                    case "select":
+                    {
+                        $options = $this->ffds->getDataForListInput($fieldName);
+                        $selOption = $this->widdgetFactory->getSelectOption($fieldName, $options);
+                        if($this->informationHolder->hasEntity())
+                        {
+                            $val = $this->informationHolder->getEntityFieldValue($fieldName);
+                            $index = array_keys($options,$val);
+                            $selOption->setCheckedOption($index[0]);
+                        }
+                        $this->namedFieldset->add($selOption);
+                        if(!$this->inline)
+                        {
+                            $this->namedFieldset->add(new Br());
+                        }
+                        break;
+                    }
+
+                    case "textarea":
+                    {
+
+
+                        if($this->informationHolder->hasEntity())
+                        {
+                            $val = $this->informationHolder->getEntityFieldValue($fieldName);
+                            $textarea = $this->widdgetFactory->getTextarea($fieldName,$fieldName,$val);
+                        } else {
+                            $textarea = $this->widdgetFactory->getTextarea($fieldName,$fieldName);
+                            $textarea->setPlaceholder($fieldName);
+                        }
+                        $this->namedFieldset->add($textarea);
+                        if(!$this->inline)
+                        {
+                            $this->namedFieldset->add(new Br());
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        $input = $this->widdgetFactory->getTextInput($fieldName,$fieldName);
+                        $this->addInputToForm($input,$fieldName);
+                        break;
+                    }
+
+                }
+            }
+        }
+
+        return $this->namedFieldset;
+    }
+
+    private function addInputToForm($widget,$fieldName)
+    {
+        $this->namedFieldset->add($widget);
+        if($this->informationHolder->hasEntity())
+        {
+            $val = $this->informationHolder->getEntityFieldValue($fieldName);
+
+            $widget->setValue($val);
+        } else {
+            $widget->setPlaceholder($fieldName);
+        }
+        if(!$this->inline)
+        {
+            $this->namedFieldset->add(new Br());
+        }
+    }
 
 
 
@@ -196,4 +233,4 @@ class FormFieldGenerator
 
 
 
- ?>
+
