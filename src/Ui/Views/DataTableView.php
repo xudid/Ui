@@ -7,9 +7,7 @@ use Prophecy\Exception\Doubler\ClassNotFoundException;
 use ReflectionClass;
 use ReflectionException;
 use Ui\HTML\Elements\Nested\Div;
-use Ui\Model\DefaultEntityResolver;
-use Ui\Model\DefaultFieldDefinitionResolver;
-use Ui\Model\DefaultFormFilterResolver;
+use Ui\Model\DefaultResolver;
 use Ui\Model\Entity;
 use Ui\Views\Holder\EntityInformationHolder;
 use Ui\Widgets\Table\DivTable;
@@ -80,7 +78,7 @@ class DataTableView
             $this->accessFilter = null;
         }
         if ($accessFilter === "default") {
-            $accessFilterName = DefaultFormFilterResolver::getFilter($this->classname);
+            $accessFilterName = DefaultResolver::getFilter($this->classname);
             $this->accessFilter = new $accessFilterName();
 
         } else {
@@ -201,7 +199,7 @@ class DataTableView
     {
         $columns = [];
         //Todo use FieldDefinitionResolverInterface
-        $formfilterClassName = DefaultFieldDefinitionResolver::getFieldDefinitions($this->classname);
+        $formfilterClassName = DefaultResolver::getFieldDefinitions($this->classname);
         $formfilter = new $formfilterClassName();
         foreach ($this->viewables as $key => $value) {
             $colname = $value;
@@ -219,7 +217,7 @@ class DataTableView
     private function initWithDefaultEntity($container)
     {
         //Resolve entity classname to access to Database
-        $this->entityClassname = DefaultEntityResolver::getEntityClassName($this->classname);
+        $this->entityClassname = DefaultResolver::getEntityClassName($this->classname);
         try {
             $r = new ReflectionClass($this->entityClassname);
             $this->Entity = $r->newInstanceArgs([$container]);

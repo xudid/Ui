@@ -23,7 +23,7 @@ class NavBar extends Nav
     $this->lil = new ItemList();
     $this->ril = new ItemList();
     $this->lil->setClass("navbar_items");
-    $this->ril->setClass("navbar_items");
+    $this->ril->setClass("navbar_items_right");
     parent::add($this->lil);
     parent::add($this->ril);
   }
@@ -42,9 +42,28 @@ class NavBar extends Nav
     }
     else {
       $item = new Li($menu);
-      $item->setClass('navbar_item_right');
+      $item->setClass('navbar_item');
       $this->ril->add($item);
     }
+  }
+
+  public function setMenuClass(string $css)
+  {
+	if($this->hasMenu()){
+		foreach ($this->ril as $menu)
+		{
+			$menu->setClass($css);
+		}
+		foreach ($this->lil as $menu)
+		{
+			$menu->setClass($css);
+		}
+	}
+  }
+
+  private function hasMenu()
+  {
+  	return ($this->lil->hasItem()||$this->ril->hasItem());
   }
 }
 

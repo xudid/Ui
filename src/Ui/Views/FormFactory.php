@@ -3,9 +3,12 @@ namespace Ui\Views;
 
 use Doctrine\ORM\PersistentCollection;
 use Ui\HTML\Elements\Nested\{Form, P};
-use Ui\Model\DefaultFieldDefinitionResolver;
-use Ui\Model\DefaultFormFilterResolver;
+use Ui\Model\DefaultResolver;
 use Ui\Views\Generator\FormFieldGenerator;
+use Ui\Views\Generator\ManyToManyViewGenerator;
+use Ui\Views\Generator\ManyToOneViewGenerator;
+use Ui\Views\Generator\OneToManyViewGenerator;
+use Ui\Views\Generator\OneToOneViewGenerator;
 use Ui\Views\Holder\ClassInformationHolder;
 use Ui\Views\Holder\EntityInformationHolder;
 use Ui\Widgets\Button\{SubmitButton};
@@ -78,9 +81,10 @@ class FormFactory
             $this->ffds = $fieldsDefinitions;
 
         } else {
-            $ffdsClassName = DefaultFieldDefinitionResolver::getFieldDefinitions($this->classname);
+            $ffdsClassName = DefaultResolver::getFieldDefinitions($this->classname);
             $this->ffds = new $ffdsClassName($this->classname);
         }
+        $this->view = new EntityView();
         $this->frm = new Form();
         $this->frm->setAction($this->formAction);
         $this->frm->setMethod($this->formMethod);
@@ -93,7 +97,7 @@ class FormFactory
             $this->accessFilter = null;
         }
         if ($accessFilter === "default") {
-            $accessFilterName = DefaultFormFilterResolver::getFilter($this->classname);
+            $accessFilterName = DefaultResolver::getFilter($this->classname);
             $this->accessFilter = new $accessFilterName();
 
         } else {
@@ -122,70 +126,93 @@ class FormFactory
             $title->add($t);
             $this->frm->add($title);
         }
-        //$this->frm->add(new Br());
 
         //Get partial form for class or object given
         $this->frm->add($this->ffg->getPartialForm());
 
         //Test if entity or class has associations
         if ($this->informationHolder->hasAssociation()) {
-            //get entity associations
             $associations = $this->informationHolder->getAssociations();
+            $this->processAssociations($associations);
 
-            //Foreach association
-            foreach ($associations as $key => $association) {
-                //test if entity exists for association
-                //get entity
-
-                $associationType = $association->getAssociationType();
-
-
-                if ($associationType == "ManyToOne") {
-                    //print_r(__FILE__.__LINE__." association OneToOne <br>");
-                    $this->processManyToOneAssociation($association);
-                }
-                if ($associationType == "OneToOne") {
-                    //print_r(__FILE__.__LINE__." association OneToOne <br>");
-                    $this->processOneToOneAssociation($association);
-                }
-
-                if ($associationType == "ManyToMany") {
-                    //print_r(__FILE__.__LINE__." association OneToOne <br>");
-                    $this->processManyToManyAssociation($association);
-                }
-
-                if ($associationType == "OneToMany") {
-                    $this->processOneToManyAssociation($association);
-                }
-            }
         }
         $submitButton = new SubmitButton("Valider");
         if ($this->inline) {
             $submitButton->setClass("form_inline_button");
         }
         $this->frm->add($submitButton);
-        return $this->frm;
+        $this->view->add($this->frm);
+        return $this->view;
     }
+
+    private function processAssociations(array $fields)
+    {
+        foreach ($fields as $key => $field) {
+            $associationType = $field->getAssociationType();
+            $className = $field->getType();
+            if ($this->informationHolder->hasEntity()) {
+
+                $value = $this->informationHolder->getEntityFieldValue($field->getName());
+                $view = null;
+                if ($value != null) {
+                    //ManyToOne Association display a form
+                    if ($associationType == "ManyToOne") {
+                        $fieldGenerator = new FormFieldGenerator($className, "default");
+                        $view = $fieldGenerator->getPartialForm();
+
+                    }
+                    //ManyToMany Association if "new" display a form if "edit" display a table
+                    if ($associationType == "ManyToMany") {
+                        $view = (new ManyToManyViewGenerator($className))->getView($value,true);
+
+                    }
+                    //OneToMany Association if "new" display a form if "edit" display a table
+                    if ($associationType == "OneToMany") {
+                        $view = (new OneToManyViewGenerator($className))->getView($value,true);
+
+                    }
+                    //ManyToOne Association display a form
+                    if ($associationType == "OneToOne") {
+                        $fieldGenerator = new FormFieldGenerator($className, "default");
+                        $view = $fieldGenerator->getPartialForm();
+
+                    }
+                } else {
+
+                }
+                $this->view->add($view);
+            } else {
+                $fieldGenerator = new FormFieldGenerator($className, "default");
+                $view = $fieldGenerator->getPartialForm();
+                $this->frm->add($view);
+            }
+
+        }
+
+    }
+
 
     private function processManyToOneAssociation($field)
     {
-        //print_r(__FILE__.__LINE__." association is ".$association->getType()."<br>");
+        //print_r(__FILE__.__LINE__." association is ".$field->getAssociationType()."<br>");
         $className = $field->getType();
         //We want to Edit Something
         $fieldGenerator = null;
         $val = null;
+        $partial = null;
         $hasentity = $this->informationHolder->hasEntity();
         if ($hasentity) {
             $val = $this->informationHolder->getEntityFieldValue($field->getName());
             if ($val !== null) {
-                $fieldGenerator = new FormFieldGenerator($val, "default");
+               $partial = new DataTableView(null, $className, "default");
             }
         } //We want to create something
         if (!$hasentity || $val === null) {
-            $fieldGenerator = new FormFieldGenerator($className, "default");
+            //Get partial Form
+
         }
-        //Get partial Form
-        $partial = $fieldGenerator->getPartialForm();
+
+
         //Add partiel Form to form
         $this->frm->add($partial);
 
@@ -217,7 +244,7 @@ class FormFactory
         $shortClassName = $informationHolder->getShortClassName();
 
         /** @var TYPE_NAME $informationHolder */
-        $ffdsClassName = DefaultFieldDefinitionResolver::getFieldDefinitions($classname);
+        $ffdsClassName = DefaultResolver::getFieldDefinitions($classname);
         $ffds = new $ffdsClassName($classname);
         $display = $ffds->getDisplayFor($shortClassName);
         $action = "";
@@ -237,6 +264,7 @@ class FormFactory
 
     private function processManyToManyAssociation($field)
     {
+        print_r(__FILE__.__LINE__." association is ".$field->getAssociationType()."<br>");
         $className = $field->getType();
         $fieldGenerator = null;
         $partial = null;
@@ -261,12 +289,13 @@ class FormFactory
     private function processOneToManyAssociation($field)
     {
         $className = $field->getType();
-       -
+
         $fieldGenerator = null;
         $partial = null;
         if ($this->informationHolder->hasEntity()) {
             $val = $this->informationHolder->getEntityFieldValue($field->getName());
             if ($val !== null) {
+
                 $partial = (new DataTableView(null, $className, "default"))->withClickableRows("/role/edit")->getView();
             } else {
                 //Get partial Form

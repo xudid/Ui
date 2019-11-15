@@ -32,5 +32,10 @@ class ItemList extends Ul
   {
     $this->add(new Li($item));
   }
+
+  public function hasItem()
+  {
+  	return count($this->items)>0?true:false;
+  }
 }
 

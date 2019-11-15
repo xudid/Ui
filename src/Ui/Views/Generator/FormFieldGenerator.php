@@ -4,8 +4,9 @@ namespace Ui\Views\Generator;
 
 
 use Ui\HTML\Elements\Empties\Br;
-use Ui\Model\DefaultFieldDefinitionResolver;
+
 use Ui\Model\DefaultFormFilterResolver;
+use Ui\Model\DefaultResolver;
 use Ui\Model\FieldDefinitionResolver;
 use Ui\Views\Holder\ClassInformationHolder;
 use Ui\Views\Holder\EntityInformationHolder;
@@ -29,8 +30,6 @@ class FormFieldGenerator
     private $classname = "";
     private $shortClassName="";
     private $entity = null;
-
-    private $getMethodNames = null;
     private $accessFilter=null;
     private $ffds = null;
     private $writables =[];
@@ -87,7 +86,7 @@ class FormFieldGenerator
                 $this->ffds = $fieldsDefinitions;
 
             } else {
-                $ffdsClassName= DefaultFieldDefinitionResolver::getFieldDefinitions($this->classname);
+                $ffdsClassName= DefaultResolver::getFieldDefinitions($this->classname);
                 $this->ffds = new $ffdsClassName($this->classname);
             }
 
@@ -111,7 +110,7 @@ class FormFieldGenerator
         }
         if($accessFilter === "default")
         {
-            $accessFilterName =  DefaultFormFilterResolver::getFilter($this->classname);
+            $accessFilterName =  DefaultResolver::getFilter($this->classname);
             $this->accessFilter = new $accessFilterName();
 
         }
@@ -138,7 +137,8 @@ class FormFieldGenerator
         foreach ($this->fields as $k =>$field)
         {
             $fieldName = $field->getName();
-            if(in_array($fieldName,$this->writables))
+
+            if(in_array($fieldName,$this->writables)&&!$field->isAssociation())
             {
 
                 switch ($this->ffds->getInputTypeFor($fieldName))

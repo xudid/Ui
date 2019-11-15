@@ -57,12 +57,21 @@ class Nested extends Base implements \ArrayAccess
         }
         return $this;
     }
+
     public function setFirstElement($element){
       if($element !=null){
           \array_unshift($this->childElements,$element);
 
       }
       return $this;
+    }
+
+    public function populate(...$children){
+        if (is_array( $children ) || !$children instanceof Traversable) {
+            foreach ($children as $k =>$child) {
+                $this->add($child);
+            }
+        }
     }
     private function generateContentString()
     {

@@ -114,7 +114,7 @@ class Field
      */
     public function isAssociation():bool
     {
-        return $this->isAssociation();
+        return $this->isAssociation;
     }
 
     /**
