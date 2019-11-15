@@ -12,25 +12,26 @@ class ClassInformationHolderTest extends TestCase
 
     public function testGetSettersNameReturnArray()
     {
-        $classInformationHolder = new ClassInformationHolder("Usage\Model\User");
+		$classInformationHolder = new ClassInformationHolder("Ui\Model\Field");
         $gettersName = $classInformationHolder->getSettersName();
         $this->assertIsArray($gettersName);
     }
 
     public function testGetShortClassName()
     {
-        $classInformationHolder = new ClassInformationHolder("Usage\Model\User");
+
+		$classInformationHolder = new ClassInformationHolder("Ui\Model\Field");
         $className = $classInformationHolder->getShortClassName();
         $this->assertIsString($className);
-        $this->assertEquals("User",$className);
+        $this->assertEquals("Field",$className);
     }
 
     public function testGetClassName()
     {
-        $classInformationHolder = new ClassInformationHolder("Usage\Model\User");
+		$classInformationHolder = new ClassInformationHolder("Ui\Model\Field");
         $className = $classInformationHolder->getClassName();
         $this->assertIsString($className);
-        $this->assertEquals("Usage\Model\User",$className);
+        $this->assertEquals("Ui\Model\Field",$className);
     }
 
     public function test__construct()
@@ -41,7 +42,7 @@ class ClassInformationHolderTest extends TestCase
 
     public function testHasAssociationReturnBool()
     {
-        $classInformationHolder = new ClassInformationHolder("Usage\Model\User");
+        $classInformationHolder = new ClassInformationHolder("Ui\Model\Field");
         $isAssociated = $classInformationHolder->hasAssociation();
         $this->assertIsBool($isAssociated);
     }
