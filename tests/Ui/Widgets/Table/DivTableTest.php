@@ -21,9 +21,9 @@ class DivTableTest extends TestCase
      */
     private array $datas;
 
-    protected function setUp()
+    protected function setUp():void
     {
-        parent::setUp();
+        //	parent::setUp();
         $this->getColumns(["firstName","lastName","old"]);
         $this->legends = $this->getLegends([["content"=>"Legend",'position'=>"TOP_LEFT"]]);
         $this->datas = $this->getDatas();

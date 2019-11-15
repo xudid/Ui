@@ -11,7 +11,7 @@ class InlineColumnTest extends TestCase
      */
     private $tableColumn;
 
-    protected function setUp()
+    protected function setUp():void
     {
         parent::setUp();
         $this->tableColumn = $this->createMock(TableColumn::class);

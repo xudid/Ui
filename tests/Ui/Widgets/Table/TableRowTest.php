@@ -16,7 +16,7 @@ class TableRowTest extends TestCase
      */
     private array $datas;
 
-    protected function setUp()
+    protected function setUp():void
     {
         parent::setUp();
         $this->getColumns(["firstName","lastName","old"]);

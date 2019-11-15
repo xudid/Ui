@@ -8,7 +8,7 @@ class TableLegendsTest extends TestCase
 {
     private $legends;
 
-    protected function setUp()
+    protected function setUp():void
     {
         parent::setUp();
         $this->legends = $this->getLegends([["content"=>"Legend",'position'=>"TOP_LEFT"]]);
