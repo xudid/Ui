@@ -25,7 +25,7 @@ class EntityInformationHolder
 
       $this->setClassName($entity);
       $this->fieldnames = $this->getFieldNames($this->classname);
-      $this->initFormFieldDefinition();
+
       $this->initEntityAccessFilter();
       $this->initGetGetMethodNames();
   }

@@ -14,29 +14,5 @@ class Button extends Btn
 		$this->startTag->setAttribute("type", "button");
 
 	}
-	public function setClass($class){
-		if(isset($class))
-		{$this->startTag->setAttribute("class",$class);}
-	}
-
-	public  function setName($name)
-	{
-		$this->startTag->setAttribute("name", $name);
-	}
-
-	public  function setFormAction($action)
-	{
-		$this->startTag->setAttribute("formaction", $action);
-	}
-
-	public  function setOnClick($action)
-	{
-		$this->startTag->setAttribute("onclick", $action);
-	}
-
-
-
-
 }
 
-?>

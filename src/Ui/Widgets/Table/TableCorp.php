@@ -11,7 +11,7 @@ class TableCorp extends Div{
     public function __construct()
     {
         parent::__construct();
-        $this->setClass("corp");
+        $this->setClass("div-corp");
         return $this;
     }
 }

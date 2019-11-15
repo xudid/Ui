@@ -21,6 +21,10 @@ class Page extends Nested{
 	private $htmle = null;
 	private $head = null;
 	private $body = null;
+	/**
+	 * @var array
+	 */
+	private array $scriptToEnd = [];
 
 
 	private function renderDoctype()
@@ -91,34 +95,43 @@ class Page extends Nested{
 	}
 
 	/**
-	 * @param $script
-	 * @return $this
+	 * @param Script $script
+	 * @return void
 	 */
-	public function addScript($script) {
-		
-            $this->head->addScript(new Script($script));
-            return $this;
+	public function addScript(Script $script) {
+
+		$position = $script->getPosition();
+		if ($script instanceof Script && strcmp($position, Script::SCRIPT_TO_END)==0) {
+			$this->scriptToEnd[] = $script;
+
+		} elseif ($script instanceof Script && strcmp($position, Script::SCRIPT_TO_HEAD)==0) {
+			$this->head->addScript($script);
+		}
 	}
 
-	/**
-	 * @param $css
-	 * @return $this
-	 */
-	public function addLink($css) {
-	        $this->head->addLink($css);
-            return $this;
-
-	}
 
     /**
      * Import css in the page head
      * @param string $css : the css file path or URI
      * @return self
      */
-	public function importCss(string $css){
-        $this->head->addLink($css,"stylesheet");
-        return $this;
-    }
+	public function importCss(...$cssPaths)
+	{
+
+		foreach ($cssPaths as $cssPath) {
+			$this->head->addLink($cssPath,"stylesheet");
+		}
+		return $this;
+
+	}
+
+	public function importScript(...$scripts)
+	{
+		foreach ($scripts as $script) {
+			$this->addScript($script);
+		}
+		return $this;
+	}
 
 	/**
 	 * @param $meta
@@ -129,10 +142,20 @@ class Page extends Nested{
 		return $this;
 	}
 
+	public function importMeta(...$metas)
+	{
+		foreach ($metas as $meta) {
+			$this->addMeta($meta);
+		}
+	}
+
 	/**
 	 * @return string
 	 */
 	public function __toString():string{
+		foreach ($this->scriptToEnd as $script) {
+			$this->addToBody($script);
+		}
 		$string ="";
 		$string = $string.$this->renderDoctype();
 		$string = $string.$this->htmle->__toString() ;

@@ -7,7 +7,7 @@ use Ui\HTML\Elements\Nested\Div;
  * @package Ui\Widgets\Table
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
-class Cell extends Div {
+class Cell extends  Div{
 
     /**
      * @var bool $editable
@@ -24,7 +24,7 @@ class Cell extends Div {
      * @param bool $editable
      * @param mixed|null $value
      */
-    public function __construct($value, bool $editable)
+    public function __construct($value, bool $editable=false)
     {
         parent::__construct();
         $this->editable = $editable;
@@ -38,7 +38,7 @@ class Cell extends Div {
             $value = implode("<br>", $value);
         }
         $this->add($value);
-        $this->setClass('cell');
+        $this->setClass('div-cell large-30');
         return $this;
     }
 

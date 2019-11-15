@@ -7,10 +7,7 @@ use Ui\HTML\Elements\Empties\EmptyElement;
 class EmptyElementTest extends TestCase
 {
 
-    public function testSetClass()
-    {
 
-    }
 
     public function test__toString()
     {

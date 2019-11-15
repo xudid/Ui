@@ -57,6 +57,7 @@ class Nested extends Base implements \ArrayAccess
         }
         return $this;
     }
+
     public function setFirstElement($element){
       if($element !=null){
           \array_unshift($this->childElements,$element);
@@ -64,18 +65,26 @@ class Nested extends Base implements \ArrayAccess
       }
       return $this;
     }
+
+    public function populate(...$children){
+        if (is_array( $children ) || !$children instanceof Traversable) {
+            foreach ($children as $k =>$child) {
+                $this->add($child);
+            }
+        }
+    }
     private function generateContentString()
     {
-        $this->contentString = $this->startTag."\r\n";
+        $this->contentString = $this->startTag;
         if(count($this->childElements)>0)
         {
           foreach ($this->childElements as $e)
           {
             $this->contentString = $this->contentString.$e ;
           }
-            $this->contentString = $this->contentString."\r\n" ;
+            $this->contentString = $this->contentString ;
         }
-        $this->contentString = $this->contentString.$this->endTag."\r\n";
+        $this->contentString = $this->contentString.$this->endTag;
 
     }
 //implements ArrayAccess interface

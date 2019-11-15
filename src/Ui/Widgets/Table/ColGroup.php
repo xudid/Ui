@@ -22,11 +22,11 @@ class ColGroup extends Div {
     {
         parent::__construct();
         $this->colCount = $colCount;
-        $this->setClass("colgroup");
+        $this->setClass("div-colgroup ");
         for($i=0;$i<$this->colCount;$i++)
         {
             $col = new Div();
-            $col->setClass("col");
+            $col->setClass("div-col ");
             $this->add($col);
         }
         return $this;

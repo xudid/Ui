@@ -7,7 +7,7 @@ namespace Ui\HTML\Attributes;
  * @author Didier Moindreau
  * TextAreaAttribute class contains TextArea element attributes and common attributes
  */
-class TextAreaAttribute extends GlobalAttribute
+class TextareaAttribute extends GlobalAttribute
 {
     const AUTOCOMPLETE = "autocomplete";
     const AUTOFOCUS = "autofocus";

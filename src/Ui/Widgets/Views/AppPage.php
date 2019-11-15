@@ -1,156 +1,205 @@
 <?php
-namespace Ui\Widgets\Views;
-use Ui\Views\Page;
-use Ui\HTML\Elements\Empties\Link;
-use Ui\Widgets\Views\NavBar;
 
-use Ui\HTML\Elements\Nested\{Header,A,Nav,Div};
+namespace Ui\Widgets\Views;
+
+use Ui\HTML\Elements\Empties\Link;
+use Ui\HTML\Elements\Nested\{A, Div, Footer};
+use Ui\Views\Page;
 
 
 /**
  * Class AppPage
  * @package Ui\Widgets\Views
  */
+//AppPage is root node
+//AppPage has four branch header navbar content footer
+//navabar can be to the top or to the bottom of th e header
+//Footer is always at the bottom of the AppPage
+//All ELements must have Parent
 class AppPage extends Page
 {
-  /*
-  * @var object $maindiv
-  */
-  private $maindiv;
-  /**
-   * @var object $navbar
-   */
-  private $navbar = null;
+	/*
+	* @var object $maindiv
+	*/
+	private Div $main;
 
-    /**
-     * @var object $sidebar
-     */
+	/**
+	 * @var Div $header
+	 */
+	private Div $header;
 
-  private $sidebar =null;
+	/**
+	 * @var Footer $footer
+	 */
+	private Footer $footer;
 
-  /**
-   *  @var string $sideBarTitle
-   */
-  private $sideBarTitle="Menu";
-  /**
-   *  @var object $contentView
-   */
-  private $contentView=null;
-  /**
-   * @var object $footer
-   */
-	private $footer =null;
+	/**
+	 * @var object $navbar
+	 */
+	private $navbar = null;
 
-    /**
-     * AppPage constructor.
-     */
-  public function __construct()
-  {
-    parent::__construct();
+	/**
+	 * @var object $sidebar
+	 */
 
-    $this->maindiv = new Div();
-    $this->maindiv->setClass("main");
-    $this->addToBody($this->maindiv);
+	private $sidebar = null;
 
-    $this->navbar = new NavBar();
-    $this->navbar->setClass("navbar");
-    $this->maindiv->add($this->navbar);
-    $div = new Div();
-    $div->setClass("second");
-    $this->sidebar = new Div();
-    $this->sidebar->setClass("sidebar");
-    // $this->sidebar->add("<h2>$this->sideBarTitle</h2>");
-    $div->add($this->sidebar);
-    $this->maindiv->add($div);
+	/**
+	 * @var string $sideBarTitle
+	 */
 
-    $this->contentView = new Div();
-    $this->contentView->setClass("content");
-    $div->add($this->contentView);
-    return $this;
-  }
+	private $sideBarTitle = "Menu";
+	/**
+	 * @var $header
+	 */
 
-    /**
-     *
-     */
-  public function getAppPage()
-  {
 
-  }
+	private $contentView = null;
 
-/**
- * @param string $css file path
- * @return self
- */
-  public function setCss($css)
-  {
-    parent::addLink((new Link($css))->setAttribute("rel","stylesheet"));
-    return $this;
-  }
+	/**
+	 * AppPage constructor.
+	 */
+	public function __construct()
+	{
+		parent::__construct();
 
-/**
- * @param object $menuItem
- * @return self
- */
-  public function addNavBarItem($type,$path,$display,$alt="",$displayside){
-    switch ($type) {
-      case 'text':
-      $item = new A($path);
-      $item->add($display);
-      $this->navbar->addMenu($item,$displayside);
-      //$this->navbar->add($item);
-        break;
-      case 'icon':
-      $item = new ClickableImage($path,$display,$alt);
+		$this->main = new Div();
+		$this->main->setClass("main");
+		$this->addToBody($this->main);
 
-      $this->navbar->addMenu($item,$displayside);
-      //$this->navbar->add($item);
-        break;
+		$this->header = new Div();
 
-      default:
+		$this->navbar = new NavBar();
+		$this->navbar->setClass("navbar");
 
-        break;
-    }
-    return $this;
-  }
-/**
- * @param string $Itemdisplay
- * @param string $itemUrl
- * @param string $itemType
- * @param string $itemalt
- * @return self
- */
-  public function addSideBarItem($Itemdisplay,$itemUrl,$itemType ="button",$itemalt =""){
-    $item = null;
-    if($itemType === "button"){
-      $item = new A('/'.$itemUrl);
-      $item->add($Itemdisplay);
-    }
-    if($itemType === "img"){
-      $item = new ClickableImage('/'.$itemUrl,$Itemdisplay,$itemalt);
+		$second = new Div();
+		$second->setClass("second");
 
-    }
-    $item->setCss("sidebar_button");
-    $this->sidebar->add($item);
-    $this->sidebar->add("<br>");
-    return $this;
+		$this->sidebar = new Div();
+		$this->sidebar->setClass("sidebar");
 
-  }
 
-    /**
-     * @param object $view
-     * @return self
-     */
-  public function setContentView($view){
-    $this->contentView->add($view);
-    return $this;
-  }
+		$second->add($this->sidebar);
 
-/**
- * @param string $title
- * @return self
- */
-  public function setSideBarTitle($title){
-    $this->sideBarTitle=$title;
-    return $this;
-  }
+
+		$this->contentView = new Div();
+		$this->contentView->setClass("content");
+
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed $header
+	 * @return AppPage
+	 */
+	public function setHeader($header)
+	{
+		$this->header = $header;
+		$this->main->setFirstElement($this->header);
+		return $this;
+	}
+	public function setHeaderClass(string $css)
+	{
+		$this->header->setClass($css);
+	}
+
+	/**
+	 * @param mixed $footer
+	 * @return AppPage
+	 */
+	public function setFooter($footer)
+	{
+		$this->footer = $footer;
+		$this->main->add($footer);
+		return $this;
+	}
+
+	public function setFooterClass(string $css)
+	{
+		$this->footer->setClass($css);
+	}
+
+	public function setNavBar($navBar)
+	{
+		$this->navbar = $navBar;
+		$this->main->add($this->navbar);
+		return $this;
+	}
+
+
+
+
+
+	/**
+	 * @param object $menuItem
+	 * @return self
+	 */
+	public function addNavBarItem($type, $path, $display,  $displayside, $alt = "")
+	{
+		switch ($type) {
+			case 'text':
+				$item = new A($path);
+				$item->add($display);
+				$this->navbar->addMenu($item, $displayside);
+				//$this->navbar->add($item);
+				break;
+			case 'icon':
+				$item = new ClickableImage($path, $display, $alt);
+
+				$this->navbar->addMenu($item, $displayside);
+				//$this->navbar->add($item);
+				break;
+
+			default:
+
+				break;
+		}
+		return $this;
+	}
+
+	/**
+	 * @param string $Itemdisplay
+	 * @param string $itemUrl
+	 * @param string $itemType
+	 * @param string $itemalt
+	 * @return self
+	 */
+	public function addSideBarItem($Itemdisplay, $itemUrl, $itemType = "button", $itemalt = "")
+	{
+		$item = null;
+		if ($itemType === "button") {
+			$item = new A('/' . $itemUrl);
+			$item->add($Itemdisplay);
+		}
+		if ($itemType === "img") {
+			$item = new ClickableImage('/' . $itemUrl, $Itemdisplay, $itemalt);
+
+		}
+		$item->setCss("sidebar_button");
+		$this->sidebar->add($item);
+		$this->sidebar->add("<br>");
+		return $this;
+
+	}
+
+	/**
+	 * @param object $view
+	 * @return self
+	 */
+	public function setContentView($view)
+	{
+		$this->contentView->add($view);
+		return $this;
+	}
+
+	/**
+	 * @param string $title
+	 * @return self
+	 */
+	public function setSideBarTitle($title)
+	{
+		$this->sideBarTitle = $title;
+		return $this;
+	}
 }

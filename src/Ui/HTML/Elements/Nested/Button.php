@@ -18,4 +18,33 @@ class Button extends Nested{
 			$this->add($text);
 		}
 	}
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public  function setName(string $name)
+    {
+        $this->startTag->setAttribute("name", $name);
+        return $this;
+    }
+
+    /**
+     * @param string $action
+     * @return $this     */
+    public function setOnClick(string $action)
+    {
+        $this->startTag->setAttribute("onclick", $action);
+        return $this;
+    }
+
+    /**
+     * @param string $action
+     * @return $this
+     */
+    public  function setFormAction(string $action)
+    {
+        $this->startTag->setAttribute("formaction", $action);
+        return $this;
+    }
 }

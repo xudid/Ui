@@ -11,10 +11,5 @@ class ResetButton extends Button
 	{
 		parent::__construct($text);
 		$this->startTag->setAttribute("type", "reset");
-        
 	}
-
-	
 }
-
-?>

@@ -10,10 +10,14 @@
         }
     ],
     "autoload":{
-      "psr-4" : {"Ui\\" : "src/Ui"}
+      "psr-4" : {
+          "Ui\\" : "src/Ui",
+          "Usage\\" :"usage"
+      }
     },
     "require": {
-        "psr/http-server-middleware": "^1.0"
+        "psr/http-server-middleware": "^1.0",
+        "psr/container": "1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.4"

@@ -1,8 +1,10 @@
 <?php
 namespace Ui\Views;
 
+use Ui\Model\DefaultResolver;
 use Ui\Views\EntityView;
-use Ui\Model\EntityInformationHolder;
+use Ui\Views\Holder\ClassInformationHolder;
+use Ui\Views\Holder\EntityInformationHolder;
 use Ui\HTML\Elements\Nested\P;
 use Ui\Widgets\Accordeon\CollapsibleItem;
 use Ui\HTML\Elements\Empties\Br;
@@ -13,11 +15,11 @@ use Ui\HTML\Elements\Empties\Br;
 class EntityPartialViewFactory
 {
   private $entity=null;
-  private $eih=null;
+  private $informationHolder=null;
   private $classname="";
   private $shortclassname="";
   private $accessFilter=null;
-  private $colNames=[];
+  private $fields=[];
   private $getMethodNames=[];
   private $iscollapsible=false;
   /**
@@ -25,19 +27,30 @@ class EntityPartialViewFactory
    * @var [type]
    */
   private $path="";
+  private $fieldDefinitions;
 
   function __construct($entity,$accessFilter)
   {
-    $this->entity = $entity;
-    $this->eih = new EntityInformationHolder($entity);
-    $this->classname = $this->eih->getClassName();
-    $this->shortClassName = $this->eih->getShortClassName();
-
-    $this->setAccessFilter($accessFilter);
-    $this->colNames =   $this->eih->getColumnNames() ;
-    $this->getMethodNames = $this->eih->getGetMethodNames();
 
 
+    try {
+      //Init InformationHolderInterface
+      if (is_string($entity)) {
+        $this->informationHolder = new ClassInformationHolder($entity);
+      } else {
+        $this->informationHolder = new EntityInformationHolder($entity);
+        $this->entity = $entity;
+      }
+      //Init class names
+      $this->classname = $this->informationHolder->getClassName();
+      $this->shortClassName = $this->informationHolder->getShortClassName();
+      $this->setAccessFilter($accessFilter);
+      $this->fields =   $this->informationHolder->getFields();
+      $this->getMethodNames = $this->informationHolder->getGettersName();
+      $fieldDefinitionsClassName = DefaultResolver::getFieldDefinitions($this->classname);
+      $this->fieldDefinitions = new $fieldDefinitionsClassName($this->classname);
+    } catch (\ReflectionException $e) {
+    }
   }
 
 
@@ -47,15 +60,14 @@ class EntityPartialViewFactory
  */
   public function getPartialView()
   {
+
     $this->viewables = $this->accessFilter->getViewablesFor($this->path);
   
     if($this->iscollapsible)
     {
       $this->entityView = new CollapsibleItem();
-      $display = $this->eih->getDisplayFor($this->shortClassName);
+      $display = $this->fieldDefinitions->getDisplayFor($this->shortClassName);
       $this->entityView->setHeader($display);
-      $content=new P();
-
       $content = $this->generateContent();
       $this->entityView->setContent($content);
 
@@ -63,9 +75,9 @@ class EntityPartialViewFactory
     else
     {
       $this->entityView = new EntityView();
-      $this->entityView->addCssClass("view");
+      $this->entityView->setClass("view");
       $content = $this->generateContent();
-      $this->entityView->addElement($content);
+      $this->entityView->add($content);
     }
 
 
@@ -79,15 +91,16 @@ class EntityPartialViewFactory
 private function generateContent()
 {
   $element = new P();
-  foreach ($this->colNames as $value)
+
+  foreach ($this->fields as $field)
   {
-    if (in_array($value,$this->viewables))
+    if (in_array($field->getName(),$this->viewables) && !$field->isAssociation())
     {
-       $val = $this->eih->getEntityFieldValue($value);
-       $display = $this->eih->getDisplayFor($value);
-       $element->addElement(ucfirst($display).": ");
-       $element->addElement($val);
-       $element->addElement(new Br());
+       $val = $this->informationHolder->getEntityFieldValue($field->getName());
+       $display = $this->fieldDefinitions->getDisplayFor($field->getName());
+       $element->add(ucfirst($display).": ");
+       $element->add($val);
+       $element->add(new Br());
    }
   }
   return $element;
@@ -96,20 +109,14 @@ private function generateContent()
   private function setAccessFilter($accessFilter)
   {
 
-    if($accessFilter == null)
-    {
+    if ($accessFilter == null) {
       $this->accessFilter = null;
     }
-    if($accessFilter == "default")
-    {
+    if ($accessFilter === "default") {
+      $accessFilterName = DefaultResolver::getFilter($this->classname);
+      $this->accessFilter = new $accessFilterName();
 
-      $this->accessFilter =
-                    $this->eih->getEntityAccessFilter();
-
-    }
-    else
-    {
-
+    } else {
       $this->accessFilter = $accessFilter;
 
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Ui\Widgets\Table;
 
 use Ui\HTML\Elements\Nested\Div;
@@ -8,15 +9,27 @@ use Ui\HTML\Elements\Nested\Div;
  * @package Ui\Widgets\Table
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
-
 //Todo BugFix legend alignment
-class TableLegends extends Div {
+class TableLegends extends Div
+{
 
 
     /**
      * @var array $tableLegends
      */
     private array $tableLegends;
+    /**
+     * @var Div
+     */
+    private $rights;
+    /**
+     * @var Div
+     */
+    private $lefts;
+    /**
+     * @var Div
+     */
+    private $container;
 
     /**
      * DivTableLegend constructor.
@@ -25,34 +38,44 @@ class TableLegends extends Div {
     public function __construct(array &$tableLegends)
     {
         parent::__construct();
+        $this->container = new Div();
+        $this->container->setClass("legend-container");
+        $this->rights = new Div();
+        $this->lefts = new Div();
+        $this->lefts->setClass("legende_left");
+        $this->rights->setClass("legende_right");
+
+
+        $this->container->add($this->rights);
+        $this->container->add($this->lefts);
+        $this->add($this->container);
         $this->tableLegends = $tableLegends;
-        $this->setClass("legende_top");
-       // $row = new Div();
-        //$row->setClass("row");
-        //$this->add($row);
+        $this->setClass("legend-top");
         $countLegends = count($this->tableLegends);
 
-        for ($i=0;$i<$countLegends;$i++) {
+        for ($i = 0; $i < $countLegends; $i++) {
 
-            $l =$tableLegends[$i];
+            $l = $tableLegends[$i];
             $legend = new Div();
-            if($l->getPosition()==TableLegend::TOP_LEFT)
-            {
-                $legend->setClass("legende_left");
-            }
-            if($l->getPosition()==TableLegend::TOP_RIGHT)
-            {
-                $legend->setClass("legende_right");
-            }
+            $legend->setClass("legend-item");
             $legend->add($l->getContent());
-            $this->add($legend);
+
+            if ($l->getPosition() == TableLegend::TOP_LEFT) {
+
+                $this->lefts->add($legend);
+            }
+            if ($l->getPosition() == TableLegend::TOP_RIGHT) {
+
+                $this->rights->add($legend);
+            }
+
         }
         return $this;
     }
 
     public function setClass($class)
     {
-        parent::setClass("legende_top ".$class);
+        parent::setClass("legend-top " . $class);
         return $this;
     }
 }

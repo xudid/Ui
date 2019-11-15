@@ -7,10 +7,7 @@ use Ui\HTML\Elements\Nested\Nested;
 class NestedTest extends TestCase
 {
 
-    public function testOffsetSet()
-    {
 
-    }
 
     public function testSetId()
     {
@@ -19,27 +16,14 @@ class NestedTest extends TestCase
         $this->assertContains('id="test"',$nested->__toString());
     }
 
-    public function testSetClass()
-    {
 
-    }
-
-    public function testOffsetUnset()
-    {
-
-    }
-
-    public function testOffsetExists()
-    {
-
-    }
 
     public function testAddElement()
     {
         $nested = new Ui\HTML\Elements\Nested\Nested("div");
         $nested1 = new Ui\HTML\Elements\Nested\Nested("div");
         $nested->add($nested1);
-        $this->assertContains("<div>\r\n<div>\r\n</div>\r\n\r\n</div>\r\n",$nested->__toString());
+        $this->assertContains("<div><div></div></div>",$nested->__toString());
     }
 
     public function test__construct()
@@ -55,13 +39,10 @@ class NestedTest extends TestCase
         $nested2 = new Ui\HTML\Elements\Nested\Nested("ul");
         $nested->add($nested2);
         $nested->setFirstElement($nested1);
-        $this->assertContains("<div>\r\n<div>\r\n</div>\r\n<ul>\r\n</ul>\r\n\r\n</div>\r\n",$nested->__toString());
+        $this->assertContains("<div><div></div><ul></ul></div>",$nested->__toString());
     }
 
-    public function testAddClass()
-    {
 
-    }
 
     public function testSetAttribute()
     {
@@ -70,10 +51,7 @@ class NestedTest extends TestCase
         $this->assertContains('id="test"',$nested->__toString());
     }
 
-    public function testOffsetGet()
-    {
 
-    }
 
     public function test__toString()
     {
@@ -83,15 +61,7 @@ class NestedTest extends TestCase
         $this->assertStringContainsString("</div>",$string);
     }
 
-    public function testSetClasses()
-    {
 
-    }
-
-    public function testSetContentString()
-    {
-
-    }
 
 
 }

@@ -32,27 +32,27 @@ class TextArea extends Nested
 	 * @param string $value
 	 * @return $this
 	 */
-	public function SetPlaceholder(string $value){
+	public function setPlaceholder(string $value){
 		$this->startTag->setAttribute("placeholder", $value);
 		return $this;
 	}
 
-	public function SetCols(int $num){
+	public function setCols(int $num){
 		$this->startTag->setAttribute("cols", $num);
 		return $this;
 	}
 
-	public function SetRows(int $num){
+	public function setRows(int $num){
 		$this->startTag->setAttribute("rows", $num);
 		return $this;
 	}
 
-	public function SetMinLength(int $num){
+	public function setMinLength(int $num){
 		$this->startTag->setAttribute("minlength", $num);
 		return $this;
 	}
 
-	public function SetMaxLength(int $num){
+	public function setMaxLength(int $num){
 		$this->startTag->setAttribute("maxlength", $num);
 		return $this;
 	}
