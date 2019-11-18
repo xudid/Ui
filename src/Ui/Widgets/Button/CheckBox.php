@@ -1,7 +1,7 @@
 <?php
 namespace Ui\Widgets\Button;
-use Ui\HTML\Elements\EmptyElements\Input;
-use Ui\HTML\Elements\NestedHtmlElement\Label;
+use Ui\HTML\Elements\Empties\Input;
+use Ui\HTML\Elements\Nested\Label;
 /**
 *
 */

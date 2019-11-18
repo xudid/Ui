@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains BrAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * BrAttribute class contains Link element attributes and common attributes
- *
+ * BrAttribute class contains Br element attributes and common attributes
  */
 class BrAttribute extends GlobalAttribute
 {

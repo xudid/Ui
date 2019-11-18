@@ -1,200 +1,257 @@
 <?php
+
 namespace Ui\Views;
-use Ui\Widgets\Table\DivRowTable;
+
+
+use Prophecy\Exception\Doubler\ClassNotFoundException;
+use ReflectionClass;
+use ReflectionException;
+use Ui\HTML\Elements\Nested\Div;
+use Ui\Model\DefaultResolver;
+use Ui\Model\Entity;
+use Ui\Views\Holder\EntityInformationHolder;
+use Ui\Widgets\Table\DivTable;
+use Ui\Widgets\Table\TableColumn;
 use Ui\Widgets\Table\TableLegend;
-use Ui\Model\EntityInformationHolder;
 
-use Ui\HTML\Elements\NestedHtmlElement\Div;
+class DataTableView
+{
 
-class DataTableView{
-
-    private $title="";
-    private $legends=[];
-    private $classname="";
-    private $entityClassname="";
-    private $Entity=null;
-    private $data=[];
-    private $colNames=null;
-    private $drt=null;
-    private $accessFilter=null;
+    private $title = "";
+    private $legends = [];
+    private $classname = "";
+    private $entityClassname = "";
+    private $Entity = null;
+    private $data = [];
+    private $fields = null;
+    private $drt = null;
+    private $accessFilter = null;
     private $viewables;
-    private $whereparams=[];
-    private $rowsclickable=false;
-    private $baseurl="";
-    private $eih=null;
+    private $whereparams = [];
+    private $rowsclickable = false;
+    private $baseurl = "";
+    private $eih = null;
+    private array $columns;
 
-    public function __construct($container=null,$className,$accessFilter)
+    /**
+     * DataTableView constructor.
+     * @param null $container
+     * @param string $className the classname of the Entiy we want to retrieve values
+     * @param $accessFilter
+     * @throws \ReflectionException
+     */
+    public function __construct($container = null, string $className, $accessFilter)
     {
 
+        //Initialize Metadata Holder
         $this->eih = new EntityInformationHolder($className);
+
+        //Set this class name
         $this->classname = $className;
+
+        //Initialize this AccessFilter
         $this->setAccessFilter($accessFilter);
 
-        $this->entityClassname = $className."sEntity";
-        $r = new \ReflectionClass($this->entityClassname);
-        $this->Entity = $r->newInstanceArgs([$container]);
-
-        $this->colNames = $this->eih->getColumnNames();
+        //Initialize fields to display
+        $this->fields = $this->eih->getFields();
         $this->viewables = $this->getViewables();
 
+        //Initialize columns
+        $this->columns = $this->generateColumns();
+    }
 
+    public function setEntity(Entity $entity)
+    {
+        $this->Entity = $entity;
     }
 
     public function where($params)
     {
-      $this->whereparams = array_merge($this->whereparams,$params);
-      return $this;
+        $this->whereparams = array_merge($this->whereparams, $params);
+        return $this;
     }
 
-    public function getColumnNames($entity)
-    {
-        $result = array();
-        $rc = new \ReflectionClass($entity);
-        foreach ($rc->getMethods() as $method) {
-        $methodName = $method->getName();
-        if (strstr($methodName, 'get') == $methodName)
-        {
-          $field = str_replace('get', '', $methodName);
-          $result[]= strtolower($field);
-        }
-    }
-
-        return $result;
-    }
 
     private function setAccessFilter($accessFilter)
     {
-        if($accessFilter == null)
-        {
-            $path_parts = explode('\\',$this->classname);
-            $path_parts_l = count($path_parts);
-            $path_parts[$path_parts_l-2]="Views";
-            $path_parts[$path_parts_l-1]=$path_parts[$path_parts_l-1]."FormFilter";
-            $classname = implode('\\',$path_parts);
-
-            $class = new \ReflectionClass($classname);
-            $this->accessFilter = $class->newInstance();
+        if ($accessFilter == null) {
+            $this->accessFilter = null;
         }
-        else
-        {
+        if ($accessFilter === "default") {
+            $accessFilterName = DefaultResolver::getFilter($this->classname);
+            $this->accessFilter = new $accessFilterName();
+
+        } else {
             $this->accessFilter = $accessFilter;
+
         }
     }
-
 
 
     private function getViewables()
     {
         $result = array();
-        $result= $this->accessFilter->getViewables();
+        $result = $this->accessFilter->getViewables();
         return $result;
 
     }
 
-    public function __toString(){
-      $this->drt = new DivRowTable($this->legends,
-                                   $columns,
-                                   $this->data,
-                                   $this->rowsclickable,
-                                   $this->baseurl);
+    public function __toString()
+    {
+            $this->drt = new DivTable($this->legends,
+            $this->columns,
+            $this->data,
+            $this->rowsclickable,
+            $this->baseurl);
         return $this->drt->__toString();
     }
 
     public function getView()
     {
-      $dataToDisplay=[];
-      if(count($this->whereparams)>0)
-      {
-        $this->data = $this->Entity->findBy($this->whereparams);
-        $dataToDisplay=$this->data;
-      }
-      else
-      {
-        $this->data = $this->Entity->findAll();
-        foreach ($this->data as $key => $value)
-        {
-          if(\is_object($value))
-          {
-            $classname = get_class($value);
-            $reflect = new \ReflectionClass($classname);
-            $newObject = $reflect->newInstance();
+        //Todo Here we use Database access via the Entity class
+        // make possible to Inject the class in relation with database it will implements
+        // an interface with  findAll() findBy(array whereparams)
 
-            $eih1 = new EntityInformationHolder($value);
-            $getMethods = $eih1->getGetMethodNames();
-            foreach ($getMethods as $key1 => $methodName)
-            {
-              $method = new \ReflectionMethod($value, $methodName);
-              $val = $method->invoke($value);
+        //Retrieve data to display
+        $dataToDisplay =  $this->retrieveData();
 
-              if(!($val instanceof \Doctrine\ORM\PersistentCollection))
-              {
-                $method = new \ReflectionMethod($newObject, $methodName);
-                $val =   $val = $method->invoke($value);
-                $setmethod = str_replace("get", "set", $methodName );
-                $method = new \ReflectionMethod($value, $setmethod);
-                $v = $method->invokeArgs($newObject, [  $val]);
-              }
-              else
-              {
-                $collection = $val->getValues();
-                if(count($collection)==0)
-                {
-                  $collection[]=" ";
+        //Generate TableColumns
+        $columns = $this->generateColumns();
+
+        //Create the Table with Data
+
+        $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
+
+        //Init container to return the table
+        $view = new Div();
+        $view->setClass("form");
+        $view->add($this->drt);
+        return $view->__toString();
+    }
+
+    //don't recursivly call
+    private function retrieveData()
+    {
+        $dataToDisplay = [];
+        if ($this->Entity ===null) {
+            try{
+
+            } catch (\Exception $exception){
+                print_r($exception->getMessage()."\n");
+            }
+            $this->initWithDefaultEntity(null);
+        }
+        //Rettrieve data with filters
+        if (count($this->whereparams) > 0) {
+            $this->data = $this->Entity->findBy($this->whereparams);
+            $dataToDisplay = $this->data;
+        } //Rettrieve data without filters
+        else {
+            $this->data = $this->Entity->findAll();
+            foreach ($this->data as $key => $object) {
+                //If $value is an object
+                if (\is_object($object)) {
+
+                    //Get Object Metadata
+                    $eih1 = new EntityInformationHolder($object);
+
+                    //Get object Getters
+                    $getMethods = $eih1->getGettersName();
+
+                    //Foreach getter  get object value
+                    /*foreach ($getMethods as $key1 => $methodName) {
+                        $method = new \ReflectionMethod($object, $methodName);
+                        $val = $method->invoke($object);
+
+                        //If $val is not a \Doctrine\ORM\PersistentCollection
+                        if (!($val instanceof \Doctrine\ORM\PersistentCollection)) {
+                            $method = new \ReflectionMethod($object, $methodName);
+                            $val = $val = $method->invoke($object);
+                            $setmethod = str_replace("get", "set", $methodName);
+                            $method = new \ReflectionMethod($object, $setmethod);
+                            $v = $method->invokeArgs($object, [$val]);
+                            //If Doctrine Collection get values
+                        } else {
+                            $collection = $val->getValues();
+                            if (count($collection) == 0) {
+                                $collection[] = " ";
+                            }
+                            $setmethod = str_replace("get", "set", $methodName);
+                            $method = new \ReflectionMethod($object, $setmethod);
+                            $v = $method->invokeArgs($object, [$collection]);
+                        }
+
+                    }*/
+                    //$dataToDisplay[$key] = $object;
+                    $dataToDisplay = $this->data;
+                } else {
+                    //If it is an array
+                    $dataToDisplay[$key] = $this->data[$key];
                 }
-                $setmethod = str_replace("get", "set", $methodName );
-                $method = new \ReflectionMethod($newObject, $setmethod);
-                $v = $method->invokeArgs($newObject, [$collection]);
-              }
 
             }
-            $dataToDisplay[$key]=$newObject;
-          }
-
-          else
-          {
-            $dataToDisplay[$key]=$this->data[$key];
-          }
 
         }
+        return $dataToDisplay;
+    }
 
-      }
-      $columns= [];
-      $formfilter = $this->eih->getFormFieldDefinitions();
-      foreach ($this->viewables as $key => $value) {
-      $colname= $value;
-      $display = $formfilter->getDisplayFor($value);
-      $column = new TableColumn($value,$display);
-      $columns[]=$column;
-      }
-      $view = new Div();
-      $view->addCssClass("form");
-      $this->drt = new DivRowTable($this->legends,$columns,$dataToDisplay ,$this->rowsclickable,$this->baseurl);
-      $view->addElement(  $this->drt);
-      return $view->__toString();
+    private function generateColumns()
+    {
+        $columns = [];
+        //Todo use FieldDefinitionResolverInterface
+        $formfilterClassName = DefaultResolver::getFieldDefinitions($this->classname);
+        $formfilter = new $formfilterClassName();
+        foreach ($this->viewables as $key => $value) {
+            $colname = $value;
+            $display = $formfilter->getDisplayFor($value);
+            $column = new TableColumn($value, $display);
+            $columns[] = $column;
+        }
+        return $columns;
+    }
+
+    /**
+     * @param $container
+     * @throws ReflectionException
+     */
+    private function initWithDefaultEntity($container)
+    {
+        //Resolve entity classname to access to Database
+        $this->entityClassname = DefaultResolver::getEntityClassName($this->classname);
+        try {
+            $r = new ReflectionClass($this->entityClassname);
+            $this->Entity = $r->newInstanceArgs([$container]);
+        } catch (ReflectionException $e) {
+            throw new ClassNotFoundException($e->getMessage(),$this->entityClassname);
+        }
+
     }
 
     public function setTitle($title)
     {
-      if(isset($title))
-      {
-        $this->title = $title;
-        $this->legends[]= new TableLegend($this->title, TableLegend::TOP_LEFT);
-      }
+        if (isset($title)) {
+            $this->title = $title;
+            $this->legends[] = new TableLegend($this->title, TableLegend::TOP_LEFT);
+        }
 
     }
 
     public function addALegend(TableLegend $legend)
     {
-      $this->legends[]=$legend;
+        $this->legends[] = $legend;
     }
 
+    /**
+     * Make rows clickable , but object that the row represents must
+     * have a gettable Id to allow this
+     * @param $baseurl
+     * @return $this
+     */
     public function withClickableRows($baseurl)
     {
-      $this->rowsclickable =true;
-      $this->baseurl = $baseurl;
-      return $this;
+        $this->rowsclickable = true;
+        $this->baseurl = $baseurl;
+        return $this;
     }
-
-
 }
-?>
+

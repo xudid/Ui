@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains FormAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * FormAttribute class contains Link element attributes and common attributes
- *
+ * FormAttribute class contains Form element attributes and common attributes
  */
 class FormAttribute extends GlobalAttribute
 {

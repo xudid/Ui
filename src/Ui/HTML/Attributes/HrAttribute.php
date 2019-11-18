@@ -5,15 +5,9 @@ namespace Ui\HTML\Attributes;
  * This file contains HrAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
+ * HrAttribute class contains Hr element attributes and common attributes
  */
 
-/**
- *
- * HrAttribute class contains Link element attributes and common attributes
- *
- */
 class HrAttribute extends GlobalAttribute
 {
     const WIDTH = "width";

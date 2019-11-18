@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains MapAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
  * MapAttribute class contains Map element attributes and commons
- *
  */
 class MapAttribute extends GlobalAttribute
 {

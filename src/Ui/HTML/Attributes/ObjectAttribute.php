@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ObjectAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * ObjectAttribute class contains Link element attributes and common attributes
- *
+ * ObjectAttribute class contains Object element attributes and common attributes
  */
 class ObjectAttribute extends GlobalAttribute
 {

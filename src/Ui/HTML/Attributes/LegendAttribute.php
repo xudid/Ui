@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains LegendAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * LegendAttribute class contains Link element attributes and common attributes
- *
+ * LegendAttribute class contains Legend element attributes and common attributes
  */
 class LegendAttribute extends GlobalAttribute
 {

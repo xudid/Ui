@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains InputAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * InputAttribute class contains Link element attributes and common attributes
- *
+ * InputAttribute class contains Input element attributes and common attributes
  */
 class InputAttribute extends GlobalAttribute
 {

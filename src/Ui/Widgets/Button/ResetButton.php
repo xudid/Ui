@@ -1,6 +1,6 @@
 <?php
 namespace Ui\Widgets\Button;
-use Ui\HTML\Elements\NestedHtmlElement\Button;
+use Ui\HTML\Elements\Nested\Button;
 /**
 * 
 */
@@ -11,10 +11,5 @@ class ResetButton extends Button
 	{
 		parent::__construct($text);
 		$this->startTag->setAttribute("type", "reset");
-        
 	}
-
-	
 }
-
-?>

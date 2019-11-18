@@ -5,15 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains H4Attribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * H4Attribute class contains Link element attributes and common attributes
- *
+ * H4Attribute class contains H4 element attributes and common attributes
  */
 class H4Attribute extends GlobalAttribute
 {

@@ -1,10 +1,10 @@
 <?php
 namespace Ui\Views;
 use Ui\Model\EntityInformationHolder;
-use Ui\HTML\Elements\NestedHtmlElement\Form;
-use Ui\HTML\Elements\NestedHtmlElement\Div;
-use Ui\HTML\Elements\NestedHtmlElement\P;
-use Ui\HTML\Elements\EmptyElements\Br;
+use Ui\HTML\Elements\Nested\Form;
+use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\P;
+use Ui\HTML\Elements\Empties\Br;
 
 use Ui\Widgets\Input\TextInput;
 use Ui\Widgets\Input\SelectOption;

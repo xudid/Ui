@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains EmbedAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
  * EmbedAttribute class contains Embed element attributes and common
- *
  */
 class EmbedAttribute extends GlobalAttribute
 {

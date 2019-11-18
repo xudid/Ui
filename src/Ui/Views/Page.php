@@ -1,21 +1,30 @@
 <?php
 namespace Ui\Views;
 
-use Ui\HTML\Elements\NestedHtmlElement\{
-		NestedHtmlElement,
+use Ui\HTML\Elements\Nested\{
+		Nested,
 		Script,
-		HtmlElement,
-		BodyElement,
-		HeadElement
+		Html,
+		Body,
+		Head
 	};
 
-use Ui\Attributes\GlobalAttribute;
-class Page extends NestedHtmlElement{
+use Ui\HTML\Attributes\GlobalAttribute;
+use Ui\HTML\Elements\Empties\Link;
+/**
+ * Class Page
+ * @package Ui\Views
+ */
+class Page extends Nested{
 
 	protected $doctype="html";
 	private $htmle = null;
 	private $head = null;
 	private $body = null;
+	/**
+	 * @var array
+	 */
+	private array $scriptToEnd = [];
 
 
 	private function renderDoctype()
@@ -25,72 +34,137 @@ class Page extends NestedHtmlElement{
 	}
 
 
+	/**
+	 * Page constructor.
+	 */
 	public function __construct(){
 
-			$this->htmle = new HtmlElement();
 
-			$this->head = new HeadElement();
-			$this->body = new BodyElement();
+			$this->htmle = new Html();
 
-			$this->htmle->addElement($this->head);
-			$this->htmle->addElement($this->body);
+			$this->head = new Head();
+			$this->body = new Body();
+
+			$this->htmle->add($this->head);
+			$this->htmle->add($this->body);
 			return $this;
 	}
 
-	public function body()
-	{
-		return $this->body;
-	}
-
-	public function setBase($base){
+	/**
+	 * @param $base
+	 * @return $this
+	 */
+	public function setBase(string $base){
 		$this->head->setBase($base);
 		return $this;
 	}
 
-	public function setLang($lang){
-			$this->htmle->setAttribute(GlobalAttribute::langAttribute,$lang);
+	/**
+	 * @param $lang
+	 * @return $this
+	 */
+	public function setLang(string $lang){
+			$this->htmle->setAttribute(GlobalAttribute::LANG,$lang);
 			return $this;
 	}
 
-	public function setTitle($title){
+	/**
+	 * @param string $title
+	 * @return self
+	 */
+	public function setTitle(string $title){
 			$this->head->setTitle($title);
 			return $this;
 	}
 
-
-	public function addBodyElement($element){
-			$this->body->addElement($element);
+	/**
+	 * @param mixed$element
+	 * @return self
+	 */
+	public function addToBody($element){
+			$this->body->add($element);
 			return $this;
 	}
 
+	/**
+	 * @param $css
+	 */
 	public function addBodyCss($css)
 	{
-		$this->body->setClass($class);
+		$this->body->setClass($css);
 	}
 
-	public function addScript($script) {
-		
-            $this->head->addScript(new Script($script));
-            return $this;
+	/**
+	 * @param Script $script
+	 * @return void
+	 */
+	public function addScript(Script $script) {
+
+		$position = $script->getPosition();
+		if ($script instanceof Script && strcmp($position, Script::SCRIPT_TO_END)==0) {
+			$this->scriptToEnd[] = $script;
+
+		} elseif ($script instanceof Script && strcmp($position, Script::SCRIPT_TO_HEAD)==0) {
+			$this->head->addScript($script);
+		}
 	}
 
-	public function addLink($css) {
-            $this->head->addLink($css);
-            return $this;
+
+    /**
+     * Import css in the page head
+     * @param string $css : the css file path or URI
+     * @return self
+     */
+	public function importCss(...$cssPaths)
+	{
+
+		foreach ($cssPaths as $cssPath) {
+			$this->head->addLink($cssPath,"stylesheet");
+		}
+		return $this;
 
 	}
 
+	public function importScript(...$scripts)
+	{
+		foreach ($scripts as $script) {
+			$this->addScript($script);
+		}
+		return $this;
+	}
+
+	/**
+	 * @param $meta
+	 * @return $this
+	 */
 	public function addMeta($meta){
 		$this->head->addMeta($meta);
 		return $this;
 	}
 
-	public function __toString(){
+	public function importMeta(...$metas)
+	{
+		foreach ($metas as $meta) {
+			$this->addMeta($meta);
+		}
+	}
+
+	/**
+	 * @return string
+	 */
+	public function __toString():string{
+		foreach ($this->scriptToEnd as $script) {
+			$this->addToBody($script);
+		}
 		$string ="";
 		$string = $string.$this->renderDoctype();
 		$string = $string.$this->htmle->__toString() ;
 		return $string;
 	}
+
+    /**
+     * @Deprecated use __toString() instead
+     */
 	public function render(){
 		$this->renderDoctype();
 
@@ -109,4 +183,3 @@ class Page extends NestedHtmlElement{
 	$this->renderHtmlCloseBalise();
 	}
 }
-?>

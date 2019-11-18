@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains WbrAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * WbrAttribute class contains Link element attributes and common attributes
- *
+ * WbrAttribute class contains  Wbr element attributes and common attributes
  */
 class WbrAttribute extends GlobalAttribute
 {

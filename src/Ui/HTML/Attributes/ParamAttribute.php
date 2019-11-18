@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ParamAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
  * ParamAttribute class contains Param element attributes and common attributes
- *
  */
 class ParamAttribute extends GlobalAttribute
 {

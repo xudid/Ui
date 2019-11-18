@@ -5,24 +5,15 @@ namespace Ui\HTML\Attributes;
  * This file contains BodyAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * BodyAttribute class contains Link element attributes and common attributes
- *
+ *BodyAttribute class contains Body element attributes and common attributes
  */
 class BodyAttribute extends GlobalAttribute
 {
-  /**
-   * This file contains ButtonAttribute class and its methods.
-   * @package Ui\HTML\Attributes
-   * @author Didier Moindreau
-   * @license
-   *
-   */
+    /**
+     * BodyAttribute constructor.
+     * @param $name
+     * @param $value
+     */
     public function __construct($name, $value)
     {
         parent::__construct($name, $value);

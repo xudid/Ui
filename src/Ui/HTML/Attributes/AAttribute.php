@@ -6,16 +6,10 @@ use Ui\HTML\Attributes\GlobalAttribute;
  * This file contains AAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
+ * AAttribute class contains A element attributes and common attributes
  *
  */
 
-
-/**
- *
- * AAttribute class contains Link element attributes and common attributes
- *
- */
 class AAttribute extends GlobalAttribute
 {
     const DOWNLOAD = "download";

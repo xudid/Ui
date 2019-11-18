@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ButtonAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * ButtonAttribute class contains Link element attributes and common attributes
- *
+ * ButtonAttribute class contains Button element attributes and common attributes
  */
 class ButtonAttribute extends GlobalAttribute
 {

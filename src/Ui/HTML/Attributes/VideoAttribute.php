@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains VideoAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
  * VideoAttribute class contains Video element attributes and common attributes
- *
  */
 class VideoAttribute extends GlobalAttribute
 {

@@ -5,15 +5,9 @@ namespace Ui\HTML\Attributes;
  * This file contains AudioAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
+ * AudioAttribute class contains Audio element attributes and common attributes
  */
 
-/**
- *
- * AudioAttribute class contains Link element attributes and common attributes
- *
- */
 class AudioAttribute extends GlobalAttribute
 {
     const AUTOPLAY = "autoplay";

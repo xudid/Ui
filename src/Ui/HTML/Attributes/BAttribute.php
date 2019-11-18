@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains LinkAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * LinkAttribute class contains Link element attributes and common attributes
- *
+ * BAttribute class contains B element attributes and common attributes
  */
 class BAttribute extends GlobalAttribute
 {

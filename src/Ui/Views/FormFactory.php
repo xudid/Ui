@@ -1,250 +1,326 @@
 <?php
-namespace Brick\Views;
-use Ui\HTML\Elements\NestedHtmlElement\{Form,P};
-
-use Ui\HTML\Elements\EmptyElements\Br;
-
-use Ui\HTML\Elements\NestedHtmlElement\Div;
-
-
-use Ui\Widgets\Button\{SubmitButton};
-
-
-use Ui\Model\Association;
-use Ui\Model\EntityInformationHolder;
-
-use Ui\Widgets\Table\DivRowTable;
-use Ui\Widgets\Table\TableLegend;
-use Ui\Widgets\Table\TableColumn;
+namespace Ui\Views;
 
 use Doctrine\ORM\PersistentCollection;
+use Ui\HTML\Elements\Nested\{Form, P};
+use Ui\Model\DefaultResolver;
+use Ui\Views\Generator\FormFieldGenerator;
+use Ui\Views\Generator\ManyToManyViewGenerator;
+use Ui\Views\Generator\ManyToOneViewGenerator;
+use Ui\Views\Generator\OneToManyViewGenerator;
+use Ui\Views\Generator\OneToOneViewGenerator;
+use Ui\Views\Holder\ClassInformationHolder;
+use Ui\Views\Holder\EntityInformationHolder;
+use Ui\Widgets\Button\{SubmitButton};
 
 class FormFactory
 {
 
     private $classname = "";
-    private $shortClassName="";
+    private $shortClassName = "";
     private $entity = null;
-    private $colNames = null;
-    private $getMethodNames = null;
     private $frm = null;
-    private $view =null;
-    private $accessFilter=null;
+    private $accessFilter = null;
     private $ffds = null;
-    private $formTitle=null;
-	  private $formAction ="";
-	  private $formMethod="";
-    //private $writables =[];
-    //private $viewables =[];
+    private $formTitle = null;
+    private $formAction = "";
+    private $formMethod = "";
     private $inline = false;
-    private $eih=null;
-/**
-*FormFactory
-*@param $className : class name with complete namespace
-*or an Object
-*
-*@param $accessFilter : null generated form presents all the
-*                 fields of the class
-*               default use an accessFilter named :
-*                 classname + FormFilter in the same directory of the class
-*               a FormFilter object
-*
-*@param $action : form
-*
-*@param $method :the method used to send data "GET"/"POST"...
-*/
-    public function __construct($className,$accessFilter,$action,$method)
-    {
-      $this->eih = new EntityInformationHolder($className);
-      $this->setAccessFilter($accessFilter);
-      $this->ffg = new FormFieldGenerator($className,$accessFilter);
-      $this->classname = $this->eih->getClassName();
+    private $informationHolder = null;
 
-      $this->shortClassName = $this->eih->getShortClassName();
-      if($this->eih->hasEntity())
-      {
-        $this->entity = $this->eih->getEntity();
-      }
+    /**
+     *FormFactory
+     * @param $className : class name with complete namespace
+     * or an Object
+     *
+     * @param $accessFilter : null generated form presents all the
+     *                 fields of the class
+     *                 default use an accessFilter named :
+     *                 classname + FormFilter in the same directory of the class
+     *                 a FormFilter object
+     *
+     * @param $action : form
+     * @param $method :the method used to send data "GET"/"POST"...
+     * @throws \ReflectionException
+     */
+    public function __construct($entity, $accessFilter, ?ViewFieldsDefinitionInterface $fieldsDefinitions = null, string $action, string $method)
+    {
+        //Init InformationHolderInterface
+        if (is_string($entity)) {
+            $this->informationHolder = new ClassInformationHolder($entity);
+        } else {
+            $this->informationHolder = new EntityInformationHolder($entity);
+        }
+        //Init class names
+        $this->classname = $this->informationHolder->getClassName();
+        $this->shortClassName = $this->informationHolder->getShortClassName();
+
+        //Init Access Filter
+        $this->setAccessFilter($accessFilter);
+
+
+        //Init Entity
+        if ($this->informationHolder->hasEntity()) {
+            $this->entity = $this->informationHolder->getEntity();
+            //Init FormFieldGenerator
+            $this->ffg = new FormFieldGenerator($this->entity, $this->accessFilter);
+
+        } else {
+            //Init FormFieldGenerator
+            $this->ffg = new FormFieldGenerator($this->classname, $this->accessFilter);
+
+        }
+
+        //Init Form variables
         $this->formAction = $action;
-		    $this->formMethod = $method;
-        $this->ffds = $this->eih->getFormFieldDefinitions();
+        $this->formMethod = $method;
+
+
+        //Setting FieldsDefinitions
+        if ($fieldsDefinitions !== null) {
+            $this->ffds = $fieldsDefinitions;
+
+        } else {
+            $ffdsClassName = DefaultResolver::getFieldDefinitions($this->classname);
+            $this->ffds = new $ffdsClassName($this->classname);
+        }
+        $this->view = new EntityView();
         $this->frm = new Form();
-        $this->view = new Div();
-        $this->view->addElement($this->frm);
         $this->frm->setAction($this->formAction);
         $this->frm->setMethod($this->formMethod);
         $this->frm->setName($this->classname);
     }
 
+    private function setAccessFilter($accessFilter)
+    {
+        if ($accessFilter == null) {
+            $this->accessFilter = null;
+        }
+        if ($accessFilter === "default") {
+            $accessFilterName = DefaultResolver::getFilter($this->classname);
+            $this->accessFilter = new $accessFilterName();
+
+        } else {
+            $this->accessFilter = $accessFilter;
+
+        }
+    }
+
     public function getForm()
     {
-      if(!$this->inline)
-      {
-        $this->frm->addCssClass("form");
-      }
-      else
-      {
-        $this->frm->addCssClass("form_inline");
-      }
-
-      if(!$this->inline)
-      {
-        $title = new P($this->classname);
-        $title->addCssClass("form_title");
-        $t="";
-        if(isset($this->formTitle))
-        {
-          $t = $this->formTitle;}
-          else
-          {
-            $t = $this->shortClassName;
-          }
-          $title->addElement($t);
-          $this->frm->addElement($title);
+        if (!$this->inline) {
+            $this->frm->setClass("form");
+        } else {
+            $this->frm->setClass("form_inline");
         }
-        $this->frm->addElement(new Br());
+
+        if (!$this->inline) {
+            $title = new P();
+            $title->setClass("form_title");
+            $t = "";
+            if (isset($this->formTitle)) {
+                $t = $this->formTitle;
+            } else {
+                $t = $this->shortClassName;
+            }
+            $title->add($t);
+            $this->frm->add($title);
+        }
 
         //Get partial form for class or object given
-        $fields = $this->ffg->getPartialForm();
-        //add entity fields
-        $this->frm->addElement($fields);
+        $this->frm->add($this->ffg->getPartialForm());
 
         //Test if entity or class has associations
-        if($this->eih->hasAssociation())
-        {
-          //get entity associations
-          $associations = $this->eih->getAssociations();
-          //Foreach association
-          foreach ($associations as $key => $association)
-          {
-            //test if entity exists for association
-            //get entity
+        if ($this->informationHolder->hasAssociation()) {
+            $associations = $this->informationHolder->getAssociations();
+            $this->processAssociations($associations);
 
-            $associationType = $association->getType();
-
-
-            if($associationType=="ManyToOne"||$associationType=="ManyToMany")
-            {
-              //print_r(__FILE__.__LINE__." association OneToOne <br>");
-              $this->processManyTypeAssociation($association);
-            }
-            if($associationType=="OneToOne")
-            {
-              //print_r(__FILE__.__LINE__." association OneToOne <br>");
-              $this->processOneTypeAssociation($association);
-            }
-
-              if($associationType=="OneToMany")
-              {
-                $this->processOneTypeAssociation($association);
-              }
-          }
         }
         $submitButton = new SubmitButton("Valider");
-        if($this->inline)
-        {
-          $submitButton->addCssClass("form_inline_button");
+        if ($this->inline) {
+            $submitButton->setClass("form_inline_button");
         }
-        $this->frm->addElement($submitButton);
-        $this->view->addCssClass("form");
+        $this->frm->add($submitButton);
+        $this->view->add($this->frm);
         return $this->view;
-}
+    }
 
-private function processManyTypeAssociation(Association $association)
-{
-  //print_r(__FILE__.__LINE__." association is ".$association->getType()."<br>");
-  $classname = $association->getClassname();
-    //We want to Edit Something
-    if($this->eih->hasEntity())
+    private function processAssociations(array $fields)
     {
-      $val = $this->eih->getEntityFieldValue($association->getFieldname());
-      if(!($val instanceof \Doctrine\ORM\PersistentCollection))
-      {
-        $ffg1 = new FormFieldGenerator($val,"default");
-        //Get partial Form
-        $fields1 = $ffg1->getPartialForm();
+        foreach ($fields as $key => $field) {
+            $associationType = $field->getAssociationType();
+            $className = $field->getType();
+            if ($this->informationHolder->hasEntity()) {
+
+                $value = $this->informationHolder->getEntityFieldValue($field->getName());
+                $view = null;
+                if ($value != null) {
+                    //ManyToOne Association display a form
+                    if ($associationType == "ManyToOne") {
+                        $fieldGenerator = new FormFieldGenerator($className, "default");
+                        $view = $fieldGenerator->getPartialForm();
+
+                    }
+                    //ManyToMany Association if "new" display a form if "edit" display a table
+                    if ($associationType == "ManyToMany") {
+                        $view = (new ManyToManyViewGenerator($className))->getView($value,true);
+
+                    }
+                    //OneToMany Association if "new" display a form if "edit" display a table
+                    if ($associationType == "OneToMany") {
+                        $view = (new OneToManyViewGenerator($className))->getView($value,true);
+
+                    }
+                    //ManyToOne Association display a form
+                    if ($associationType == "OneToOne") {
+                        $fieldGenerator = new FormFieldGenerator($className, "default");
+                        $view = $fieldGenerator->getPartialForm();
+
+                    }
+                } else {
+
+                }
+                $this->view->add($view);
+            } else {
+                $fieldGenerator = new FormFieldGenerator($className, "default");
+                $view = $fieldGenerator->getPartialForm();
+                $this->frm->add($view);
+            }
+
+        }
+
+    }
+
+
+    private function processManyToOneAssociation($field)
+    {
+        //print_r(__FILE__.__LINE__." association is ".$field->getAssociationType()."<br>");
+        $className = $field->getType();
+        //We want to Edit Something
+        $fieldGenerator = null;
+        $val = null;
+        $partial = null;
+        $hasentity = $this->informationHolder->hasEntity();
+        if ($hasentity) {
+            $val = $this->informationHolder->getEntityFieldValue($field->getName());
+            if ($val !== null) {
+               $partial = new DataTableView(null, $className, "default");
+            }
+        } //We want to create something
+        if (!$hasentity || $val === null) {
+            //Get partial Form
+
+        }
+
+
         //Add partiel Form to form
-        $this->frm->addElement($fields1);
-      }
-      else
-      {
-        $collection = $val->getValues();
-        $ei = new EntityInformationHolder($classname);
-        $title = $ei->getDisplayFor($ei->getShortClassName());
-        $drt = new DivRowTable([new TableLegend($title, TableLegend::TOP_LEFT)],
-        [new TableColumn("name", "Roles")],
-        $collection ,false," ");
-        $this->frm->addElement($drt);
-      }
+        $this->frm->add($partial);
 
     }
-    //We want to create somethong
-    else
+
+    /**
+     * Add inputs to the form for given Field witch represents a OneToOne Association
+     * If we work on an object try to get the field value and generate a filled form
+     * else if we work on a class or field has null value generate an empty form
+     * @param $field
+     */
+    private function processOneToOneAssociation($field)
     {
-      $ffg1 = new FormFieldGenerator($classname,"default");
-      //Get partial Form
-      $fields1 = $ffg1->getPartialForm();
-      //Add partiel Form to form
-      $this->frm->addElement($fields1);
+        //print_r(__FILE__.__LINE__." association is OneToMany <br>");
+        $classname = $field->getType();
+        $informationHolder = null;
+        $entity = null;
+        if ($this->informationHolder->hasEntity()) {
+            $entity = $this->informationHolder->getEntity();
+            if ($entity !== null) {
+                $informationHolder = new EntityInformationHolder($entity);
+            }
+
+        }
+
+        if ($entity === null) {
+            $informationHolder = new ClassInformationHolder($classname);
+        }
+        $shortClassName = $informationHolder->getShortClassName();
+
+        /** @var TYPE_NAME $informationHolder */
+        $ffdsClassName = DefaultResolver::getFieldDefinitions($classname);
+        $ffds = new $ffdsClassName($classname);
+        $display = $ffds->getDisplayFor($shortClassName);
+        $action = "";
+        $button = new SubmitButton($display);
+        if ($this->formAction == "update") {
+            $action = "edit";
+        }
+        if ($this->formAction == "new") {
+            $action = "new";
+        }
+        if ($this->entity != null) {
+            $formaction = strtolower("/" . $shortClassName) . "/" . $this->entity->getId() . "/" . $action;
+            $button->setFormAction($formaction);
+        }
+        $this->frm->add($button);
     }
 
-}
+    private function processManyToManyAssociation($field)
+    {
+        print_r(__FILE__.__LINE__." association is ".$field->getAssociationType()."<br>");
+        $className = $field->getType();
+        $fieldGenerator = null;
+        $partial = null;
+        if ($this->informationHolder->hasEntity()) {
+            $val = $this->informationHolder->getEntityFieldValue($field->getName());
+            if ($val !== null) {
+                $partial = new DataTableView(null, $className, "default");
+            } else {
+                //Get partial Form
+                $fieldGenerator = new FormFieldGenerator($className, "default");
+                $partial = $fieldGenerator->getPartialForm();
+            }
 
-private function processOneTypeAssociation(Association $association)
-{
-  //print_r(__FILE__.__LINE__." association is OneToMany <br>");
+        } else {
+            //Get partial Form
+            $fieldGenerator = new FormFieldGenerator($className, "default");
+            $partial = $fieldGenerator->getPartialForm();
+        }
+        $this->frm->add($partial);
+    }
 
-  $classname = $association->getClassname();
-  $eih1 = new EntityInformationHolder($classname);
-  $display = $eih1->getDisplayFor($eih1->getShortClassName());
-  $action ="";
-  $button = new SubmitButton($display);
-  if($this->formAction == "update")
-  {
-    $action = "edit";
-  }
-  if($this->formAction == "new")
-  {
-    $action = "new";
-  }
-  if($this->entity !=null)
-  {
-    $formaction =strtolower("/".$eih1->getShortClassName())."/".$this->entity->getId()."/".$action;
-    $button->setFormAction($formaction);
-  }
-  $this->frm->addElement( $button);
-}
+    private function processOneToManyAssociation($field)
+    {
+        $className = $field->getType();
 
+        $fieldGenerator = null;
+        $partial = null;
+        if ($this->informationHolder->hasEntity()) {
+            $val = $this->informationHolder->getEntityFieldValue($field->getName());
+            if ($val !== null) {
+
+                $partial = (new DataTableView(null, $className, "default"))->withClickableRows("/role/edit")->getView();
+            } else {
+                //Get partial Form
+                $fieldGenerator = new FormFieldGenerator($className, "default");
+                $partial = $fieldGenerator->getPartialForm();
+            }
+
+        } else {
+            //Get partial Form
+            $fieldGenerator = new FormFieldGenerator($className, "default");
+            $partial = $fieldGenerator->getPartialForm();
+        }
+        $this->frm->add($partial);
+
+    }
 
     public function setInline()
     {
-        $this->inline = true ;
-    }
-
-    private function setAccessFilter($accessFilter)
-    {
-      if($accessFilter == null)
-      {
-        $this->accessFilter = null;
-      }
-      if($accessFilter == "default")
-      {
-        $this->accessFilter =
-                      $this->eih->getEntityAccessFilter();
-      }
-      else
-      {
-        $this->accessFilter = $accessFilter;
-
-      }
+        $this->inline = true;
     }
 
     public function setFormTitle($title)
     {
-      if(isset($title)){
-        $this->formTitle=$title;
-      }
+        if (isset($title)) {
+            $this->formTitle = $title;
+        }
     }
 }
-
-?>

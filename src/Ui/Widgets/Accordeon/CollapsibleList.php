@@ -20,7 +20,7 @@ class CollapsibleList extends ItemList
 
   public function addItem($item)
   {
-    $this->addElement($item);
+    $this->add($item);
   }
 }
 

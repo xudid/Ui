@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains ArticleAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * ArticleAttribute class contains Link element attributes and common attributes
- *
+ * ArticleAttribute class contains Article element attributes and common attributes
  */
 class ArticleAttribute extends GlobalAttribute
 {

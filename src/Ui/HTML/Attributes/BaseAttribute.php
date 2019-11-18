@@ -5,14 +5,7 @@ namespace Ui\HTML\Attributes;
  * This file contains BaseAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-/**
- *
- * BaseAttribute class contains Link element attributes and common attributes
- *
+ * BaseAttribute class contains Base element attributes and common attributes
  */
 class BaseAttribute extends GlobalAttribute
 {

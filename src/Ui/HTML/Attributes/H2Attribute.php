@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains H2Attribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * H2Attribute class contains Link element attributes and common attributes
- *
+ * H2Attribute class contains H2 element attributes and common attributes
  */
 class H2Attribute extends GlobalAttribute
 {

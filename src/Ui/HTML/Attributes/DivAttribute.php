@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains DivAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
- * DivAttribute class contains Link element attributes and common attributes
- *
+ * DivAttribute class contains Div element attributes and common attributes
  */
 class DivAttribute extends GlobalAttribute
 {

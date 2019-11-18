@@ -4,15 +4,7 @@ namespace Ui\HTML\Attributes;
  * This file contains FooterAttribute class and its methods.
  * @package Ui\HTML\Attributes
  * @author Didier Moindreau
- * @license
- *
- */
-
-
-/**
- *
  * FooterAttribute class contains Footer element attributes and common attributes
- *
  */
 class FooterAttribute extends GlobalAttribute
 {

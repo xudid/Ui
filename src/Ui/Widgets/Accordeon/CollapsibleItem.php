@@ -1,8 +1,8 @@
 <?php
 namespace Ui\Widgets\Accordeon;
 
-use Ui\HTML\Elements\NestedHtmlElement\Li;
-use Ui\HTML\Elements\NestedHtmlElement\Div;
+use Ui\HTML\Elements\Nested\Li;
+use Ui\HTML\Elements\Nested\Div;
 
 /**
  *
@@ -19,19 +19,19 @@ class CollapsibleItem extends Li
     $this->header->setClass("collapsible-header");
     $this->content=new Div();
     $this->content->setClass("collapsible-body");
-    $this->addElement($this->header);
-    $this->addElement($this->content);
+    $this->add($this->header);
+    $this->add($this->content);
 
   }
 
   public function setHeader($header)
   {
-    $this->header->addElement($header);
+    $this->header->add($header);
   }
 
   public function setContent($content)
   {
-    $this->content->addElement($content);
+    $this->content->add($content);
   }
 }
  

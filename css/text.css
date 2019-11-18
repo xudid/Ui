@@ -1,0 +1,27 @@
+/*Text*/
+/*Colors*/
+.txt-white{
+    color: white;
+}
+/*Colors*/
+/*Alignement*/
+.txt-center{
+    text-align:center
+}
+.txt-right{
+    text-align: right;
+}
+.txt-left{
+    text-align: left;
+}
+/*Alignement*/
+
+/*Decorations*/
+.no-text-decoration{
+    text-decoration: none;
+}
+
+.text-decoration-white{
+    text-decoration-color: white;
+}
+/*Decorations*/
