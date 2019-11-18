@@ -2,15 +2,25 @@
 namespace Ui\Widgets\Views;
 
 use Ui\HTML\Elements\BaseElement\{H1,H2,H3,H4,H5,H6};
+
 /**
- * 
+ * @author Didier Moindreau <dmoindreau@gmail.com>
+ * @license M.I.T
  */
 class Title 
 {
     private $element = null;
-    function __construct(string $level)
+    /**
+     * [__construct description]
+     * @param integer $level :[description]
+     * @param string $text :[<description>]
+     * @return self :[<description>]
+     */
+    function __construct(int $level, string $text)
     {
-        $this->element = new "H".$level();
+        $elementname = 'Ui\HTML\Elements\BaseElement\H'.$level;
+        $this->element = new $elementname($text);
+        return $this;
     }
 
     public function  __toString()
