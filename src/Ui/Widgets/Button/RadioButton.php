@@ -8,7 +8,12 @@ class RadioButton extends Input
 	private $name = "";
 	private $value ="";
 
-	function __construct($name,$value)
+	/**
+	 * 	
+	 * @param string $name  :the tag name for forms processing
+	 * @param string $value :the tag value for forms processing
+	 */
+	function __construct(string $name,string $value)
 	{
 		parent::__construct();
 		$this->name = $name;

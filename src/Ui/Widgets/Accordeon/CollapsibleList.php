@@ -11,13 +11,20 @@ use Ui\Widgets\Lists\ItemList;
 class CollapsibleList extends ItemList
 {
 
-  function __construct()
+  /**
+   * [__construct description]
+   */
+  public function __construct()
   {
     parent::__construct();
     $this->setClass("collapsible");
 
   }
 
+  /**
+   * [addItem description]
+   * @param [type] $item [description]
+   */
   public function addItem($item)
   {
     $this->add($item);

@@ -12,6 +12,10 @@ class CollapsibleItem extends Li
 
   private $header=null;
   private $content=null;
+  /**
+   * __construct description
+   * @param   $[name] [<description>]
+   */
   function __construct()
   {
     parent::__construct();
@@ -23,7 +27,11 @@ class CollapsibleItem extends Li
     $this->add($this->content);
 
   }
-
+  /**
+   * [setHeader description]
+   * @param mixed $header :the header
+   * @param  mixed  $name :the header name
+   */
   public function setHeader($header)
   {
     $this->header->add($header);
