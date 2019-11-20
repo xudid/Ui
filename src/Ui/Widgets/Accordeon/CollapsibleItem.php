@@ -1,45 +1,44 @@
 <?php
+
 namespace Ui\Widgets\Accordeon;
 
-use Ui\HTML\Elements\Nested\Li;
 use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\Li;
 
 /**
- *
+ * Class CollapsibleItem
+ * @package Ui\Widgets\Accordeon
  */
 class CollapsibleItem extends Li
 {
+    private ?Div $header = null;
+    private ?Div $content = null;
 
-  private $header=null;
-  private $content=null;
-  /**
-   * __construct description
-   * @param   $[name] [<description>]
-   */
-  function __construct()
-  {
-    parent::__construct();
-    $this->header=new Div();
-    $this->header->setClass("collapsible-header");
-    $this->content=new Div();
-    $this->content->setClass("collapsible-body");
-    $this->add($this->header);
-    $this->add($this->content);
+    /**
+     * CollapsibleItem constructor.
+     */
+    function __construct()
+    {
+        parent::__construct();
+        $this->header = new Div();
+        $this->header->setClass("collapsible-header");
+        $this->content = new Div();
+        $this->content->setClass("collapsible-body");
+        $this->add($this->header);
+        $this->add($this->content);
+    }
 
-  }
-  /**
-   * [setHeader description]
-   * @param mixed $header :the header
-   * @param  mixed  $name :the header name
-   */
-  public function setHeader($header)
-  {
-    $this->header->add($header);
-  }
+    /**
+     * @param mixed $header :the header
+     * @param mixed $name :the header name
+     */
+    public function setHeader($header)
+    {
+        $this->header->add($header);
+    }
 
-  public function setContent($content)
-  {
-    $this->content->add($content);
-  }
+    public function setContent($content)
+    {
+        $this->content->add($content);
+    }
 }
- 
