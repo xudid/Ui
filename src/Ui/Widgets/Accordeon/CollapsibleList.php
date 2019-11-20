@@ -1,34 +1,29 @@
 <?php
-namespace Ui\Widgets\Accordeon;
 
+namespace Ui\Widgets\Accordeon;
 use Ui\Widgets\Lists\ItemList;
 
-
-
 /**
- *Contains CollapsibleItems 
+ * Class CollapsibleList contains CollapsibleItems
+ * @package Ui\Widgets\Accordeon
  */
 class CollapsibleList extends ItemList
 {
 
   /**
-   * [__construct description]
+   * CollapsibleList constructor.
    */
   public function __construct()
   {
     parent::__construct();
     $this->setClass("collapsible");
-
   }
 
-  /**
-   * [addItem description]
-   * @param [type] $item [description]
-   */
+/**
+ * @param $item
+ */
   public function addItem($item)
   {
     $this->add($item);
   }
 }
-
- ?>
