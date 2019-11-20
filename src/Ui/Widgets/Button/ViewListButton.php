@@ -1,12 +1,17 @@
 <?php
+
 namespace Ui\Widgets\Button;
 use Ui\HTML\Elements\Nested\Button;
+
 /**
- *
+ * Class ViewListButton
+ * @package Ui\Widgets\Button
  */
 class ViewListButton extends Button
 {
-
+/**
+ * ViewListButton constructor.
+ */
   function __construct()
   {
     $text = '<i class="material-icons" style="font-size:16px;color:green">view_list</i>';
@@ -14,4 +19,3 @@ class ViewListButton extends Button
 		$this->startTag->setAttribute("type", "button");
   }
 }
-
