@@ -9,18 +9,19 @@ use Ui\HTML\Elements\Nested\A;
  */
 class ClickableImage extends A
 {
-  private $img=null;
+  private ?Img $img=null;
   /**
    * @param string $href
-   * @param string $imagepath
-   * @param string $imgalttext
+   * @param string $imagePath
+   * @param string $imageText
    */
-  public function __construct(string $href,$imagepath,$imgalttext)
+  public function __construct(string $href, string $imagePath, string $imageText)
   {
     parent::__construct($href);
-    if (isset($imagepath) && isset($imgalttext)) {
-    	$this->img=new Img($imagepath,$imgalttext);
+    if (isset($imagePath) && isset($imageText)) {
+    	$this->img=new Img($imagePath,$imageText);
     	$this->add($this->img);
     }
   }
 }
+
