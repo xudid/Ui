@@ -20,6 +20,7 @@ class NamedFieldset extends Fieldset
     parent::__construct();
     $legend = new Legend($legend);
     $this->add($legend);
+    return this;
   }
 }
 
