@@ -1,12 +1,18 @@
 <?php
+
 namespace Ui\Widgets\Button;
 use Ui\HTML\Elements\Empties\Input;
 use Ui\HTML\Elements\Nested\Label;
+
+/**
+ * Class RadioButton
+ * @package Ui\Widgets\Button
+ */
 class RadioButton extends Input
 {
-	private $label = null;
-	private $name = "";
-	private $value ="";
+	private ?Label $label = null;
+	private string $name = "";
+	private string $value ="";
 
 	/**
 	 * 	
