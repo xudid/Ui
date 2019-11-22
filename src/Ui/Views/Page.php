@@ -9,11 +9,10 @@ use Ui\HTML\Elements\Nested\{Body, Head, Html, Nested, Script};
  * Class Page
  * @package Ui\Views
  */
-class Page extends Nested
+class Page extends Html
 {
 
-    protected string $doctype = "html";
-    private $htmle = null;
+    protected string $doctype = "-";
     private $head = null;
     private $body = null;
     /**
@@ -27,18 +26,16 @@ class Page extends Nested
         return "<!DOCTYPE " . $this->doctype . '>';
     }
 
-
     /**
      * Page constructor.
      */
     public function __construct()
     {
-	    parent::__construct();
-        $this->htmle = new Html();
+    	parent::__construct();
         $this->head = new Head();
         $this->body = new Body();
-        $this->htmle->add($this->head);
-        $this->htmle->add($this->body);
+        $this->add($this->head);
+        $this->add($this->body);
         return $this;
     }
 
@@ -78,7 +75,7 @@ class Page extends Nested
      */
     public function feedBody(...$elements)
     {
-        $this->body->feed($elements);
+        $this->body->feed(...$elements);
         return $this;
     }
 
@@ -151,12 +148,9 @@ class Page extends Nested
     public function __toString(): string
     {
         foreach ($this->scriptToEnd as $script) {
-            $this->addToBody($script);
+            $this->body->add($script);
         }
-        $string = "";
-        $string = $string . $this->renderDoctype();
-        $string = $string . $this->htmle->__toString();
-        return $string;
+        return parent::__toString();
     }
 
     /**
