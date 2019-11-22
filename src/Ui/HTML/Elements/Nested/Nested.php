@@ -1,5 +1,6 @@
 <?php
 namespace Ui\HTML\Elements\Nested;
+use ArrayAccess;
 use Ui\HTML\Elements\Bases\Base;
 use Ui\HTML\Elements\Empties\EmptyElement;
 
@@ -138,9 +139,11 @@ class Nested extends Base implements ArrayAccess
     
     private function getChildsString($child) 
 	{
-		if (is_array($child)) {
-			foreach ($child as $subchild) {
-				return $this->getChildsString($subchild);
+		if($child !== $this) {
+			if (is_array($child)) {
+				foreach ($child as $subchild) {
+					return $this->getChildsString($subchild);
+				}
 			}
 		}
 
