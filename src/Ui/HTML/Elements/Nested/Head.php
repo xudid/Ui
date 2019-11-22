@@ -9,11 +9,11 @@ use Ui\HTML\Elements\Empties\Meta;
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
 class Head extends Nested{
-	private $title = "";
-	protected $charset="utf-8";
-	private $meta =[];
-	private $scripts = [];
-	private $links = [];
+	private string $title = "";
+	protected string $charset="utf-8";
+	private array $meta =[];
+	private array $scripts = [];
+	private array $links = [];
 	private $base =null ;
 
 	/**
@@ -39,36 +39,27 @@ class Head extends Nested{
 	 */
 	private function generateContentString(){
 		$this->contentString = $this->startTag."\r\n";
-
 		if($this->base !=null){
 			$this->contentString = $this->contentString.$this->base ;
 		}
 		if($this->title !=null){
-
 			$this->contentString = $this->contentString.$this->renderTitle();
-
 		}
 
 		$this->contentString = $this->contentString.$this->renderMeta();
 
 		if(count($this->scripts)>0){
-
 			$this->contentString = $this->contentString.$this->renderScripts() ;
-
 		}
-
 		if(count($this->links)>0){
 			$this->contentString = $this->contentString.$this->renderLink() ;
 		}
-
-
-		if(count($this->childElements)>0){
-			foreach ($this->childElements as $e){
+		if(count($this->childs)>0){
+			foreach ($this->childs as $e){
 				$this->contentString = $this->contentString.$e ;
 			}
 		}
 		$this->contentString = $this->contentString.$this->endTag."\r\n";
-
 	}
 
 	/**
@@ -166,4 +157,3 @@ class Head extends Nested{
 		return $this;
 	}
 }
-

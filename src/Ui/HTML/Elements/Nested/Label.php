@@ -16,7 +16,7 @@ class Label extends Nested{
 		parent::__construct("label");
 		
 		if(isset($label)){
-			$this->addElement($label);
+			$this->add($label);
 		}
 	}
 
@@ -48,9 +48,9 @@ class Label extends Nested{
 	private function generateContentString()
 	{
 			$this->contentString = $this->startTag;
-			if(count($this->childElements)>0)
+			if(count($this->childs)>0)
 			{
-					foreach ($this->childElements as $e)
+					foreach ($this->childs as $e)
 					{
 							$this->contentString = $this->contentString.$e ;
 					}

@@ -35,8 +35,10 @@ class Nested extends Base implements \ArrayAccess
      */
     public function feed(...$childs)
     {
-        foreach ($childs as $child) {
-            $this->add($child);
+        if (is_array( $childs ) || !$childs instanceof Traversable) {
+            foreach ($childs as $child) {
+                $this->add($child);
+            }
         }
         return $this;
     }
@@ -115,19 +117,12 @@ class Nested extends Base implements \ArrayAccess
 
     public function setFirstElement($element){
       if($element !=null){
-          \array_unshift($this->childs,$element);
+          array_unshift($this->childs,$element);
 
       }
       return $this;
     }
 
-    public function populate(...$children){
-        if (is_array( $children ) || !$children instanceof Traversable) {
-            foreach ($children as $k =>$child) {
-                $this->add($child);
-            }
-        }
-    }
     private function generateContentString()
     {
         $this->contentString = $this->startTag;
@@ -137,10 +132,8 @@ class Nested extends Base implements \ArrayAccess
           {
             $this->contentString = $this->contentString.$e ;
           }
-            $this->contentString = $this->contentString ;
         }
         $this->contentString = $this->contentString.$this->endTag;
-
     }
 //implements ArrayAccess interface
 

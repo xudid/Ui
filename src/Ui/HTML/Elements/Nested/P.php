@@ -1,6 +1,5 @@
 <?php
 namespace Ui\HTML\Elements\Nested;
-use Ui\HTML\Elements\Nested\Nested;
 
 /**
  * Class P
@@ -11,7 +10,8 @@ class P extends Nested{
 	/**
 	 * P constructor.
 	 */
-	public function __construct(){
+	public function __construct(...$elements){
 		parent::__construct("p");
+		$this->feed($elements);
 	}
 }
