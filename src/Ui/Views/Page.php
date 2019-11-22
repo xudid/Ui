@@ -55,7 +55,7 @@ class Page extends Html
      */
     public function setLang(string $lang)
     {
-        $this->htmle->setAttribute(GlobalAttribute::LANG, $lang);
+        $this->setAttribute(GlobalAttribute::LANG, $lang);
         return $this;
     }
 
