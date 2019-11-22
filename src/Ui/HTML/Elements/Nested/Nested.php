@@ -10,9 +10,12 @@ use Ui\HTML\Elements\Bases\Base;
 class Nested extends Base implements \ArrayAccess
 {
     /**
-     * @var array|null
+     * @var array
      */
-    protected $childElements=null;
+    protected array $childs=[];
+
+    protected ?Nested $root = null;
+    protected ?Nested $parent = null;
 
     /**
      * Nested constructor.
@@ -22,8 +25,60 @@ class Nested extends Base implements \ArrayAccess
     public function __construct(string $elementName)
     {
         parent::__construct($elementName);
-        $this->childElements = array();
+        $this->childs = array();
         return $this;
+    }
+
+    /**
+     * @param mixed ...$childs
+     * @return $this
+     */
+    public function feed(...$childs)
+    {
+        foreach ($childs as $child) {
+            $this->add($child);
+        }
+        return $this;
+    }
+
+    /**
+     * @return Nested|null
+     */
+    public function getRoot(): ?Nested
+    {
+        return $this->root;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRoot():bool
+    {
+        return is_null($this->root);
+    }
+
+    /**
+     * @param Nested|null $root
+     */
+    public function setRoot(?Nested $root): void
+    {
+        $this->root = $root;
+    }
+
+    /**
+     * @return Nested|null
+     */
+    public function getParent(): ?Nested
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Nested|null $parent
+     */
+    public function setParent(?Nested $parent): void
+    {
+        $this->parent = $parent;
     }
 
     /**
@@ -39,7 +94,7 @@ class Nested extends Base implements \ArrayAccess
      * @return self
      */
     public function setContentString($string){
-        $this->childElements[]=$string;
+        $this->childs[]=$string;
         $this->generateContentString();
         return $this;
 
@@ -52,7 +107,7 @@ class Nested extends Base implements \ArrayAccess
     public function add($element){
 
         if($element !=null){
-            $this->childElements[]=$element;
+            $this->childs[]=$element;
 
         }
         return $this;
@@ -60,7 +115,7 @@ class Nested extends Base implements \ArrayAccess
 
     public function setFirstElement($element){
       if($element !=null){
-          \array_unshift($this->childElements,$element);
+          \array_unshift($this->childs,$element);
 
       }
       return $this;
@@ -76,9 +131,9 @@ class Nested extends Base implements \ArrayAccess
     private function generateContentString()
     {
         $this->contentString = $this->startTag;
-        if(count($this->childElements)>0)
+        if(count($this->childs)>0)
         {
-          foreach ($this->childElements as $e)
+          foreach ($this->childs as $e)
           {
             $this->contentString = $this->contentString.$e ;
           }
@@ -90,22 +145,22 @@ class Nested extends Base implements \ArrayAccess
 //implements ArrayAccess interface
 
      public function offsetExists ($offset ){
-       return isset($this->childElements[$offset]);
+       return isset($this->childs[$offset]);
      }
      public function offsetGet (   $offset ){
-       return isset($this->childElements[$offset]) ? $this->childElements[$offset] : null;
+       return isset($this->childs[$offset]) ? $this->childs[$offset] : null;
      }
 
      public function offsetSet (  $offset ,  $value ){
        if(is_null($offset)){
-         $this->childElements[]=$value;
+         $this->childs[]=$value;
        }
        else{
-         $this->childElements[$offset]=$value;
+         $this->childs[$offset]=$value;
        }
      }
      public function offsetUnset (  $offset ){
-       unset($this->childElements[$offset]);
+       unset($this->childs[$offset]);
      }
   }
 
