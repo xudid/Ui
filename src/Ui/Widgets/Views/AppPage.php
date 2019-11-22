@@ -65,7 +65,7 @@ class AppPage extends Page
 
 		$this->main = new Div();
 		$this->main->setClass("main");
-		$this->addToBody($this->main);
+
 
 		$this->header = new Div();
 
@@ -84,7 +84,7 @@ class AppPage extends Page
 
 		$this->contentView = new Div();
 		$this->contentView->setClass("content");
-
+		$this->feedBody($this->main);
 
 		return $this;
 	}
