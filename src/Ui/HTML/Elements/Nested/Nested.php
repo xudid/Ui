@@ -1,13 +1,14 @@
 <?php
 namespace Ui\HTML\Elements\Nested;
 use Ui\HTML\Elements\Bases\Base;
+use Ui\HTML\Elements\Empties\EmptyElement;
 
 /**
  * Class Nested
  * @package Ui\HTML\Elements\Nested
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
-class Nested extends Base implements \ArrayAccess
+class Nested extends Base implements ArrayAccess
 {
     /**
      * @var array
@@ -35,10 +36,8 @@ class Nested extends Base implements \ArrayAccess
      */
     public function feed(...$childs)
     {
-        if (is_array( $childs ) || !$childs instanceof Traversable) {
-            foreach ($childs as $child) {
-                $this->add($child);
-            }
+    	foreach ($childs as $child) {
+             $this->add($child);
         }
         return $this;
     }
@@ -96,6 +95,7 @@ class Nested extends Base implements \ArrayAccess
      * @return self
      */
     public function setContentString($string){
+        $this->childs=[];
         $this->childs[]=$string;
         $this->generateContentString();
         return $this;
@@ -109,7 +109,7 @@ class Nested extends Base implements \ArrayAccess
     public function add($element){
 
         if($element !=null){
-            $this->childs[]=$element;
+        	$this->childs[]=$element;
 
         }
         return $this;
@@ -128,13 +128,29 @@ class Nested extends Base implements \ArrayAccess
         $this->contentString = $this->startTag;
         if(count($this->childs)>0)
         {
-          foreach ($this->childs as $e)
+          foreach ($this->childs as $child)
           {
-            $this->contentString = $this->contentString.$e ;
+			  $this->contentString .= $this->getChildsString($child);
           }
         }
         $this->contentString = $this->contentString.$this->endTag;
     }
+    
+    private function getChildsString($child) 
+	{
+		if (is_array($child)) {
+			foreach ($child as $subchild) {
+				return $this->getChildsString($subchild);
+			}
+		}
+
+
+		if (is_object($child) && $child instanceof Base || $child instanceof EmptyElement) {
+			return $child->__toString();
+		}
+		return $child ;
+	}
+
 //implements ArrayAccess interface
 
      public function offsetExists ($offset ){
