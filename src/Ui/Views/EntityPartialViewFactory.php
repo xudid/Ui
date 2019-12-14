@@ -1,6 +1,9 @@
 <?php
 namespace Ui\Views;
 
+use Ui\HTML\Elements\Bases\Span;
+use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\Section;
 use Ui\Model\DefaultResolver;
 use Ui\Views\EntityView;
 use Ui\Views\Holder\ClassInformationHolder;
@@ -8,6 +11,7 @@ use Ui\Views\Holder\EntityInformationHolder;
 use Ui\HTML\Elements\Nested\P;
 use Ui\Widgets\Accordeon\CollapsibleItem;
 use Ui\HTML\Elements\Empties\Br;
+use Ui\Widgets\FieldInfo;
 
 /**
  *
@@ -28,8 +32,12 @@ class EntityPartialViewFactory
    */
   private $path="";
   private $fieldDefinitions;
+  /**
+   * @var bool
+   */
+  private $subView;
 
-  function __construct($entity,$accessFilter)
+  function __construct($entity,$accessFilter = 'default', bool $subView)
   {
 
 
@@ -51,6 +59,7 @@ class EntityPartialViewFactory
       $this->fieldDefinitions = new $fieldDefinitionsClassName($this->classname);
     } catch (\ReflectionException $e) {
     }
+    $this->subView = $subView;
   }
 
 
@@ -58,9 +67,8 @@ class EntityPartialViewFactory
  * [getPartialView description]
  * @return [type] [description]
  */
-  public function getPartialView()
+  public function getPartialView(bool $subView)
   {
-
     $this->viewables = $this->accessFilter->getViewablesFor($this->path);
   
     if($this->iscollapsible)
@@ -74,15 +82,14 @@ class EntityPartialViewFactory
     }
     else
     {
-      $this->entityView = new EntityView();
-      $this->entityView->setClass("view");
-      $content = $this->generateContent();
-      $this->entityView->add($content);
+      $this->entityView = (new Section())->setClass('row d-flex m-3 justify-content-center');
+     $this->generateContent();
     }
 
 
-    return $this->entityView->__toString();
+    return $this->entityView;
   }
+
 
 /**
  * [generateContent description]
@@ -90,21 +97,21 @@ class EntityPartialViewFactory
  */
 private function generateContent()
 {
-  $element = new P();
+  $fieldsInfo = [];
 
   foreach ($this->fields as $field)
   {
+
     if (in_array($field->getName(),$this->viewables) && !$field->isAssociation())
     {
        $val = $this->informationHolder->getEntityFieldValue($field->getName());
        $display = $this->fieldDefinitions->getDisplayFor($field->getName());
-       $element->add(ucfirst($display).": ");
-       $element->add($val);
-       $element->add(new Br());
+
+      $fieldInfo = new FieldInfo($display, $val);
+      $this->entityView->add($fieldInfo);
+      /* $element->add(new Br());*/
    }
   }
-  return $element;
-
 }
   private function setAccessFilter($accessFilter)
   {

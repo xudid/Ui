@@ -48,23 +48,21 @@ class FormFieldGenerator
     private NamedFieldset $namedFieldset;
 
 
-    /**
-     * Initialise the FormFieldGenerator
-     * @param mixed $entity  the name of the class or
-     * the object to process
-     *
-     * @param [type] $accessFilter contains
-     * the fields name that we must include in the form
-     * we get them from the "getWritables()" method
-     * on it
-     */
+	/**
+	 * Initialise the FormFieldGenerator
+	 * @param mixed $entity the name of the class or
+	 * the object to process
+	 *
+	 * @param $accessFilter
+	 * @param ViewFieldsDefinitionInterface|null $fieldsDefinitions
+	 */
     function __construct($entity, $accessFilter, ViewFieldsDefinitionInterface $fieldsDefinitions = null)
     {
 
         $this->widdgetFactory = new WidgetFactory();
         try {
             //Init InformationHolderInterface
-            if (is_string($entity)) {
+            if (is_string($entity)||is_null($entity)) {
                $this->informationHolder = new ClassInformationHolder($entity);
             } else {
                  $this->informationHolder = new EntityInformationHolder($entity);
@@ -211,6 +209,7 @@ class FormFieldGenerator
 
     private function addInputToForm($widget,$fieldName)
     {
+
         $this->namedFieldset->add($widget);
         if($this->informationHolder->hasEntity())
         {

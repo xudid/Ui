@@ -3,6 +3,7 @@
 namespace Ui\Widgets\Table;
 
 use Ui\HTML\Elements\Empties\Hr;
+use Ui\HTML\Elements\Nested\Div;
 use Ui\HTML\Elements\Nested\Section;
 
 
@@ -12,7 +13,7 @@ use Ui\HTML\Elements\Nested\Section;
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  * must be use with Ui css
  */
-class DivTable
+class DivTable extends Div
 {
 
     private array $legends = [];
@@ -47,6 +48,9 @@ class DivTable
                                 string $baseurl = " "
     )
     {
+    	parent::__construct();
+		$this->setClass("div-table bg-dark text-white col-lg-12");
+
         $this->legends = $legends;
         $this->columns = $columns;
         $this->colCount = count($columns);
@@ -58,26 +62,18 @@ class DivTable
         $this->rowcss["header"]= "bg-primary text-white";
         $this->legendcss="bg-primary text-white";
 
-
-        $colgroupDiv = new ColGroup($this->colCount);
-        $this->tableSection = (new Section())->setClass("div-table bg-dark text-white");
-
-        $this->tableSection->add((new TableLegends($this->legends))->setClass($this->legendcss));
-
-        $this->tableSection->add($colgroupDiv);
-
-
-
-
-        $this->tableSection->add((new TableHeader($this->columns))->setClass($this->rowcss["header"]));
-
-        $this->dataDiv = new TableCorp();
-
-        $this->tableSection->add($this->dataDiv);
+		$this->dataDiv = new TableCorp();
+        $this->feed(
+        	(new TableLegends($this->legends))->setClass($this->legendcss),
+			new ColGroup($this->colCount),
+			(new TableHeader($this->columns))->setClass($this->rowcss["header"]),
+			$this->dataDiv,
+		);
 
         $datacount = count($this->DataArray);
 
         //Todo use the RowFactory
+
         for ($i = 0; $i < $datacount; $i++) {
             $val = $this->DataArray[$i];
             $parity = $i%2===0?'even':'odd';
@@ -93,11 +89,4 @@ class DivTable
         $this->rowcss = $rowcss;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->tableSection->__toString();
-    }
 }

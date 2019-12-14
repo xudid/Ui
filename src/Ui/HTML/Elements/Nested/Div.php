@@ -9,6 +9,7 @@ use Ui\HTML\Elements\Nested\Nested;
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
 class Div extends Nested{
+	protected $index;
 	/**
 	 * Div constructor.
 	 */

@@ -125,6 +125,11 @@ class Field
         return $this->type;
     }
 
+    public function getShortType()
+	{
+		return end(explode('\\', $this->type));
+	}
+
     /**
      * @param mixed $type
      */

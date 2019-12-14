@@ -4,6 +4,7 @@ namespace Ui\Views;
 
 use Psr\Container\ContainerInterface;
 use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\Section;
 use Ui\Model\Association;
 use Ui\Model\DefaultResolver;
 use Ui\Views\Generator\ManyToManyViewGenerator;
@@ -92,9 +93,9 @@ class EntityViewFactory
      * @param [type] $accessFilter [description]
      */
 
-    public function __construct($entity, $accessFilter = "default", ContainerInterface $container = null)
+    public function __construct($entity, $accessFilter = "default",$router = null)
     {
-        $this->view = new EntityView($container);
+        $this->view = new EntityView();
 
         try {
             if (is_string($entity)) {
@@ -110,15 +111,13 @@ class EntityViewFactory
 
         } catch (\ReflectionException $e) {
         }
-
-
     }
 
     /**
      * [getView description]
      * @return string [description]
      */
-    public function getView()
+    public function getView(bool $subview = false)
     {
         $title = "";
 
@@ -127,12 +126,11 @@ class EntityViewFactory
         } else {
             $title = $this->shortClassName;
         }
-
-        $this->entityView = new EntityView();
+        $this->entityView = new EntityView($subview);
         $this->view->setTitle($title);
-        $this->view->setClass("view");
+        $this->view->setClass("bg-light text-dark shadow-lg py-3 m-4");
 
-        $epvf = new EntityPartialViewFactory($this->entity, $this->accessFilter);
+        $epvf = new EntityPartialViewFactory($this->entity, $this->accessFilter, $subview);
         $epvf->setCurrentPath($this->path);
 
         if ($this->iscollapsible) {
@@ -142,7 +140,7 @@ class EntityViewFactory
             $this->view->add($this->collapsiblelist);
 
         } else {
-            $this->view->add($epvf->getPartialView());
+            $this->view->add(($epvf->getPartialView($subview)));
         }
 
         if ($this->informationHolder->hasAssociation()) {
@@ -196,6 +194,8 @@ class EntityViewFactory
      */
     private function processAssociations(array $fields)
     {
+    	$section = (new Section())->setClass('row d-flex justify-content-center m-3');
+    	$this->view->add($section);
         foreach ($fields as $key => $field) {
             $associationType = $field->getAssociationType();
             $className = $field->getType();
@@ -206,7 +206,7 @@ class EntityViewFactory
                 if ($value != null) {
                     //ManyToOne Association
                     if ($associationType == "ManyToOne") {
-                        $view = (new ManyToOneViewGenerator($className))->getView($value);
+						$view = (new EntityViewFactory($value))->getView(true);
 
                     }
                     if ($associationType == "ManyToMany") {
@@ -219,13 +219,14 @@ class EntityViewFactory
 
                     }
                     if ($associationType == "OneToOne") {
-                        $view = (new OneToOneViewGenerator($className))->getView($value);
+						$view = (new ManyToManyViewGenerator($className))->getView($value);
+						//$view->setTitle( $field->getShortType());
 
                     }
                 } else {
 
                 }
-                $this->view->add($view);
+               $section->add($view);
             }
 
         }
@@ -233,103 +234,9 @@ class EntityViewFactory
     }
 
 
-    /**
-     * [processManyTypeAssociations description]
-     * @param Association $association [description]
-     */
-    private function processManyTypeAssociations(Association $association)
-    {
-        $classname = $association->getClassname();
-        //we work on an object to generate the view
-        if ($this->informationHolder->hasEntity()) {
 
-            $epvf1 = null;
-            $val = $this->informationHolder->getEntityFieldValue($association->getFieldname());
-            //Association Many Has entity is not instance of \Doctrine\ORM\PersistentCollection
-            if (!($val instanceof \Doctrine\ORM\PersistentCollection)) {
-                $epvf1 = new EntityPartialViewFactory($val, "default");
-                if ($epvf1 != null) {
-                    if ($this->iscollapsible) {
-                        $epvf1->setCollapsible();
-                        $epvf1->setCurrentPath($this->path);
-                        $view1 = $epvf1->getPartialView();
-                        $this->collapsiblelist->addItem($view1);
-                    } else {
-                        $epvf1->setCurrentPath($this->path);
-                        $view1 = $epvf1->getPartialView();
-                        $this->view->add($view1);
-                    }
 
-                }
 
-            } //Association Many Has entity is  instance of \Doctrine\ORM\PersistentCollection
-            else {
-                $collection = $val->getValues();
-                $ei = new EntityInformationHolder($classname);
-                $shortClassName = $ei->getShortClassName();
-
-                $display = $this->informationHolder->getDisplayFor($shortClassName);
-                $title = ($ei->getDisplayFor($shortClassName)) . "s";
-                $columns = $this->generateTableColumns($ei);
-
-                $drt = new DivTable([new TableLegend($title, TableLegend::TOP_LEFT)],
-                    $columns,
-                    $collection, false, " ");
-
-                $this->addAssociationView($drt, $display);
-
-            }
-        }
-        //else We don't work on an object
-    }
-
-    /**
-     * [processOneTypeAssociations description]
-     * @param Association $association [description]
-     */
-    private function processOneTypeAssociations(Association $association)
-    {
-        $classname = $association->getClassname();
-        //print_r("<br>".__FILE__.__LINE__.$classname."<br>");
-        $shortClassName = $association->getShortClassname();
-        $eih1 = new EntityInformationHolder($classname);
-
-        $getMethods = $eih1->getGetMethodNames();
-        $columns = $this->generateTableColumns($eih1);
-        //we work on an object to generate the view
-        if ($this->informationHolder->hasEntity()) {
-            $vals = $this->informationHolder->getEntityFieldValue(lcfirst($shortClassName));
-            $data = [];
-            //  print_r("<br>".__FILE__.__LINE__.get_class($vals)."<br>");
-            if ($vals instanceof \Doctrine\ORM\PersistentCollection) {
-                $class = "";
-                foreach ($vals as $key => $v) {
-                    $class = get_class($v);
-                    $dpart = [];
-
-                    foreach ($getMethods as $key => $method) {
-                        $m = new \ReflectionMethod($v, $method);
-                        $d = $m->invoke($v);
-                        $fieldname = str_replace("get", "", $method);
-                        $fieldname = lcfirst($fieldname);
-                        if (is_object($d)) {
-                            $dpart[$fieldname] = $d->__toString();
-                        } else {
-                            $dpart[$fieldname] = $d;
-                        }
-
-                    }
-                    $data[] = $dpart;
-                }
-                $drt = new DivTable([new TableLegend($eih1->getDisplayFor($class), TableLegend::TOP_LEFT)], $columns, $data, false, "");
-                $display = $eih1->getDisplayFor($eih1->getShortClassName());
-                $this->addAssociationView($drt, $display);
-
-            }
-
-        }
-
-    }
 
     /**
      * Add the view to this collabsiblelist or to this entityview
@@ -377,4 +284,3 @@ class EntityViewFactory
     }
 }
 
-?>

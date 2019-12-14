@@ -78,7 +78,7 @@ class TableRow extends Div{
             $value = $method->invoke($this->val);
             $cell = new Cell($value, $isEditable);
             if ($column->isBaseIdSet()) {
-                $cell->setId($column->getBaseId() . $this->rowIndex);
+                $cell->setIndex($column->getBaseId() . $this->rowIndex);
             }
             $this->add($cell);
             //Todo create a default row click action
@@ -105,7 +105,7 @@ class TableRow extends Div{
             $cell = new Cell($this->val[$column->getName()],$isEditable);
             if($column->isBaseIdSet())
             {
-                $cell->setId($column->getBaseId().$this->rowIndex);
+                $cell->setIndex($column->getBaseId().$this->rowIndex);
             }
             $this->add($cell);
         }

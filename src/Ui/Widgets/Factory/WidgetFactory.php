@@ -55,7 +55,7 @@ class WidgetFactory
     public function getSelectOption($name,$options, $id=null)
     {
         $selOption = new SelectOption($options);
-        $selOption->setId($id);
+        $selOption->setIndex($id);
         $selOption->setName($name);
         return $selOption;
     }

@@ -3,11 +3,15 @@
 
 namespace Ui\Views\Generator;
 
+use Ui\HTML\Elements\Bases\Span;
+use Ui\HTML\Elements\Nested\A;
+use Ui\HTML\Elements\Nested\Div;
 use Ui\Model\DefaultResolver;
 use Ui\Views\EntityView;
 use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
 use Ui\Widgets\Table\TableLegend;
+use Ui\Widgets\Views\FieldButton;
 
 /**
  * Class ManyToManyViewGenerator
@@ -37,19 +41,9 @@ class ManyToManyViewGenerator implements AssociationViewGenerator
      */
     public function getView($datas,bool $clickable = false,string $baseURL="")
     {
-        $view = new EntityView();
-        $fieldsDefinitionClassName = DefaultResolver::getFieldDefinitions($this->className);
-        $fieldsDefinition = new $fieldsDefinitionClassName();
-        $legendTitle = $fieldsDefinition->getDisplayFor($this->className);
-        $columns = [];
-
-        foreach ($this->viewables as $key => $value) {
-            $display =  $fieldsDefinition->getDisplayFor($value);
-            $column = new TableColumn($value, $display);
-            $columns[] = $column;
-        }
-        $table = new DivTable([new TableLegend($legendTitle,TableLegend::TOP_RIGHT)],$columns,$datas,$clickable,$baseURL);
-        $view->add($table);
-        return $view;
+    	$fieldsDefinitionClassName = DefaultResolver::getFieldDefinitions($this->className);
+		$fieldsDefinition = new $fieldsDefinitionClassName();
+		$fieldTitle = $fieldsDefinition->getDisplayFor($this->className);
+        return new FieldButton($fieldTitle, $baseURL);
     }
 }

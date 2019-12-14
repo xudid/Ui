@@ -12,8 +12,6 @@ use Ui\HTML\Elements\Nested\Div;
 //Todo BugFix legend alignment
 class TableLegends extends Div
 {
-
-
     /**
      * @var array $tableLegends
      */

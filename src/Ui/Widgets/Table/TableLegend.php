@@ -35,7 +35,7 @@ class TableLegend
      * @param mixed $content  [description]
      * @param string $position [description]
      */
-    function __construct($content,string $position)
+    function __construct($content,string $position = self::TOP_RIGHT)
     {
         $this->content = $content;
         $this->position = $position;

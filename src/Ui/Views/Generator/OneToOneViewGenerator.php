@@ -20,17 +20,19 @@ class OneToOneViewGenerator implements AssociationViewGenerator
      */
     private $fieldGenerator;
 
+    private $className;
+
     /**
      * Return an EntityView
      */
     public function __construct($className)
     {
         $this->className = $className;
-        $accessFilterName = DefaultResolver::getFilter($this->classname);
+        $accessFilterName = DefaultResolver::getFilter($this->className);
         $this->accessFilter = new $accessFilterName();
         $this->viewables = $this->accessFilter->getViewables();
 
-        $this->fieldGenerator = new FormFieldGenerator($this->classname, $this->accessFilter);
+        $this->fieldGenerator = new FormFieldGenerator($this->className, $this->accessFilter);
 
     }
 
@@ -40,8 +42,7 @@ class OneToOneViewGenerator implements AssociationViewGenerator
      */
     public function getView($datas, bool $clickable = false, string $baseURL = "")
     {
-        $view = new EntityView();
-        $view->add((new Form())->add($this->fieldGenerator->getPartialForm()));
-        return $view;
+        (new Form())->add($this->fieldGenerator->getPartialForm());
+        return (new Form())->add($this->fieldGenerator->getPartialForm());
     }
 }

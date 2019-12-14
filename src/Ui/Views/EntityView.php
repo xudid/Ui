@@ -1,7 +1,7 @@
 <?php
 namespace Ui\Views;
 use Ui\HTML\Elements\Nested\Section;
-use Ui\HTML\Elements\Nested\P;
+use Ui\Widgets\Views\Title;
 
 /**
  * Class EntityView
@@ -13,24 +13,30 @@ class EntityView extends Section {
     private string $title = "";
     private string $name = "";
     private $titleElement=null;
+	/**
+	 * @var bool
+	 */
+	private $subView;
 
-    /**
+	/**
      * EntityView constructor.
      */
-    public function __construct() {
+    public function __construct(bool $subView = false) {
         parent::__construct();
         $this->childs = [];
-    }
+		$this->subView = $subView;
+	}
 
     /**
      * @param string $title
      * @return $this
      */
     public function setTitle(string $title) {
+    	$size = $this->subView?6:5;
         $this->title = $title;
-        $this->titleElement = (new p($this->title))->add($this->title);
-        $this->titleElement->setClass("form_title");
-        $this->setFirstElement($this->titleElement);
+        $this->titleElement = (new Title($size, $this->title));
+        $this->titleElement->setClass("bg-primary text-white text-center py-2 rounded-top rounded-lg mb-3");
+        $this->setFirst($this->titleElement);
         return $this;
     }
 

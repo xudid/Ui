@@ -85,7 +85,7 @@ public function getSearchView()
             $input = new TextInput();
             $input->setName($value);
             $input->SetPlaceholder($value);
-            $input->setId($value);
+            $input->setIndex($value);
             $this->frm->addElement($input);
             $this->frm->addElement(new br());
             break;
@@ -104,7 +104,7 @@ public function getSearchView()
           {
             $options = $this->ffds->getDataForListInput($value);
 						$selOption = new SelectOption($options);
-						$selOption->setId($value);
+						$selOption->setIndex($value);
 						$selOption->setName($value);
 						$this->frm->addElement($selOption);
             $this->frm->addElement(new br());

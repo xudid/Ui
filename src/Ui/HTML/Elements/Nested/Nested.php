@@ -2,6 +2,8 @@
 namespace Ui\HTML\Elements\Nested;
 use ArrayAccess;
 use Ui\HTML\Elements\Bases\Base;
+use Ui\HTML\Elements\Bases\InnerText;
+use Ui\HTML\Elements\ElementInterface;
 use Ui\HTML\Elements\Empties\EmptyElement;
 
 /**
@@ -16,8 +18,8 @@ class Nested extends Base implements ArrayAccess
      */
     protected array $childs=[];
 
-    protected ?Nested $root = null;
-    protected ?Nested $parent = null;
+    protected int $lastNumericIndex = 0;
+
 
     /**
      * Nested constructor.
@@ -44,43 +46,11 @@ class Nested extends Base implements ArrayAccess
     }
 
     /**
-     * @return Nested|null
-     */
-    public function getRoot(): ?Nested
-    {
-        return $this->root;
-    }
-
-    /**
      * @return bool
      */
     public function isRoot():bool
     {
         return is_null($this->root);
-    }
-
-    /**
-     * @param Nested|null $root
-     */
-    public function setRoot(?Nested $root): void
-    {
-        $this->root = $root;
-    }
-
-    /**
-     * @return Nested|null
-     */
-    public function getParent(): ?Nested
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param Nested|null $parent
-     */
-    public function setParent(?Nested $parent): void
-    {
-        $this->parent = $parent;
     }
 
     /**
@@ -107,23 +77,59 @@ class Nested extends Base implements ArrayAccess
      * @param $element
      * @return $this
      */
-    public function add($element){
-
-        if($element !=null){
-        	$this->childs[]=$element;
-
-        }
+    public function add($element)
+	{
+		if ($element != null && $element instanceof ElementInterface) {
+			$index = $element->getIndex();
+			if ( $index && !array_key_exists($index,$this->childs)) {
+				$this->childs[$index] = $element;
+			} else {
+				$this->childs[] = $element;
+				$index = $this->lastNumericIndex ++;
+				$element->setIndex($index);
+			}
+		}
+		if (is_string($element) && !empty($element)) {
+			$innerText = new InnerText($element);
+			$innerText->setIndex($this->lastNumericIndex ++);
+			$this->childs[] = $element;
+		}
         return $this;
     }
 
-    public function setFirstElement($element){
-      if($element !=null){
-          array_unshift($this->childs,$element);
+    public function remove($element)
+	{
+		if ($element != null && !is_string($element)) {
+			$this->childs[$element->getIndex()] = null;
+		}
+	}
 
+    public function setFirst($element){
+      if($element !=null && !is_string($element)){
+		  $index = $element->getIndex();
+		  if ( $index && !array_key_exists($index,$this->childs)) {
+		  		$temp[$index] = $element;
+		  		array_filter($this->childs);
+			  $this->childs = array_merge($temp,$this->childs);
+		  } elseif(empty($index)) {
+			  $index =  $this->lastNumericIndex ++;
+			  $element->setIndex($index);
+			  $temp[$index] = $element;
+			  array_filter($this->childs);
+			  $this->childs = array_merge($temp,$this->childs);
+		  } else {
+			  $temp[$index] = $element;
+			  $this->childs[$index] = null;
+			  array_filter($this->childs);
+			  $this->childs = array_merge($temp,$this->childs);
+		  }
       }
       return $this;
     }
 
+	/**
+	 *
+	 */
     private function generateContentString()
     {
         $this->contentString = $this->startTag;
@@ -136,7 +142,11 @@ class Nested extends Base implements ArrayAccess
         }
         $this->contentString = $this->contentString.$this->endTag;
     }
-    
+
+	/**
+	 * @param $child
+	 * @return string
+	 */
     private function getChildsString($child) 
 	{
 		if($child !== $this) {
@@ -146,8 +156,6 @@ class Nested extends Base implements ArrayAccess
 				}
 			}
 		}
-
-
 		if (is_object($child) && $child instanceof Base || $child instanceof EmptyElement) {
 			return $child->__toString();
 		}
@@ -156,14 +164,17 @@ class Nested extends Base implements ArrayAccess
 
 //implements ArrayAccess interface
 
-     public function offsetExists ($offset ){
-       return isset($this->childs[$offset]);
+     public function offsetExists ($offset )
+	 {
+	 	return isset($this->childs[$offset]);
      }
-     public function offsetGet (   $offset ){
+     public function offsetGet (   $offset )
+	 {
        return isset($this->childs[$offset]) ? $this->childs[$offset] : null;
      }
 
-     public function offsetSet (  $offset ,  $value ){
+     public function offsetSet (  $offset ,  $value )
+	 {
        if(is_null($offset)){
          $this->childs[]=$value;
        }
@@ -171,7 +182,8 @@ class Nested extends Base implements ArrayAccess
          $this->childs[$offset]=$value;
        }
      }
-     public function offsetUnset (  $offset ){
+     public function offsetUnset (  $offset )
+	 {
        unset($this->childs[$offset]);
      }
   }

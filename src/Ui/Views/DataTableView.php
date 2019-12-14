@@ -7,8 +7,14 @@ use Prophecy\Exception\Doubler\ClassNotFoundException;
 use ReflectionClass;
 use ReflectionException;
 use Ui\HTML\Elements\Nested\Div;
+use Ui\Model\Database\DaoInterface;
 use Ui\Model\DefaultResolver;
 use Ui\Model\Entity;
+use Ui\Model\EntityFactory;
+use Ui\Views\Generator\CellValueGenerator;
+use Ui\Views\Generator\FormFieldGenerator;
+use Ui\Views\Generator\ManyToManyViewGenerator;
+use Ui\Views\Generator\OneToManyViewGenerator;
 use Ui\Views\Holder\EntityInformationHolder;
 use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
@@ -20,7 +26,6 @@ class DataTableView
     private $title = "";
     private $legends = [];
     private $classname = "";
-    private $entityClassname = "";
     private $Entity = null;
     private $data = [];
     private $fields = null;
@@ -33,14 +38,19 @@ class DataTableView
     private $eih = null;
     private array $columns;
 
-    /**
-     * DataTableView constructor.
-     * @param null $container
-     * @param string $className the classname of the Entiy we want to retrieve values
-     * @param $accessFilter
-     * @throws \ReflectionException
-     */
-    public function __construct($container = null, string $className, $accessFilter)
+	/**
+	 * @var EntityFactory
+	 */
+	private $entityFactory;
+
+	/**
+	 * DataTableView constructor.
+	 * @param string $className the classname of the Entiy we want to retrieve values
+	 * @param $accessFilter
+	 * @param EntityFactory $entityFactory
+	 * @throws ReflectionException
+	 */
+    public function __construct(string $className, $accessFilter, EntityFactory $entityFactory)
     {
 
         //Initialize Metadata Holder
@@ -58,7 +68,10 @@ class DataTableView
 
         //Initialize columns
         $this->columns = $this->generateColumns();
-    }
+        //Initilize database access
+		$this->entityFactory = $entityFactory;
+		return $this;
+	}
 
     public function setEntity(Entity $entity)
     {
@@ -83,17 +96,14 @@ class DataTableView
 
         } else {
             $this->accessFilter = $accessFilter;
-
         }
     }
 
 
     private function getViewables()
     {
-        $result = array();
         $result = $this->accessFilter->getViewables();
-        return $result;
-
+        return $result??[];
     }
 
     public function __toString()
@@ -122,9 +132,9 @@ class DataTableView
 
         $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
 
-        //Init container to return the table
+        //Init div container to return the table
         $view = new Div();
-        $view->setClass("form");
+        $view->setClass("d-flex justify-content-center row-lg m-4");
         $view->add($this->drt);
         return $view->__toString();
     }
@@ -139,14 +149,15 @@ class DataTableView
             } catch (\Exception $exception){
                 print_r($exception->getMessage()."\n");
             }
-            $this->initWithDefaultEntity(null);
+            $this->initWithDefaultEntity();
         }
         //Rettrieve data with filters
         if (count($this->whereparams) > 0) {
             $this->data = $this->Entity->findBy($this->whereparams);
             $dataToDisplay = $this->data;
-        } //Rettrieve data without filters
+        }
         else {
+			//Rettrieve data without filters
             $this->data = $this->Entity->findAll();
             foreach ($this->data as $key => $object) {
                 //If $value is an object
@@ -155,35 +166,49 @@ class DataTableView
                     //Get Object Metadata
                     $eih1 = new EntityInformationHolder($object);
 
-                    //Get object Getters
-                    $getMethods = $eih1->getGettersName();
+                    //Get Fields
+					$fields = $eih1->getFields();
 
-                    //Foreach getter  get object value
-                    /*foreach ($getMethods as $key1 => $methodName) {
-                        $method = new \ReflectionMethod($object, $methodName);
-                        $val = $method->invoke($object);
+					foreach ($fields as $field) {
+							//Field is not an association
+						if ($field && !$field->isAssociation()) {
+							$dataToDisplay[$key][$field->getName()] = $eih1->getEntityFieldValue($field->getName());
+						} else {
+							//Field is an association getting it"s type
+							$associationType = $field->getAssociationType();
+							$className = $field->getType();
+							$value = $eih1->getEntityFieldValue($field->getName());
+							if ($value != null) {
+								//ManyToOne Association display a form
+								if ($associationType == "ManyToOne") {
+									//Display a clickable label with significative information
+									$cellValueGenerator = new CellValueGenerator($value, "default");
+									$dataToDisplay[$key][$field->getName()] = $cellValueGenerator->getValue();
 
-                        //If $val is not a \Doctrine\ORM\PersistentCollection
-                        if (!($val instanceof \Doctrine\ORM\PersistentCollection)) {
-                            $method = new \ReflectionMethod($object, $methodName);
-                            $val = $val = $method->invoke($object);
-                            $setmethod = str_replace("get", "set", $methodName);
-                            $method = new \ReflectionMethod($object, $setmethod);
-                            $v = $method->invokeArgs($object, [$val]);
-                            //If Doctrine Collection get values
-                        } else {
-                            $collection = $val->getValues();
-                            if (count($collection) == 0) {
-                                $collection[] = " ";
-                            }
-                            $setmethod = str_replace("get", "set", $methodName);
-                            $method = new \ReflectionMethod($object, $setmethod);
-                            $v = $method->invokeArgs($object, [$collection]);
-                        }
+								}
+								//ManyToMany Association if "new" display a form if "edit" display a table
+								if ($associationType == "ManyToMany") {
+									//Display a button witch target the page who display information for that relation
+									//$view = (new ManyToManyViewGenerator($className))->getView($value,true);
 
-                    }*/
-                    //$dataToDisplay[$key] = $object;
-                    $dataToDisplay = $this->data;
+								}
+								//OneToMany Association if "new" display a form if "edit" display a table
+								if ($associationType == "OneToMany") {
+									//Display a button witch target the page who display information for that relation
+									//$view = (new OneToManyViewGenerator($className))->getView($value,true);
+
+								}
+								//OneToOne Association display a form
+								if ($associationType == "OneToOne") {
+									//Display a clickable label with significative information
+									$cellValueGenerator = new CellValueGenerator($className);
+									$dataToDisplay[$key][$field->getName()] = $cellValueGenerator->getView($value, true  );
+								}
+							} else {
+
+							}
+						}
+					}
                 } else {
                     //If it is an array
                     $dataToDisplay[$key] = $this->data[$key];
@@ -211,19 +236,11 @@ class DataTableView
     }
 
     /**
-     * @param $container
      * @throws ReflectionException
      */
-    private function initWithDefaultEntity($container)
+    private function initWithDefaultEntity()
     {
-        //Resolve entity classname to access to Database
-        $this->entityClassname = DefaultResolver::getEntityClassName($this->classname);
-        try {
-            $r = new ReflectionClass($this->entityClassname);
-            $this->Entity = $r->newInstanceArgs([$container]);
-        } catch (ReflectionException $e) {
-            throw new ClassNotFoundException($e->getMessage(),$this->entityClassname);
-        }
+    	$this->Entity = $this->entityFactory->getEntity($this->classname);
 
     }
 

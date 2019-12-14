@@ -1,6 +1,9 @@
 <?php
 namespace Ui\HTML\Elements\Bases;
 
+use phpDocumentor\Reflection\Element;
+use Ui\HTML\Elements\ElementInterface;
+use Ui\HTML\Elements\Nested\Nested;
 use Ui\HTML\Tags\StartTag;
 use Ui\HTML\Tags\EndTag;
 
@@ -9,8 +12,14 @@ use Ui\HTML\Tags\EndTag;
  * @package Ui\HTML\Elements\Bases
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
-class Base
+class Base implements ElementInterface
 {
+
+	protected ?Nested $parent = null;
+
+	protected ?Nested $root = null;
+
+	protected $index ='';
 
     private $elementName = "";
 
@@ -86,15 +95,33 @@ class Base
       return $this;
     }
 
+    public function getIndex()
+	{
+		return $this->index;
+	}
+
     /**
-     * @param string $id
+     * @param string $index
+     * @return self
+     */
+    public function setIndex(string $index)
+    {
+    	$this->index = $index;
+        return $this;
+    }
+
+    /**
+     * @param string $index
      * @return self
      */
     public function setId(string $id)
     {
+    	$this->index = $id;
         $this->startTag->setAttribute("id",$id);
         return $this;
     }
+
+
 
 
     /**
@@ -108,5 +135,43 @@ class Base
         }
         return $this;
     }
+
+	/**
+	 * @return Nested|null
+	 */
+	public function getParent(): ?Nested
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * @param Nested|null $parent
+	 * @return Base
+	 */
+	public function setParent(?Nested $parent)
+	{
+		$this->parent = $parent;
+		return $this;
+	}
+
+	/**
+	 * @return Nested|null
+	 */
+	public function getRoot(): ?Nested
+	{
+		return $this->root;
+	}
+
+	/**
+	 * @param Nested|null $root
+	 * @return Base
+	 */
+	public function setRoot(?Nested $root): Base
+	{
+		$this->root = $root;
+		return $this;
+	}
+
+
 }
 

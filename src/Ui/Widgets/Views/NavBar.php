@@ -1,8 +1,8 @@
 <?php
 namespace Ui\Widgets\Views;
 
+use Ui\HTML\Elements\Nested\Div;
 use Ui\HTML\Elements\Nested\Nav;
-use Ui\HTML\Elements\Nested\Li;
 use Ui\Widgets\Lists\ItemList;
 
 /**
@@ -11,8 +11,10 @@ use Ui\Widgets\Lists\ItemList;
  */
 class NavBar extends Nav
 {
-  private $lil = null;
-  private $ril = null;
+  private $leftNavItems = null;
+  private $rightNavItems = null;
+  private $leftColumn = null;
+  private $rightColumn = null;
 
   /**
    * NavBar constructor.
@@ -20,50 +22,57 @@ class NavBar extends Nav
   public function __construct()
   {
     parent::__construct();
-    $this->lil = new ItemList();
-    $this->ril = new ItemList();
-    $this->lil->setClass("navbar_items");
-    $this->ril->setClass("navbar_items_right");
-    parent::add($this->lil);
-    parent::add($this->ril);
+    $this->setClass("navbar");
+    $this->leftColumn = (new Div())->setClass("nav_column_left");
+    $this->rightColumn = (new Div())->setClass("nav_column_right");
+    $this->leftNavItems = new ItemList();
+    $this->leftColumn->add($this->leftNavItems);
+    $this->rightNavItems = new ItemList();
+    $this->rightColumn->add($this->rightNavItems);
+    $this->leftNavItems->setClass("navbar_items");
+    $this->rightNavItems->setClass("navbar_items_right");
+    parent::add($this->leftColumn);
+    parent::add($this->rightColumn);
   }
 
   /**
-   * @param $menu
+   * @param $item
    * @param $position
    */
-  public function addMenu($menu,$position)
+  public function addMenu(NavbarItem $item)
   {
-    if($position=="left")
+  	if($item && $item->getPosition() == NavbarItem::LEFT)
     {
-      $item = new Li($menu);
-      $item->setClass('navbar_item');
-      $this->lil->add($item);
+      $this->leftNavItems->add($item);
     }
-    else {
-      $item = new Li($menu);
-      $item->setClass('navbar_item');
-      $this->ril->add($item);
+    elseif($item && $item->getPosition() == NavbarItem::RIGHT) {
+      $this->rightNavItems->add($item);
     }
   }
 
-  public function setMenuClass(string $css)
+  public function setClass(string $class)
+  {
+	  parent::setClass("navbar ".$class);
+	  return $this;
+  }
+
+	public function setMenuClass(string $css)
   {
 	if($this->hasMenu()){
-		foreach ($this->ril as $menu)
+		foreach ($this->rightNavItems as $item)
 		{
-			$menu->setClass($css);
+			$item->setClass($css);
 		}
-		foreach ($this->lil as $menu)
+		foreach ($this->leftNavItems as $item)
 		{
-			$menu->setClass($css);
+			$item->setClass($css);
 		}
 	}
   }
 
   private function hasMenu()
   {
-  	return ($this->lil->hasItem()||$this->ril->hasItem());
+  	return ($this->leftNavItems->hasItem()||$this->rightNavItems->hasItem());
   }
 }
 

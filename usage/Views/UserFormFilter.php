@@ -21,11 +21,8 @@ class UserFormFilter implements ViewFilterInterface
         $this->writables = [
             "firstName",
             "lastName",
-            "token",
-            "role"
-
+			'old'
         ];
-
         $this->viewables = $this->writables;
     }
 

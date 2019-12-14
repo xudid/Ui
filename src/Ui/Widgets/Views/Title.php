@@ -1,13 +1,13 @@
 <?php
 namespace Ui\Widgets\Views;
 
-use Ui\HTML\Elements\BaseElement\{H1,H2,H3,H4,H5,H6};
+use Ui\HTML\Elements\Bases\{Base, H1, H2, H3, H4, H5, H6};
 
 /**
  * @author Didier Moindreau <dmoindreau@gmail.com>
  * @license M.I.T
  */
-class Title 
+class Title extends Base
 {
     private $element = null;
     /**
@@ -18,7 +18,7 @@ class Title
      */
     function __construct(int $level, string $text)
     {
-        $elementname = 'Ui\HTML\Elements\BaseElement\H'.$level;
+        $elementname = 'Ui\HTML\Elements\Bases\H'.$level;
         $this->element = new $elementname($text);
         return $this;
     }
@@ -37,4 +37,11 @@ class Title
     {
         $this->element->setAttribute($name, $value);
     }
+
+    public function setClass(string $class)
+	{
+		return  $this->element->setClass($class);
+	}
+
+
 }

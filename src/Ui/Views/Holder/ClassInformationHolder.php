@@ -128,6 +128,8 @@ class ClassInformationHolder implements InformationHolderInterface
         return $this->className;
     }
 
+
+
     protected function findAssociations()
     {
         $hasAsociation = false;

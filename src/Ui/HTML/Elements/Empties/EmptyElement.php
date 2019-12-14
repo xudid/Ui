@@ -1,6 +1,8 @@
 <?php
 namespace Ui\HTML\Elements\Empties;
 
+use Ui\HTML\Elements\ElementInterface;
+use Ui\HTML\Elements\Nested\Nested;
 use Ui\HTML\Tags\StartTag;
 use Ui\HTML\Tags\EndTag;
 
@@ -11,8 +13,13 @@ use Ui\HTML\Tags\EndTag;
  *
  *
  */
-class EmptyElement
+class EmptyElement implements ElementInterface
 {
+	protected ?Nested $parent = null;
+
+	protected ?Nesteed $root = null;
+
+	protected $index ='';
 
     protected $startTag = null;
 
@@ -55,8 +62,27 @@ class EmptyElement
       return $this;
     }
 
+	/**
+	 * @return string
+	 */
+	public function getIndex():string
+	{
+		return $this->index;
+	}
+
     /**
-     * @param string $id
+     * @param string $index
+     * @return self
+     */
+    public function setIndex(string $index)
+    {
+    	$this->index = $index;
+        $this->startTag->setAttribute("id",$index);
+        return $this;
+    }
+
+    /**
+     * @param string $index
      * @return self
      */
     public function setId(string $id)
@@ -74,6 +100,45 @@ class EmptyElement
       if(isset($class))
       $this->startTag->setAttribute("class",$class);
     }
+
+	/**
+	 * @return Nested|null
+	 */
+	public function getParent(): ?Nested
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * @param Nested|null $parent
+	 * @return EmptyElement
+	 */
+	public function setParent(?Nested $parent){
+		$this->parent = $parent;
+		return $this;
+	}
+
+	/**
+	 * @return Nesteed|null
+	 */
+	public function getRoot(): ?Nested
+	{
+		return $this->root;
+	}
+
+	/**
+	 * @param Nesteed|null $root
+	 * @return EmptyElement
+	 */
+	public function setRoot(?Nested $root): EmptyElement
+	{
+		$this->root = $root;
+		return $this;
+	}
+
+
+
+
 
 
 }

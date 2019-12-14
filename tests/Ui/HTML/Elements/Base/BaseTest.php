@@ -22,7 +22,7 @@ class BaseTest extends TestCase
     public function testSetId()
     {
         $base = new Ui\HTML\Elements\Bases\Base("b");
-        $base->setId('test');
+        $base->setIndex('test');
         $this->assertContains('id="test"',$base->__toString());
     }
 

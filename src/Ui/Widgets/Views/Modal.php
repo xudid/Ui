@@ -13,7 +13,7 @@ class Modal extends Div
 	/**
 	 * @var \Ui\HTML\Elements\Bases\Base
 	 */
-	private $id = "id";
+	protected $id = "id";
 	private $modalTrigger;
 	private $triggerText = 'Let me pop';
 	private $contentText = 'Thank to pop me out of that button, but now i\'m done so you can close this window.';
@@ -92,7 +92,7 @@ class Modal extends Div
 	}
 
 	/**
-	 * @param \Ui\HTML\Elements\Bases\Base $id
+	 * @param  $id
 	 * @return Modal
 	 */
 	public function setId($id): Modal
