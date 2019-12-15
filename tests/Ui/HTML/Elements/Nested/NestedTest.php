@@ -12,8 +12,8 @@ class NestedTest extends TestCase
     public function testSetId()
     {
         $nested = new Ui\HTML\Elements\Nested\Nested("div");
-        $nested->setIndex('test');
-        $this->assertContains('id="test"',$nested->__toString());
+        $nested->setId('test');
+        $this->assertStringContainsString('id="test"',$nested->__toString());
     }
 
     public function testAddElementInEmptyNestedWithoutId()
@@ -21,15 +21,15 @@ class NestedTest extends TestCase
         $nested = new Ui\HTML\Elements\Nested\Nested("div");
         $nested1 = new Ui\HTML\Elements\Nested\Nested("div");
         $nested->add($nested1);
-        $this->assertContains('<div><div id="0"></div></div>',$nested->__toString());
+        $this->assertStringContainsString('<div><div></div></div>',$nested->__toString());
     }
 
 	public function testAddElementInEmptyNestedWithId()
 	{
 		$nested = new Ui\HTML\Elements\Nested\Nested("div");
 		$nested1 = new Ui\HTML\Elements\Nested\Nested("div");
-		$nested->add($nested1->setIndex('test'));
-		$this->assertContains('<div><div id="test"></div></div>',$nested->__toString());
+		$nested->add($nested1->setId('test'));
+		$this->assertStringContainsString('<div><div id="test"></div></div>',$nested->__toString());
 	}
 
     public function test__construct()
@@ -45,7 +45,7 @@ class NestedTest extends TestCase
         $nested2 = new Ui\HTML\Elements\Nested\Nested("ul");
         $nested->add($nested2);
         $nested->setFirst($nested1);
-        $this->assertContains('<div><div id="1"></div><ul id="0"></ul></div>',$nested->__toString());
+        $this->assertStringContainsString('<div><div></div><ul></ul></div>',$nested->__toString());
     }
 
 
@@ -54,7 +54,7 @@ class NestedTest extends TestCase
     {
         $nested = new Ui\HTML\Elements\Nested\Nested("div");
         $nested->setAttribute("id","test");
-        $this->assertContains('id="test"',$nested->__toString());
+        $this->assertStringContainsString('id="test"',$nested->__toString());
     }
 
 
