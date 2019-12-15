@@ -14,7 +14,7 @@ class BaseTest extends TestCase
     {
         $base = new Ui\HTML\Elements\Bases\Base("b");
         $base->setAttribute("id","test");
-        $this->assertContains('id="test"',$base->__toString());
+        $this->assertStringContainsString('id="test"',$base->__toString());
     }
 
 
@@ -22,15 +22,15 @@ class BaseTest extends TestCase
     public function testSetId()
     {
         $base = new Ui\HTML\Elements\Bases\Base("b");
-        $base->setIndex('test');
-        $this->assertContains('id="test"',$base->__toString());
+        $base->setId('test');
+        $this->assertStringContainsString('id="test"',$base->__toString());
     }
 
     public function test__toString()
     {
         $base = new Ui\HTML\Elements\Bases\Base("b");
         $string = $base->__toString();
-        $this->assertContains("<b></b>",$string);
+        $this->assertStringContainsString("<b></b>",$string);
     }
 
 
@@ -46,7 +46,7 @@ class BaseTest extends TestCase
         $base = new Ui\HTML\Elements\Bases\Base("b");
         $base->setContentString("test");
         $string = $base->__toString();
-        $this->assertContains("<b>test</b>",$string);
+        $this->assertStringContainsString("<b>test</b>",$string);
     }
 
 
