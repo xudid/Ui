@@ -70,7 +70,7 @@ class Page extends Html
     }
 
     /**
-     * @param mixed $element
+     * @param array $elements
      * @return self
      */
     public function feedBody(...$elements)

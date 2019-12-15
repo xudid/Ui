@@ -79,8 +79,8 @@ class Nested extends Base implements ArrayAccess
      */
     public function add($element)
 	{
-		if ($element != null && $element instanceof ElementInterface) {
-			$index = $element->getIndex();
+	    if ($element != null && $element instanceof ElementInterface) {
+	       	$index = $element->getIndex();
 			if ( $index && !array_key_exists($index,$this->childs)) {
 				$this->childs[$index] = $element;
 			} else {
@@ -156,7 +156,7 @@ class Nested extends Base implements ArrayAccess
 				}
 			}
 		}
-		if (is_object($child) && $child instanceof Base || $child instanceof EmptyElement) {
+		if (is_object($child) && $child instanceof ElementInterface) {
 			return $child->__toString();
 		}
 		return $child ;

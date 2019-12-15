@@ -12,6 +12,6 @@ class P extends Nested{
 	 */
 	public function __construct(...$elements){
 		parent::__construct("p");
-		$this->feed($elements);
+		$this->feed(...$elements);
 	}
 }
