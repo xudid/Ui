@@ -363,3 +363,6 @@ border-bottom: 1px solid white;
   transition: max-height 0.3s ease-out;
 
 }
+.large-30{
+    width: 30%;
+}
