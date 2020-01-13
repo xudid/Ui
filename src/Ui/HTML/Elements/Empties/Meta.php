@@ -9,8 +9,10 @@ class Meta extends EmptyElement{
     /**
      * Meta constructor.
      */
-	public function __construct(){
+	public function __construct(string $name = '', string $content = ''){
 	parent::__construct("meta");
+	if (strlen($name) > 0) $this->setAttribute('name', $name);
+	if (strlen($name) > 0) $this->setAttribute('content', $content);
 	return $this;
 	}
 }
