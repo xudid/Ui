@@ -49,7 +49,7 @@ class DivTable extends Div
     )
     {
     	parent::__construct();
-		$this->setClass("div-table bg-dark text-white col-lg-12");
+		$this->setClass("div-table col-lg-12 p-0");
 
         $this->legends = $legends;
         $this->columns = $columns;
@@ -59,8 +59,8 @@ class DivTable extends Div
         $this->baseurl = $baseurl;
         $this->rowcss["odd"] = " ";
         $this->rowcss["even"] = "";
-        $this->rowcss["header"]= "bg-primary text-white";
-        $this->legendcss="bg-primary text-white";
+        $this->rowcss["header"]= "";
+        $this->legendcss= "";
 
 		$this->dataDiv = new TableCorp();
         $this->feed(
@@ -88,5 +88,4 @@ class DivTable extends Div
     {
         $this->rowcss = $rowcss;
     }
-
 }
