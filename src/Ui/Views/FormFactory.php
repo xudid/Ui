@@ -3,7 +3,6 @@ namespace Ui\Views;
 
 use Doctrine\ORM\PersistentCollection;
 use Ui\HTML\Elements\Nested\{Form, P};
-use Ui\Model\DefaultResolver;
 use Ui\Views\Generator\FormFieldGenerator;
 use Ui\Views\Generator\ManyToManyViewGenerator;
 use Ui\Views\Generator\ManyToOneViewGenerator;
