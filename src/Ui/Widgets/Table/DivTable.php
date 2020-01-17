@@ -2,11 +2,7 @@
 
 namespace Ui\Widgets\Table;
 
-use Ui\HTML\Elements\Empties\Hr;
 use Ui\HTML\Elements\Nested\Div;
-use Ui\HTML\Elements\Nested\Section;
-
-
 /**
  * Class DivRowTable
  * @package Ui\Widgets\Table

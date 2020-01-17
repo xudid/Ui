@@ -3,18 +3,16 @@ namespace Ui\Views\Generator;
 
 
 
+use Entity\Metadata\Holder\ClassInformationHolder;
+use http\Exception\InvalidArgumentException;
 use Ui\HTML\Elements\Empties\Br;
-
-use Ui\Model\DefaultFormFilterResolver;
-use Ui\Model\DefaultResolver;
-use Ui\Model\FieldDefinitionResolver;
-use Ui\Views\Holder\ClassInformationHolder;
-use Ui\Views\Holder\EntityInformationHolder;
-use Ui\Views\Holder\InformationHolderInterface;
+use Entity\Metadata\Holder\EntityInformationHolder;
+use Entity\Metadata\Holder\InformationHolderInterface;
 use Ui\Views\ViewFieldsDefinitionInterface;
 use Ui\Views\ViewFilterInterface;
 use Ui\Widgets\Factory\WidgetFactory;
 use Ui\Widgets\Views\NamedFieldset;
+use Entity\DefaultResolver;
 
 
 /**
@@ -58,11 +56,12 @@ class FormFieldGenerator
 	 */
     function __construct($entity, $accessFilter, ViewFieldsDefinitionInterface $fieldsDefinitions = null)
     {
-
         $this->widdgetFactory = new WidgetFactory();
         try {
-            //Init InformationHolderInterface
-            if (is_string($entity)||is_null($entity)) {
+            if (is_null($entity)) {
+                throw new InvalidArgumentException("FormFieldGenerator entity parameter must be an existing class name or an object");
+            }   
+            if (is_string($entity)) {
                $this->informationHolder = new ClassInformationHolder($entity);
             } else {
                  $this->informationHolder = new EntityInformationHolder($entity);
@@ -91,6 +90,7 @@ class FormFieldGenerator
             //Init writables
             $this->writables = $this->getWritables();
         }catch (\ReflectionException $e) {
+            var_dump($entity);
             print_r(__FILE__.__LINE__." ".$e->getMessage()."\n");
         }
     }

@@ -9,9 +9,10 @@ use Ui\Views\Generator\ManyToManyViewGenerator;
 use Ui\Views\Generator\ManyToOneViewGenerator;
 use Ui\Views\Generator\OneToManyViewGenerator;
 use Ui\Views\Generator\OneToOneViewGenerator;
-use Ui\Views\Holder\ClassInformationHolder;
-use Ui\Views\Holder\EntityInformationHolder;
+use Entity\Metadata\Holder\ClassInformationHolder;
+use Entity\Metadata\Holder\EntityInformationHolder;
 use Ui\Widgets\Button\{SubmitButton};
+use Entity\DefaultResolver;
 
 class FormFactory
 {
@@ -148,41 +149,50 @@ class FormFactory
     private function processAssociations(array $fields)
     {
         foreach ($fields as $key => $field) {
-            $associationType = $field->getAssociationType();
-            $className = $field->getType();
-            if ($this->informationHolder->hasEntity()) {
+            if (
+                $field->isWritable() &&
+                in_array(
+                    strtolower($field->getShortType()),
+                    $this->accessFilter->getWritables())
+            ) {
+                $associationType = $field->getAssociationType();
+                $className = $field->getType();
+                if ($this->informationHolder->hasEntity()) {
 
-                $value = $this->informationHolder->getEntityFieldValue($field->getName());
-                $view = null;
-                if ($value != null) {
-                    //ManyToOne Association display a form
-                    if ($associationType == "ManyToOne") {
-                        $fieldGenerator = new FormFieldGenerator($className, "default");
-                        $view = $fieldGenerator->getPartialForm();
+                    $value = $this->informationHolder->getEntityFieldValue($field->getName());
+                    $view = null;
+                    if ($value != null) {
+                        //ManyToOne Association display a form
+                        if ($associationType == "ManyToOne") {
+                            $fieldGenerator = new FormFieldGenerator($className, "default");
+                            $view = $fieldGenerator->getPartialForm();
+
+                        }
+                        //ManyToMany Association if "new" display a form if "edit" display a table
+                        if ($associationType == "ManyToMany") {
+                            $view = (new ManyToManyViewGenerator($className))->getView($value, true);
+
+                        }
+                        //OneToMany Association if "new" display a form if "edit" display a table
+                        if ($associationType == "OneToMany") {
+                            $view = (new OneToManyViewGenerator($className))->getView($value, true);
+
+                        }
+                        //ManyToOne Association display a form
+                        if ($associationType == "OneToOne") {
+                            $view = (new OneToOneViewGenerator($className))->getView($value, true);
+                        }
+                    } else {
 
                     }
-                    //ManyToMany Association if "new" display a form if "edit" display a table
-                    if ($associationType == "ManyToMany") {
-                        $view = (new ManyToManyViewGenerator($className))->getView($value,true);
-
-                    }
-                    //OneToMany Association if "new" display a form if "edit" display a table
-                    if ($associationType == "OneToMany") {
-                        $view = (new OneToManyViewGenerator($className))->getView($value,true);
-
-                    }
-                    //ManyToOne Association display a form
-                    if ($associationType == "OneToOne") {
-						$view = (new OneToOneViewGenerator($className))->getView($value,true);
-                    }
+                    $this->view->add($view);
+                } elseif (is_string($className)) {
+                    $fieldGenerator = new FormFieldGenerator($className, "default");
+                    $view = $fieldGenerator->getPartialForm();
+                    $this->frm->add($view);
                 } else {
-
+                    //var_dump($className);
                 }
-                $this->view->add($view);
-            } else {
-                $fieldGenerator = new FormFieldGenerator($className, "default");
-                $view = $fieldGenerator->getPartialForm();
-                $this->frm->add($view);
             }
         }
     }

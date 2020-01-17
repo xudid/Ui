@@ -223,7 +223,6 @@ class DataTableView
     private function generateColumns()
     {
         $columns = [];
-        //Todo use FieldDefinitionResolverInterface
         $formfilterClassName = DefaultResolver::getFieldDefinitions($this->classname);
         $formfilter = new $formfilterClassName();
         foreach ($this->viewables as $key => $value) {
