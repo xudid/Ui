@@ -30,17 +30,16 @@ class FormFactory
 
     /**
      *FormFactory
-     * @param $className : class name with complete namespace
-     * or an Object
-     *
+     * @param $entity
      * @param $accessFilter : null generated form presents all the
      *                 fields of the class
      *                 default use an accessFilter named :
      *                 classname + FormFilter in the same directory of the class
      *                 a FormFilter object
      *
-     * @param $action : form
-     * @param $method :the method used to send data "GET"/"POST"...
+     * @param ViewFieldsDefinitionInterface|null $fieldsDefinitions
+     * @param string $action : form
+     * @param string $method :the method used to send data "GET"/"POST"...
      * @throws \ReflectionException
      */
     public function __construct($entity, $accessFilter, ?ViewFieldsDefinitionInterface $fieldsDefinitions = null, string $action, string $method)

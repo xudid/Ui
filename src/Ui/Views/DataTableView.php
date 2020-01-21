@@ -3,19 +3,18 @@
 namespace Ui\Views;
 
 
+use Entity\DefaultResolver;
+use Entity\Entity;
+use Entity\EntityFactory;
+use Entity\Metadata\Holder\ClassInformationHolder;
+use Entity\Metadata\Holder\EntityInformationHolder;
 use Prophecy\Exception\Doubler\ClassNotFoundException;
 use ReflectionClass;
 use ReflectionException;
 use Ui\HTML\Elements\Nested\Div;
-use Ui\Model\Database\DaoInterface;
-use Ui\Model\DefaultResolver;
-use Ui\Model\Entity;
-use Ui\Model\EntityFactory;
 use Ui\Views\Generator\CellValueGenerator;
-use Ui\Views\Generator\FormFieldGenerator;
-use Ui\Views\Generator\ManyToManyViewGenerator;
-use Ui\Views\Generator\OneToManyViewGenerator;
-use Ui\Views\Holder\EntityInformationHolder;
+
+
 use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
 use Ui\Widgets\Table\TableLegend;
@@ -35,7 +34,7 @@ class DataTableView
     private $whereparams = [];
     private $rowsclickable = false;
     private $baseurl = "";
-    private $eih = null;
+    private $informationHolder = null;
     private array $columns;
 
 	/**
@@ -43,18 +42,23 @@ class DataTableView
 	 */
 	private $entityFactory;
 
-	/**
-	 * DataTableView constructor.
-	 * @param string $className the classname of the Entiy we want to retrieve values
-	 * @param $accessFilter
-	 * @param EntityFactory $entityFactory
-	 * @throws ReflectionException
-	 */
-    public function __construct(string $className, $accessFilter, EntityFactory $entityFactory)
+    /**
+     * DataTableView constructor.
+     * @param string $className the classname of the Entiy we want to retrieve values
+     * @param $accessFilter
+     * @param Entity $entity
+     * @throws ReflectionException
+     */
+    public function __construct(string $className, $accessFilter, Entity $entity)
     {
 
         //Initialize Metadata Holder
-        $this->eih = new EntityInformationHolder($className);
+        //Init InformationHolderInterface
+        if (is_string($className)) {
+            $this->informationHolder = new ClassInformationHolder($className);
+        } else {
+            $this->informationHolder = new EntityInformationHolder($className);
+        }
 
         //Set this class name
         $this->classname = $className;
@@ -63,13 +67,13 @@ class DataTableView
         $this->setAccessFilter($accessFilter);
 
         //Initialize fields to display
-        $this->fields = $this->eih->getFields();
+        $this->fields = $this->informationHolder->getFields();
         $this->viewables = $this->getViewables();
 
         //Initialize columns
         $this->columns = $this->generateColumns();
         //Initilize database access
-		$this->entityFactory = $entityFactory;
+		$this->entityFactory = $entity;
 		return $this;
 	}
 
@@ -143,13 +147,12 @@ class DataTableView
     private function retrieveData()
     {
         $dataToDisplay = [];
-        if ($this->Entity ===null) {
+        if ($this->Entity === null) {
             try{
 
             } catch (\Exception $exception){
                 print_r($exception->getMessage()."\n");
             }
-            $this->initWithDefaultEntity();
         }
         //Rettrieve data with filters
         if (count($this->whereparams) > 0) {
@@ -164,20 +167,20 @@ class DataTableView
                 if (\is_object($object)) {
 
                     //Get Object Metadata
-                    $eih1 = new EntityInformationHolder($object);
+                    $informationHolder = new EntityInformationHolder($object);
 
                     //Get Fields
-					$fields = $eih1->getFields();
+					$fields = $informationHolder->getFields();
 
 					foreach ($fields as $field) {
 							//Field is not an association
 						if ($field && !$field->isAssociation()) {
-							$dataToDisplay[$key][$field->getName()] = $eih1->getEntityFieldValue($field->getName());
+							$dataToDisplay[$key][$field->getName()] = $informationHolder->getEntityFieldValue($field->getName());
 						} else {
 							//Field is an association getting it"s type
 							$associationType = $field->getAssociationType();
 							$className = $field->getType();
-							$value = $eih1->getEntityFieldValue($field->getName());
+							$value = $informationHolder->getEntityFieldValue($field->getName());
 							if ($value != null) {
 								//ManyToOne Association display a form
 								if ($associationType == "ManyToOne") {
@@ -234,14 +237,6 @@ class DataTableView
         return $columns;
     }
 
-    /**
-     * @throws ReflectionException
-     */
-    private function initWithDefaultEntity()
-    {
-    	$this->Entity = $this->entityFactory->getEntity($this->classname);
-
-    }
 
     public function setTitle($title)
     {
