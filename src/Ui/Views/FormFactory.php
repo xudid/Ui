@@ -2,7 +2,7 @@
 namespace Ui\Views;
 
 use Doctrine\ORM\PersistentCollection;
-use Ui\HTML\Elements\Nested\{Form, P};
+use Ui\HTML\Elements\Nested\{Div, Form, P};
 use Ui\Views\Generator\FormFieldGenerator;
 use Ui\Views\Generator\ManyToManyViewGenerator;
 use Ui\Views\Generator\ManyToOneViewGenerator;
@@ -12,6 +12,8 @@ use Entity\Metadata\Holder\ClassInformationHolder;
 use Entity\Metadata\Holder\EntityInformationHolder;
 use Ui\Widgets\Button\{SubmitButton};
 use Entity\DefaultResolver;
+use Ui\Views\Holder\TraitInformationHolder;
+use Ui\Widgets\Views\Title;
 
 class FormFactory
 {
@@ -27,7 +29,11 @@ class FormFactory
     private $formMethod = "";
     private $inline = false;
     private $informationHolder = null;
-
+    /**
+     * @var FormFieldGenerator
+     */
+    private FormFieldGenerator $fieldGenerator;
+    use TraitInformationHolder;
     /**
      *FormFactory
      * @param $entity
@@ -44,12 +50,7 @@ class FormFactory
      */
     public function __construct($entity, $accessFilter, ?ViewFieldsDefinitionInterface $fieldsDefinitions = null, string $action, string $method)
     {
-        //Init InformationHolderInterface
-        if (is_string($entity)) {
-            $this->informationHolder = new ClassInformationHolder($entity);
-        } else {
-            $this->informationHolder = new EntityInformationHolder($entity);
-        }
+        $this->getInformationHolder($entity);
         //Init class names
         $this->classname = $this->informationHolder->getClassName();
         $this->shortClassName = $this->informationHolder->getShortClassName();
@@ -62,11 +63,11 @@ class FormFactory
         if ($this->informationHolder->hasEntity()) {
             $this->entity = $this->informationHolder->getEntity();
             //Init FormFieldGenerator
-            $this->ffg = new FormFieldGenerator($this->entity, $this->accessFilter);
+            $this->fieldGenerator = new FormFieldGenerator($this->entity, $this->accessFilter);
 
         } else {
             //Init FormFieldGenerator
-            $this->ffg = new FormFieldGenerator($this->classname, $this->accessFilter);
+            $this->fieldGenerator = new FormFieldGenerator($this->classname, $this->accessFilter);
 
         }
 
@@ -80,14 +81,15 @@ class FormFactory
             $this->ffds = $fieldsDefinitions;
 
         } else {
-            $ffdsClassName = DefaultResolver::getFieldDefinitions($this->classname);
-            $this->ffds = new $ffdsClassName($this->classname);
+                $ffdsClassName = DefaultResolver::getFieldDefinitions($this->classname);
+                $this->ffds = new $ffdsClassName($this->classname);
         }
-        $this->view = new EntityView();
+        $this->view = (new EntityView())->setClass("bg-light text-dark shadow-lg py-3 m-4");
         $this->frm = new Form();
-        $this->frm->setAction($this->formAction);
-        $this->frm->setMethod($this->formMethod);
-        $this->frm->setName($this->classname);
+        $this->frm->setAction($this->formAction)
+            ->setMethod($this->formMethod)
+            ->setName($this->classname)
+            ->setClass('m-3');
     }
 
     private function setAccessFilter($accessFilter)
@@ -107,28 +109,26 @@ class FormFactory
 
     public function getForm()
     {
-        if (!$this->inline) {
-            $this->frm->setClass("form");
-        } else {
+        if ($this->inline) {
             $this->frm->setClass("form_inline");
         }
-
+    $this->frm->setClass('justify-content-around');
         if (!$this->inline) {
-            $title = new P();
-            $title->setClass("form_title");
             $t = "";
             if (isset($this->formTitle)) {
                 $t = $this->formTitle;
             } else {
                 $t = $this->shortClassName;
             }
-            $title->add($t);
-            $this->frm->add($title);
+            //$title = new Title(3,$t);
+            //$title->setClass("form_title");
+            $this->view->setTitle($t);
         }
 
         //Get partial form for class or object given
-        $this->frm->add($this->ffg->getPartialForm());
+        $this->frm->add($this->fieldGenerator->getPartialForm());
 
+        $this->view->add($this->frm);
         //Test if entity or class has associations
         if ($this->informationHolder->hasAssociation()) {
             $associations = $this->informationHolder->getAssociations();
@@ -137,10 +137,11 @@ class FormFactory
         }
         $submitButton = new SubmitButton("Valider");
         if ($this->inline) {
-            $submitButton->setClass("form_inline_button");
+            $submitButton->setClass("btn btn-primary form_inline_button");
+        } else {
+            $submitButton->setClass("btn btn-primary ml-3");
         }
-        $this->frm->add($submitButton);
-        $this->view->add($this->frm);
+            $this->frm->add($submitButton);
         return $this->view;
     }
 
@@ -183,7 +184,7 @@ class FormFactory
                     } else {
 
                     }
-                    $this->view->add($view);
+                    $this->view->add((new Div())->setClass('row ml-0')->add($view));
                 } elseif (is_string($className)) {
                     $fieldGenerator = new FormFieldGenerator($className, "default");
                     $view = $fieldGenerator->getPartialForm();
