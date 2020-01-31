@@ -23,33 +23,33 @@ class WidgetFactory
      */
     private $input;
 
-    public function getTextInput($name,$display, $id=null)
+    public static function getTextInput($name,$display, $id=null)
     {
-        $this->input = new TextInput();
-        $this->initNameAndId($id,$name);
-        $this->input->SetPlaceholder($display);
-        return $this->input;
+        $input = new TextInput();
+        self::initNameAndId($input,$id,$name);
+        $input->SetPlaceholder($display);
+        return $input;
     }
 
     public function getDateInput($name,$id=null)
     {
-        $this->input = new DateInput();
-        $this->initNameAndId($id,$name);
-        return  $this->input;
+        $input = new DateInput();
+        self::initNameAndId($input,$id,$name);
+        return  $input;
     }
 
     public function getColorInput($name,$id=null)
     {
-        $this->input = new ColorInput();
-        $this->initNameAndId($id,$name);
-        return $this->input;
+        $input = new ColorInput();
+        self::initNameAndId($input,$id,$name);
+        return $input;
     }
 
     public function getPasswordInput($name,$id=null)
     {
-        $this->input = new PasswordInput("password");
-        $this->initNameAndId($id,$name);
-        return $this->input;
+        $input = new PasswordInput("password");
+        self::initNameAndId($input,$id,$name);
+        return $input;
     }
 
     public function getSelectOption($name,$options, $id=null)
@@ -63,44 +63,44 @@ class WidgetFactory
     public function getEmailInput($name,$display="e.mail@mail.box.com",$id=null)
     {
         $input = new EmailInput();
-        $this->initNameAndId($id,$name);
+        self::initNameAndId($input,$id,$name);
         $input->SetPlaceholder($display);
-        return $this->input;
+        return $input;
     }
 
     public function getTextarea($name, $id=null,$value="")
     {
-        $this->input = new TextArea();
-        $this->input->add($value);
-        $this->initNameAndId($id,$name);
-        return $this->input;
+        $input = new TextArea();
+        $input->add($value);
+        self::initNameAndId($input,$id,$name);
+        return $input;
     }
 
     public function getRadioButton($name,$id=null)
     {
-        $this->input = new RadioButton();
-        $$this->initNameAndId($id,$name);
-        return $this->input;
+        $input = new RadioButton();
+        self::initNameAndId($input,$id,$name);
+        return $input;
     }
 
     public function getCheckBox($id,$name)
     {
-        $this->input= new CheckBox();
-        $this->initNameAndId($id,$name);
-        return $this->input;
+        $input= new CheckBox();
+        self::initNameAndId($input,$id,$name);
+        return $input;
     }
 
     public function getResetButton($id,$name)
     {
-        $this->input = new ResetButton();
-        $this->initNameAndId($id,$name);
-        return $this->input;
+        $input = new ResetButton();
+        self::initNameAndId($input,$id,$name);
+        return $$input;
     }
 
-    private function initNameAndId($id,$name)
+    private static function initNameAndId($input,$id,$name)
     {
         $id = $id===null?$name:$id;
-        $this->input->setName($name);
-        $this->input->setId($id);
+        $input->setName($name);
+        $input->setId($id);
     }
 }
