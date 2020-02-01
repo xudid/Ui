@@ -20,15 +20,15 @@ class FieldInfo extends Div
 	public function __construct(string $label, $value)
 	{
 		parent::__construct();
-		$this->setClass('col-sm-4 text-white text-left ');
+		$this->setClass('col-sm-9 text-white text-left mb-3');
 		$this->fieldGroup = (new Div())->setClass('input-group ');
 		$this->add($this->fieldGroup);
 		$this->fieldGroup->add(
 			(new Div())->setClass('input-group-prepend ')->add(
 					(new Span(ucfirst($label)." : "))
-					->setClass("input-group-text bg-secondary text-white")
+					->setClass('input-group-text bg-secondary text-white')
 				)
 		);
-		$this->fieldGroup->add((new Span($value))->setClass("form-control"));
+		$this->fieldGroup->add((new Span($value))->setClass('text-truncate form-control'));
 	}
 }
