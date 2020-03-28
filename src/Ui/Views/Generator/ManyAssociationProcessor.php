@@ -1,13 +1,14 @@
 <?php
 
 
-namespace Ui\Model;
+namespace Ui\Views\Generator;
 
-
+use Entity\DefaultResolver;
+use Entity\Metadata\Field;
+use Entity\Metadata\Holder\ClassInformationHolder;
+use Entity\Metadata\Holder\EntityInformationHolder;
+use Entity\Metadata\Holder\InformationHolderInterface;
 use Ui\Views\Generator\FormFieldGenerator;
-use Ui\Model\Field;
-use Ui\Views\Holder\ClassInformationHolder;
-use Ui\Views\Holder\EntityInformationHolder as EntityInformationHolderAlias;
 use Ui\Views\ViewFieldsDefinitionInterface;
 use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
@@ -16,7 +17,7 @@ use Ui\Widgets\Table\TableLegend;
 class ManyAssociationProcessor
 {
 
-    private $informationHolder;
+    private InformationHolderInterface $informationHolder;
     private $classname;
     private $entity;
     /**
@@ -68,7 +69,7 @@ class ManyAssociationProcessor
             {
                 $collection = $val->getValues();
                 $ei = new EntityInformationHolder($this->classname);
-                $vfdClassName = DefaultFieldDefinitionResolver::getFieldDefinitions($this->classname);
+                $vfdClassName = DefaultResolver::getFieldDefinitions($this->classname);
                 $viewFieldDefinitions = new $vfdClassName();
                 $title =  $viewFieldDefinitions->getDisplayFor($ei->getShortClassName());
 
@@ -87,7 +88,6 @@ class ManyAssociationProcessor
             $ffg1 = new FormFieldGenerator($this->classname,"default");
             //Get partial Form
             $ffg1->getPartialForm($this->frm);
-
         }
     }
 }

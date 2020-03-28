@@ -2,22 +2,18 @@
 namespace Ui\Views;
 
 
-use Psr\Container\ContainerInterface;
+use Entity\DefaultResolver;
+use Entity\Metadata\Holder\ClassInformationHolder;
+use Entity\Metadata\Holder\EntityInformationHolder;
+use ReflectionException;
 use Ui\HTML\Elements\Nested\Div;
 use Ui\HTML\Elements\Nested\Section;
-use Ui\Model\Association;
-use Ui\Model\DefaultResolver;
 use Ui\Views\Generator\ManyToManyViewGenerator;
-use Ui\Views\Generator\ManyToOneViewGenerator;
 use Ui\Views\Generator\OneToManyViewGenerator;
-use Ui\Views\Generator\OneToOneViewGenerator;
-use Ui\Views\Holder\ClassInformationHolder;
-use Ui\Views\Holder\EntityInformationHolder;
+use Ui\Views\Holder\TraitInformationHolder;
 use Ui\Widgets\Accordeon\CollapsibleItem;
 use Ui\Widgets\Accordeon\CollapsibleList;
-use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
-use Ui\Widgets\Table\TableLegend;
 
 /**
  * EntityViewFactory
@@ -33,11 +29,6 @@ class EntityViewFactory
     private $view = null;
 
     private CollapsibleList $collapsiblelist ;
-    /**
-     * [private description]
-     * @var [type]
-     */
-    private $entityView = null;
 
     /**
      * [private description]
@@ -85,32 +76,27 @@ class EntityViewFactory
      * [private description]
      * @var [type]
      */
-    private $path = "";
+    private string $path = "";
+    private $fieldDefinitions;
 
+    use TraitInformationHolder;
     /**
      * [__construct description]
      * @param [type] $entity       [description]
      * @param [type] $accessFilter [description]
      */
 
-    public function __construct($entity, $accessFilter = "default",$router = null)
+    public function __construct($entity, $accessFilter = "default")
     {
+
         $this->view = new EntityView();
-
-        try {
-            if (is_string($entity)) {
-                $this->informationHolder = new ClassInformationHolder($entity);
-            } else {
-                $this->informationHolder = new EntityInformationHolder($entity);
-                $this->entity = $entity;
-            }
-            //Init class names
-            $this->classname = $this->informationHolder->getClassName();
-            $this->shortClassName = $this->informationHolder->getShortClassName();
-            $this->setAccessFilter($accessFilter);
-
-        } catch (\ReflectionException $e) {
-        }
+        $this->getInformationHolder($entity);
+        //Init class names
+        $this->classname = $this->informationHolder->getClassName();
+        $this->shortClassName = $this->informationHolder->getShortClassName();
+        $this->setAccessFilter($accessFilter);
+        $fieldDefinitions = DefaultResolver::getFieldDefinitions($this->classname);
+        $this->fieldDefinitions = new $fieldDefinitions($this->classname);
     }
 
     /**
@@ -119,28 +105,24 @@ class EntityViewFactory
      */
     public function getView(bool $subview = false)
     {
-        $title = "";
-
         if (isset($this->viewTitle)) {
             $title = $this->viewTitle;
         } else {
-            $title = $this->shortClassName;
         }
-        $this->entityView = new EntityView($subview);
-        $this->view->setTitle($title);
+        $this->view->setTitle($this->fieldDefinitions->getDisplayFor($this->shortClassName));
         $this->view->setClass("bg-light text-dark shadow-lg py-3 m-4");
 
-        $epvf = new EntityPartialViewFactory($this->entity, $this->accessFilter, $subview);
-        $epvf->setCurrentPath($this->path);
+        $factory = new EntityPartialViewFactory($this->entity, 'default', $subview);
+        $factory->setCurrentPath($this->path);
 
         if ($this->iscollapsible) {
             $this->collapsiblelist = new CollapsibleList();
-            $epvf->setCollapsible();
-            $this->collapsiblelist->addItem($epvf->getPartialView());
+            $factory->setCollapsible();
+            $this->collapsiblelist->addItem($factory->getPartialView($subview));
             $this->view->add($this->collapsiblelist);
 
         } else {
-            $this->view->add(($epvf->getPartialView($subview)));
+            $this->view->add(($factory->getPartialView($subview)));
         }
 
         if ($this->informationHolder->hasAssociation()) {
@@ -223,8 +205,6 @@ class EntityViewFactory
 						//$view->setTitle( $field->getShortType());
 
                     }
-                } else {
-
                 }
                $section->add($view);
             }
@@ -283,4 +263,3 @@ class EntityViewFactory
         return $columns;
     }
 }
-

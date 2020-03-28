@@ -13,7 +13,7 @@ class EmptyElementTest extends TestCase
     {
         $empty = new Ui\HTML\Elements\Empties\EmptyElement("input");
         $string = $empty->__toString();
-        $this->assertContains("<input>",$string);
+        $this->assertStringContainsString("<input>",$string);
 
     }
 
@@ -27,6 +27,6 @@ class EmptyElementTest extends TestCase
     {
         $empty = new Ui\HTML\Elements\Empties\EmptyElement("input");
         $empty->setAttribute("id","test");
-        $this->assertContains('id="test"',$empty->__toString());
+        $this->assertStringContainsString('id="test"',$empty->__toString());
     }
 }

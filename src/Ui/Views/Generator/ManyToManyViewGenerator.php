@@ -3,14 +3,8 @@
 
 namespace Ui\Views\Generator;
 
-use Ui\HTML\Elements\Bases\Span;
-use Ui\HTML\Elements\Nested\A;
+use Entity\DefaultResolver;
 use Ui\HTML\Elements\Nested\Div;
-use Ui\Model\DefaultResolver;
-use Ui\Views\EntityView;
-use Ui\Widgets\Table\DivTable;
-use Ui\Widgets\Table\TableColumn;
-use Ui\Widgets\Table\TableLegend;
 use Ui\Widgets\Views\FieldButton;
 
 /**
@@ -27,23 +21,39 @@ class ManyToManyViewGenerator implements AssociationViewGenerator
      * ManyToManyViewGenerator constructor.
      * @param $className
      */
-    public function __construct($className)
+    public function __construct(string $className)
     {
         $this->className = $className;
         $accessFilterName = DefaultResolver::getFilter($this->className);
         $this->accessFilter = new $accessFilterName();
         $this->viewables = $this->accessFilter->getViewables();
-    }
 
+    }
 
     /**
      * Return an EntityView with a DivTable inside
+     *
+     * @param $datas
+     * @param bool $clickable
+     * @param string $baseURL
+     * @return FieldButton
      */
     public function getView($datas,bool $clickable = false,string $baseURL="")
     {
     	$fieldsDefinitionClassName = DefaultResolver::getFieldDefinitions($this->className);
 		$fieldsDefinition = new $fieldsDefinitionClassName();
-		$fieldTitle = $fieldsDefinition->getDisplayFor($this->className);
-        return new FieldButton($fieldTitle, $baseURL);
+		$fieldTitle = $fieldsDefinition->getDisplayFor($this->getShortClassname($this->className));
+        return (new FieldButton($fieldTitle, $baseURL));
+    }
+
+    /**
+     * @param string $classname
+     * @return mixed
+     */
+    private function getShortClassname(string $classname)
+    {
+        $s = str_replace('\\', '/', $classname);
+        $c = explode("/", $s);
+        return  end($c);
     }
 }
