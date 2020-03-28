@@ -130,7 +130,7 @@ class Nested extends Base implements ArrayAccess
 	/**
 	 *
 	 */
-    private function generateContentString()
+    protected function generateContentString()
     {
         $this->contentString = $this->startTag;
         if(count($this->childs)>0)

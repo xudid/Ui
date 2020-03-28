@@ -37,69 +37,66 @@ class Head extends Nested{
 	/**
 	 *
 	 */
-	private function generateContentString(){
-		$this->contentString = $this->startTag."\r\n";
+	protected function generateContentString(){
+
 		if($this->base !=null){
-			$this->contentString = $this->contentString.$this->base ;
+			$this->add($this->base) ;
 		}
 		if($this->title !=null){
-			$this->contentString = $this->contentString.$this->renderTitle();
+			$this->renderTitle();
 		}
 
-		$this->contentString = $this->contentString.$this->renderMeta();
+		$this->renderMeta();
 
 		if(count($this->scripts)>0){
-			$this->contentString = $this->contentString.$this->renderScripts() ;
+			$this->renderScripts() ;
 		}
 		if(count($this->links)>0){
-			$this->contentString = $this->contentString.$this->renderLink() ;
+			$this->renderLink() ;
 		}
-		if(count($this->childs)>0){
-			foreach ($this->childs as $e){
-				$this->contentString = $this->contentString.$e ;
-			}
-		}
-		$this->contentString = $this->contentString.$this->endTag."\r\n";
+		parent::generateContentString();
 	}
 
 	/**
 	 * @return string
 	 */
-	private function renderTitle():string{
-		return  "<title>".$this->title."</title>"."\r\n";
+	private function renderTitle():self
+    {
+		$this->add("<title>".$this->title."</title>"."\r\n");
+		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	private function renderMeta():string{
-		$string="";
+	private function renderMeta():self
+    {
 		foreach($this->meta as $value){
-        $string = $string.$value."\r\n";
+        $this->add($value);
     	}
-    	return $string;
+    	return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	private function renderScripts():string{
-		$string="";
+	private function renderScripts():self
+    {
 		foreach($this->scripts as $value){
-			$string = $string.$value."\r\n";
+			$this->add($value);
 		}
-		return $string;
+		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	private function renderLink():string{
-		$string="";
+	private function renderLink():self
+    {
     	foreach($this->links as $value){
-        $string = $string.$value."\r\n";
+        $this->add($value);
     	}
-    	return $string;
+    	return $this;
 	}
 
 	/**

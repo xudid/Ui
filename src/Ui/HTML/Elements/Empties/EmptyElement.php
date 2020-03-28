@@ -17,7 +17,7 @@ class EmptyElement implements ElementInterface
 {
 	protected ?Nested $parent = null;
 
-	protected ?Nesteed $root = null;
+	protected ?Nested $root = null;
 
 	protected $index ='';
 
@@ -29,14 +29,12 @@ class EmptyElement implements ElementInterface
 
 
     /**
-    * @param elementName HtmlElement name in start and end Tag
+    * @param string elementName HtmlElement name in start and end Tag
     *
     */
     public function __construct($elementName)
     {
-      //$classstarttag = "Brick\\tags\EmptyElementTags\\".$this->elementName."StartTag";
     	$this->startTag = new StartTag($elementName);
-
     }
 
     /**
@@ -77,7 +75,6 @@ class EmptyElement implements ElementInterface
     public function setIndex(string $index)
     {
     	$this->index = $index;
-        $this->startTag->setAttribute("id",$index);
         return $this;
     }
 
@@ -99,6 +96,7 @@ class EmptyElement implements ElementInterface
     {
       if(isset($class))
       $this->startTag->setAttribute("class",$class);
+      return this;
     }
 
 	/**
@@ -119,7 +117,7 @@ class EmptyElement implements ElementInterface
 	}
 
 	/**
-	 * @return Nesteed|null
+	 * @return Nested|null
 	 */
 	public function getRoot(): ?Nested
 	{
@@ -127,7 +125,7 @@ class EmptyElement implements ElementInterface
 	}
 
 	/**
-	 * @param Nesteed|null $root
+	 * @param Nested|null $root
 	 * @return EmptyElement
 	 */
 	public function setRoot(?Nested $root): EmptyElement
@@ -135,10 +133,4 @@ class EmptyElement implements ElementInterface
 		$this->root = $root;
 		return $this;
 	}
-
-
-
-
-
-
 }
