@@ -37,10 +37,11 @@ class Cell extends  Div{
         {
             $value = implode("<br>", $value);
         }
+        if (is_numeric($value)) {
+            $value = (string)$value;
+        }
         $this->add($value);
         $this->setClass('div-cell large-30');
         return $this;
     }
-
-
 }

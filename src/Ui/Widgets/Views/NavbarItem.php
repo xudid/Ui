@@ -4,6 +4,7 @@
 namespace Ui\Widgets\Views;
 
 
+use Ui\HTML\Elements\ElementInterface;
 use Ui\HTML\Elements\Nested\Li;
 
 /**
@@ -23,6 +24,15 @@ class NavbarItem extends Li
 	public function __construct($content = null, string $position = NavbarItem::LEFT)
 	{
 		$this->position = $position;
+		$margin = $position == NavbarItem::LEFT ? 'mr-2' : 'ml-2';
+		if ($content instanceof ElementInterface) {
+		    $content->setClass('d-inline ' . $margin);
+
+        }
+		if ($content instanceof Modal) {
+		    $content->getTrigger()->setClass('d-inline ' . $margin);
+        }
+
 		parent::__construct($content);
 		$this->setClass();
 	}

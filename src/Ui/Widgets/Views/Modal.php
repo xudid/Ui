@@ -16,7 +16,7 @@ class Modal extends Div
 	protected $id = "id";
 	private $modalTrigger;
 	private $triggerText = 'Let me pop';
-	private $contentText = 'Thank to pop me out of that button, but now i\'m done so you can close this window.';
+	private $contentText = '';
 	/**
 	 * @var \Ui\HTML\Elements\Bases\Base
 	 */
@@ -30,29 +30,29 @@ class Modal extends Div
 	 */
 	private $modal;
 
-	private $headerText = 'Here i am ';
+	private $headerText = '';
 	private $modalTriggerAnchor;
 	/**
 	 * @var H2
 	 */
 	private $header;
 
-	public function __construct()
+	public function __construct($id, $children)
 	{
 		parent::__construct();
 		$this->setClass('modal_container');
 		$this->modalTrigger = (new Div())->setClass('modal_trigger');
-		$this->modalTriggerAnchor = (new A('#modal'))->setClass('button')->add($this->triggerText);
+		$this->modalTriggerAnchor = (new A($this->triggerText, '#modal_' . $id))->setClass('button');
 		$this->modalTrigger->add($this->modalTriggerAnchor);
 		$this->add($this->modalTrigger);
-		$this->modal = (new Div())->setId('modal')->setClass('overlay');
+		$this->modal = (new Div())->setId('modal_' . $id)->setClass('overlay');
 		$this->popup = (new Div())->setClass('popup');
 		$this->header = new H2($this->headerText);
 		$this->popup->add($this->header);
 
-		$this->popup->add((new A('#'))->setClass('close')->add('&times;'));
+		$this->popup->add((new A('&times;', '#'))->setClass('close'));
 		$this->content = (new Div())->setClass('modal_content');
-		$this->content->add($this->contentText);
+		$this->content->feed($children);
 		$this->popup->add($this->content);
 		$this->modal->add($this->popup);
 		$this->add($this->modal);
@@ -99,9 +99,14 @@ class Modal extends Div
 	{
 		$this->id = $id;
 		$this->modal->setId($this->id);
-		$this->modalTriggerAnchor = (new A('#' . $this->id))->setClass('button')->add($this->triggerText);
+		$this->modalTriggerAnchor = (new A('$this->triggerText','#' . $this->id))->setClass('button');
 		$this->modalTrigger->setContentString($this->modalTriggerAnchor);
 		return $this;
 	}
+
+	public function getTrigger()
+    {
+        return $this->modalTrigger;
+    }
 
 }

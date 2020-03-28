@@ -13,8 +13,9 @@ class Div extends Nested{
 	/**
 	 * Div constructor.
 	 */
-	public function __construct(){
+	public function __construct(...$children){
 		parent::__construct("div");
+		$this->feed(...$children);
 	}
 
 

@@ -1,6 +1,10 @@
 <?php
 namespace Ui\Widgets\Table;
 
+use ReflectionException;
+use ReflectionMethod;
+use ReflectionObject;
+use Ui\HTML\Elements\Nested\A;
 use Ui\HTML\Elements\Nested\Div;
 
 //Todo create a RowFactory and a  RowFactoryInterface with setRowClickAction setRowClass setRowCss setRowColumns ?
@@ -29,27 +33,10 @@ class TableRow extends Div{
     private int $colCount;
     private bool $rowsclickable;
 
-    public function __construct(array $columns, $val, int $rowIndex, string $baseUrl="", bool $rowsclickable=false)
+    public function __construct()
     {
         parent::__construct();
-
         $this->setClass("div-row");
-        $this->val = $val;
-        $this->rowIndex = $rowIndex;
-        $this->columns = $columns;
-        $this->colCount = count($this->columns);
-        $this->baseUrl = $baseUrl;
-        $this->rowsclickable = $rowsclickable;
-        if(is_object($val))
-        {
-            $this->getTableRowFromObject();
-        }
-        else
-        {
-            $this->getTableRow();
-        }
-        return $this;
-
     }
 
     public function setClass(string $class)
@@ -60,7 +47,8 @@ class TableRow extends Div{
 
     private function getTableRowFromObject()
     {
-        $ro = new \ReflectionObject($this->val);
+
+        $ro = new ReflectionObject($this->val);
         $hasgetId = false;
         if ($ro->hasMethod("getId")) {
             $hasgetId = true;
@@ -72,8 +60,8 @@ class TableRow extends Div{
             $isEditable = $column->isEditable();
             $methodName = "get" . ucfirst($colname);
             try {
-                $method = new \ReflectionMethod($this->val, $methodName);
-            } catch (\ReflectionException $e) {
+                $method = new ReflectionMethod($this->val, $methodName);
+            } catch (ReflectionException $e) {
             }
             $value = $method->invoke($this->val);
             $cell = new Cell($value, $isEditable);
@@ -84,9 +72,14 @@ class TableRow extends Div{
             //Todo create a default row click action
             //Todo allow to provide a row click action
             if ($hasgetId && $this->rowsclickable) {
-                $method = new \ReflectionMethod($this->val, "getId");
-                $id = $method->invoke($this->val);
-                $this->setOnClick("location.href='" . $this->baseUrl . "/" . $id . "'");
+                try {
+                    $method = new ReflectionMethod($this->val, "getId");
+                    $id = $method->invoke($this->val);
+                    $this->setOnClick("location.href='" . $this->baseUrl . "/" . $id . "'");
+                } catch (ReflectionException $e) {
+                    throw $e;
+                }
+
             }
         }
     }
@@ -96,18 +89,27 @@ class TableRow extends Div{
         {
             $id = $this->val["id"];
             $this->setOnClick("location.href='".$this->baseUrl."/".$id."'");
-        }
+        } elseif(array_key_exists("id" , $this->val)) {
+           $a = new A((string)$this->val['id'], $this->baseUrl . "/" . $this->val['id'] );
+           $a->setClass('btn btn-primary btn-xs');
+           $cell = new Cell($a,false);
+
+           $this->add($cell);
+       }
         for($i=0;$i<$this->colCount;$i++)
         {
             $column = $this->columns[$i];
             $isEditable = $column->isEditable();
-
-            $cell = new Cell($this->val[$column->getName()],$isEditable);
-            if($column->isBaseIdSet())
-            {
-                $cell->setIndex($column->getBaseId().$this->rowIndex);
+            $columnName = $column->getName();
+            if ($columnName != 'id') {
+                $cell = new Cell($this->val[$columnName],$isEditable);
+                if($column->isBaseIdSet())
+                {
+                    $cell->setIndex($column->getBaseId().$this->rowIndex);
+                }
+                $this->add($cell);
             }
-            $this->add($cell);
+
         }
     }
 

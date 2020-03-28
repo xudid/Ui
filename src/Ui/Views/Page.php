@@ -120,7 +120,16 @@ class Page extends Html
     public function importScript(...$scripts)
     {
         foreach ($scripts as $script) {
-            $this->addScript($script);
+            $this->addScript(new Script($script));
+            $this->addScript(new Script("
+    document.addEventListener('DOMContentLoaded',
+    function(event)
+    {
+      console.log('DOM fully loaded and parsed');
+      InitCollapsible();
+    }
+    );",
+                false));
         }
         return $this;
     }

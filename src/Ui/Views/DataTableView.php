@@ -4,108 +4,67 @@ namespace Ui\Views;
 
 
 use Entity\DefaultResolver;
-use Entity\Entity;
-use Entity\EntityFactory;
-use Entity\Metadata\Holder\ClassInformationHolder;
-use Entity\Metadata\Holder\EntityInformationHolder;
+use Entity\Model\Model;
+use Entity\Model\ModelManager;
 use ReflectionException;
-use Ui\HTML\Elements\Nested\A;
 use Ui\HTML\Elements\Nested\Div;
 use Ui\Views\Generator\CellValueGenerator;
-use Ui\Views\Generator\ManyToManyViewGenerator;
+use Ui\Widgets\Table\ColumnsFactory;
 use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
 use Ui\Widgets\Table\TableLegend;
+use Ui\Widgets\Views\Modal;
 
 
-class DataTableView
+class DataTableView extends ViewFactory
 {
 
     private $title = "";
     private $legends = [];
     private $classname = "";
     private $data = [];
-    private $fields = null;
     private $drt = null;
-    private $accessFilter = null;
     private $viewables;
     private $whereparams = [];
     private $rowsclickable = false;
     private $baseurl = "";
-    private $informationHolder = null;
+    //private $informationHolder = null;
     private array $columns;
 
     /**
-     * @var EntityFactory
+     * @var ModelManager
      */
-    private $entity;
+    private ModelManager $manager;
 
     /**
      * DataTableView constructor.
      * @param string $className the classname of the Entiy we want to retrieve values
      * @param $accessFilter
-     * @param Entity $entity
+     * @param ModelManager $manager
      * @throws ReflectionException
      */
-    public function __construct(string $className, $accessFilter, Entity $entity)
+    public function __construct( $model, ModelManager $manager)
     {
+        parent::__construct($model);
 
-        //Initialize Metadata Holder
-        //Init InformationHolderInterface
-        if (is_string($className)) {
-            $this->informationHolder = new ClassInformationHolder($className);
-        } else {
-            $this->informationHolder = new EntityInformationHolder($className);
-        }
-
-        //Set this class name
-        $this->classname = $className;
-
-        //Initialize this AccessFilter
-        $this->setAccessFilter($accessFilter);
-
-        //Initialize fields to display
-        $this->fields = $this->informationHolder->getFields();
         $this->viewables = $this->getViewables();
 
         //Initialize columns
-        $this->columns = $this->generateColumns();
+        $this->columns = $this->generateColumns($this->classNamespace);
         //Initilize database access
-        $this->entity = $entity;
+        $this->manager = $manager;
         return $this;
     }
 
-    public function setEntity(Entity $entity)
+    public function setModel(Model $model)
     {
-        $this->Entity = $entity;
+        $this->model = $model;
     }
 
     public function where($params)
     {
         $this->whereparams = array_merge($this->whereparams, $params);
         return $this;
-    }
-
-
-    private function setAccessFilter($accessFilter)
-    {
-        if ($accessFilter == null) {
-            $this->accessFilter = null;
-        }
-        if ($accessFilter === "default") {
-            $accessFilterName = DefaultResolver::getFilter($this->classname);
-            $this->accessFilter = new $accessFilterName();
-
-        } else {
-            $this->accessFilter = $accessFilter;
-        }
-    }
-
-
-    private function getViewables()
-    {
-        $result = $this->accessFilter->getViewables();
-        return $result ?? [];
     }
 
     public function __toString()
@@ -119,22 +78,20 @@ class DataTableView
     }
 
     // Todo pass a base URL to Get view and use Router to generate url foreach link
-    public function getView()
+    public function getView($app)
     {
-        //Todo Here we use Database access via the Entity class
-        // make possible to Inject the class in relation with database it will implements
-        // an interface with  findAll() findBy(array whereparams)
-
-        //Retrieve data to display
-        $dataToDisplay = $this->retrieveData();
+        //Retrieve data
+        $this->retrieveData();
 
         //Generate TableColumns
-        $columns = $this->generateColumns();
+        $columns = ColumnsFactory::make($this->classNamespace);
+
+        //Prepare Data to display
+        $dataToDisplay = $this->processData();
 
         //Create the Table with Data
 
         $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
-
         //Init div container to return the table
         $view = new Div();
         $view->setClass("d-flex justify-content-center row-lg m-4");
@@ -142,83 +99,108 @@ class DataTableView
         return $view->__toString();
     }
 
-    //don't recursivly call
     private function retrieveData()
     {
-        $dataToDisplay = [];
-        if ($this->entity === null) {
-            try {
-
-            } catch (\Exception $exception) {
-                print_r($exception->getMessage() . "\n");
+        if(is_null($this->manager)) {
+            throw new \Exception("Can't retrieve data without ModelManager in : " . __CLASS__);
+        } else {
+            //Rettrieve data with filters
+            if (count($this->whereparams) > 0) {
+                $this->data = $this->manager->findBy($this->whereparams);
+            } else {
+                //Rettrieve data without filters
+                $this->data = $this->manager->findAll();
             }
         }
-        //Rettrieve data with filters
-        if (count($this->whereparams) > 0) {
-            $this->data = $this->entity->findBy($this->whereparams);
-            // $dataToDisplay = $this->data;
-        } else {
-            //Rettrieve data without filters
-            $this->data = $this->entity->findAll();
-        }
+
+    }
+    //don't recursivly call
+     private function processData()
+    {
+        $dataToDisplay = [];
+
+        // on parcours les données récupérées
+        //pour chaque enregistrement on traite les columns et les association
+        // on contruit ici les Rows d'une table avec les données de l'objet et les données
+        //des associations on pourait imaginer une class RowFactory a qui on délégue la
+        //construction de la Row et ajouter les rows au Table au fil de l'eau
         foreach ($this->data as $key => $object) {
-            //If $value is an object
-            if (\is_object($object)) {
-
+            // make TableRow from Model
+            if (\is_object($object) && $object instanceof Model) {
                 //Get Object Metadata
-                $informationHolder = new EntityInformationHolder($object);
+                $columns = $object::getColumns();
 
-                //Get Fields
-                $fields = $informationHolder->getFields();
-
-                foreach ($fields as $field) {
-                    //Field is not an association
-                    if ($field && !$field->isAssociation()) {
-                        $dataToDisplay[$key][$field->getName()] = $informationHolder->getEntityFieldValue($field->getName());
-                    } else {
-                        // if field is OneToOne or ManyToOne add value to
-                        //$dataToDisplay with $key = fieldName
-                        // if field is OneToMany or ManyToMany add a
-                        //FieldButton to $dataToDisplay with fieldName
-                        //Field is an association getting it"s type
-                        $associationType = $field->getAssociationType();
-                        $fieldName = $field->getName();
-                        $className = $field->getAssociationClass();
-                        $value = $informationHolder->getEntityFieldValue($field->getName());
-                        if ($associationType == "ManyToOne" || $associationType == "OneToOne") {
-                            //Display a clickable label with significative information
-                            $cellValueGenerator = new CellValueGenerator($value, "default");
-                            $dataToDisplay[$key][$field->getName()] = $cellValueGenerator->getValue();
-
-                        }
-                        //ManyToMany Association if "new" display a form if "edit" display a table
-                        if ($associationType == "OneToMany" || $associationType == "ManyToMany") {
-                            //Display a button witch target the page who display information for that relation
-                            $view = (new ManyToManyViewGenerator($className))->getView($value, true);
-                            $dataToDisplay[$key][$field->getName()] = (new A("/users/users/roles/31"))
-                                ->add('<i class="material-icons md-36">group</i>' . $field->getName())->setClass('btn btn-primary');
-                        }
-                    }
+                // process DataColumns
+                foreach ($columns as $column) {
+                    $value = $object->getPropertyValue($column->getName());
+                    $dataToDisplay[$key][$column->getName()] = $value;
                 }
+                $this->processAssociations($object, $key, $dataToDisplay);
             } else {
-                //If it is an array
+                // make TableRow From Array
                 $dataToDisplay[$key] = $this->data[$key];
             }
-
         }
-
-
         return $dataToDisplay;
     }
 
-    private function generateColumns()
+    private function processAssociations($object, $key, array &$dataToDisplay)
+    {
+        $associations = $object::getAssociations();
+        foreach ($associations as $association) {
+            if ($association->getType() == "OneToMany" || $association->getType() == "ManyToMany") {
+                $view = $this->getManyAssociationView($object, $association, $key);
+                $dataToDisplay[$key][$association->getName()] = $view;
+            }
+
+            if ($association->getType() == "ManyToOne" || $association->getType() == "OneToOne") {
+                $view = $this->getOneAssociationView($object, $association);
+                $dataToDisplay[$key][$association->getName()] = $view;
+            }
+        }
+    }
+
+    private function getManyAssociationView($object, $association, $key)
+    {
+        //$dataToDisplay[$key][$association->getName()] = (new A($app->getRoute($association->getName(),index))
+        //   ->add('<i class="material-icons md-36">group</i>' . $association->getName())->setClass('btn btn-primary');
+        $associationClassName = $association->getName();
+        $outClassName = $association->getOutClassName();
+        $collection = $this->manager->findAssociationValuesBy($outClassName, $object);
+        $vfdClassName = DefaultResolver::getFieldDefinitions($outClassName);
+        $viewFieldDefinitions = new $vfdClassName();
+        $title =  $viewFieldDefinitions->getDisplayFor($associationClassName);
+        $columns = ColumnsFactory::make($outClassName);
+        $drt = new DivTable(
+            [new TableLegend($title, TableLegend::TOP_LEFT)],
+            $columns,
+            $collection ,
+            false,
+            " "
+        );
+        // generate id with association name _$key  ? replace key by object Id
+        $modal = new Modal(strtolower($associationClassName) . '_' . $key, $drt);
+        $modal->setHeaderText($associationClassName);
+        $modal->setTriggerText($associationClassName);
+        return $modal;
+    }
+
+    public function getOneAssociationView($object, $association)
+    {
+        $associationClassName = $association->getName();
+        $value = $object->getPropertyValue($associationClassName);
+        $cellValueGenerator = new CellValueGenerator($value, "default");
+        return $cellValueGenerator->getValue();
+    }
+    private function generateColumns(string $className)
     {
         $columns = [];
-        $formfilterClassName = DefaultResolver::getFieldDefinitions($this->classname);
-        $formfilter = new $formfilterClassName();
-        foreach ($this->viewables as $key => $value) {
-            $colname = $value;
-            $display = $formfilter->getDisplayFor($value);
+        $fieldsDefinitions = DefaultResolver::getFieldDefinitions($className);
+        $fieldsDefinitions = new $fieldsDefinitions();
+        $fieldFilter = DefaultResolver::getFilter($className);
+        $fieldFilter = new $fieldFilter();
+        foreach ($fieldFilter->getViewables() as $key => $value) {
+            $display = $fieldsDefinitions->getDisplayFor($value);
             $column = new TableColumn($value, $display);
             $columns[] = $column;
         }
@@ -250,6 +232,12 @@ class DataTableView
     {
         $this->rowsclickable = true;
         $this->baseurl = $baseurl;
+        return $this;
+    }
+
+    public function withBaseUrl(string $baseUrl)
+    {
+        $this->baseurl = $baseUrl;
         return $this;
     }
 }

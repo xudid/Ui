@@ -2,73 +2,59 @@
 
 namespace Ui\Views;
 
-use Entity\DefaultResolver;
+use Ui\HTML\Elements\Bases\Base;
+use Ui\HTML\Elements\Nested\Div;
 use Ui\HTML\Elements\Nested\Section;
-use Ui\Views\Holder\TraitInformationHolder;
-use Ui\Widgets\Accordeon\CollapsibleItem;
+use Ui\Widgets\Accordeon\CollapsibleItem as CollapsibleItem;
 use Ui\Widgets\FieldInfo;
 
 /**
- *
+ * Class EntityPartialViewFactory
+ * @package Ui\Views
  */
-class EntityPartialViewFactory
+class EntityPartialViewFactory extends ViewFactory
 {
-    private $entity = null;
-    private $informationHolder = null;
-    private $classname = "";
-    private $shortclassname = "";
-    private $accessFilter = null;
-    private $fields = [];
-    private $getMethodNames = [];
     private $iscollapsible = false;
     /**
      * [private description]
      * @var [type]
      */
-    private $path = "";
-    private $fieldDefinitions;
+    private string $path = "";
     /**
      * @var bool
      */
     private $subView;
     private $viewables;
+
+    private  $entityView;
+
     /**
-     * @var CollapsibleItem
+     * EntityPartialViewFactory constructor.
+     * @param $model
+     * @param string $accessFilter
+     * @param bool $subView
      */
-    private $entityView;
-
-    use TraitInformationHolder;
-
-    function __construct($entity, $accessFilter = 'default', bool $subView)
+    public function __construct($model, bool $subView = false)
     {
-        $this->getInformationHolder($entity);
-        //Init class names
-        $this->classname = $this->informationHolder->getClassName();
-        $this->shortClassName = $this->informationHolder->getShortClassName();
-        $this->setAccessFilter($accessFilter);
-        $this->fields = $this->informationHolder->getFields();
-        $this->getMethodNames = $this->informationHolder->getGettersName();
-        $fieldDefinitionsClassName = DefaultResolver::getFieldDefinitions($this->classname);
-        $this->fieldDefinitions = new $fieldDefinitionsClassName($this->classname);
+        parent::__construct($model);
+        $this->setFieldsDefinitions();
         $this->subView = $subView;
     }
 
 
     /**
-     * [getPartialView description]
      * @param bool $subView
-     * @return \Ui\HTML\Elements\Bases\Base|CollapsibleItem [type] [description]
+     * @return Base|CollapsibleItem
      */
-    public
-    function getPartialView(bool $subView)
+    public function getPartialView(bool $subView)
     {
         $this->viewables = $this->accessFilter->getViewablesFor($this->path);
 
         if ($this->iscollapsible) {
             $this->entityView = new CollapsibleItem();
-            $display = $this->fieldDefinitions->getDisplayFor($this->shortClassName);
+            $display = $this->fieldsDefinitions->getDisplayFor($this->shortClassName);
             $this->entityView->setHeader($display);
-            $content = $this->generateContent();
+            $content = $this->generateCollapsibleContent();
             $this->entityView->setContent($content);
 
         } else {
@@ -76,55 +62,44 @@ class EntityPartialViewFactory
             $this->generateContent();
         }
 
-
         return $this->entityView;
     }
-
 
     /**
      * [generateContent description]
      *
      */
-    private
-    function generateContent()
+    private function generateContent()
     {
-        $fieldsInfo = [];
-
-        foreach ($this->fields as $field) {
-
-            if (in_array($field->getName(), $this->viewables) && !$field->isAssociation()) {
-                $val = $this->informationHolder->getEntityFieldValue($field->getName());
-                $display = $this->fieldDefinitions->getDisplayFor($field->getName());
-
+        foreach ($this->fields as $column) {
+            if (in_array($column->getName(), $this->viewables)) {
+               $val = $this->model->getPropertyValue($column->getName());
+               dump($val);
+                $display = $this->fieldsDefinitions->getDisplayFor($column->getName());
                 $fieldInfo = new FieldInfo($display, $val);
                 $this->entityView->add($fieldInfo);
-                /* $element->add(new Br());*/
             }
         }
     }
 
-    private
-    function setAccessFilter($accessFilter)
+    function generateCollapsibleContent()
     {
-
-        if ($accessFilter == null) {
-            $this->accessFilter = null;
+        $div = new Div();
+        foreach ($this->fields as $column) {
+            if (in_array($column->getName(), $this->viewables)) {
+                $val = $this->model->getPropertyValue($column->getName());
+                $display = $this->fieldsDefinitions->getDisplayFor($column->getName());
+                $fieldInfo = new FieldInfo($display, $val);
+                $div->add($fieldInfo);
+            }
         }
-        if ($accessFilter === "default") {
-            $accessFilterName = DefaultResolver::getFilter($this->classname);
-            $this->accessFilter = new $accessFilterName();
-
-        } else {
-            $this->accessFilter = $accessFilter;
-
-        }
+        return $div;
     }
 
     /**
      * [setCollapsible description]
      */
-    public
-    function setCollapsible()
+    public function setCollapsible()
     {
         $this->iscollapsible = true;
     }

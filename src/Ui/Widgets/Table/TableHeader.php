@@ -24,7 +24,7 @@ class TableHeader extends Header {
     {
         parent::__construct();
         $this->columns = $columns;
-        $this->setClass("div-head");
+        $this->setClass("div-head div-head-primary");
         foreach($this->columns as $col)
         {
             if($col->mustDisplay())
@@ -38,7 +38,7 @@ class TableHeader extends Header {
 
     public function setClass($class)
     {
-        parent::setClass("div-head ".$class);
+        parent::setClass("div-head div-head-primary text-white".$class);
         return $this;
     }
 }

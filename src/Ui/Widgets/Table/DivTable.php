@@ -2,6 +2,7 @@
 
 namespace Ui\Widgets\Table;
 
+use Entity\Model\Model;
 use Ui\HTML\Elements\Nested\Div;
 /**
  * Class DivRowTable
@@ -27,16 +28,16 @@ class DivTable extends Div
     private string $legendcss;
 
 
+    //Todo create a TableFactory and a TableFactoryIntercace
     /**
-     * DivRowTable constructor.
-     * @param array $legends :array of TableLegend
-     * @param array $columns :array of TableColumn
+     * DivTable constructor.
+     * @param array $legends
+     * @param array $columns
      * @param array $DataArray
      * @param bool $rowsclickable
      * @param string $baseurl
+     * @throws \ReflectionException
      */
-    //Todo create a ColumnFactory and a ColumnFactoryIntercace
-    //Todo create a TableFactory and a TableFactoryIntercace
     public function __construct(array $legends,
                                 array $columns,
                                 array $DataArray,
@@ -45,7 +46,7 @@ class DivTable extends Div
     )
     {
     	parent::__construct();
-		$this->setClass("div-table col-lg-12 p-0");
+		$this->setClass("div-table");
 
         $this->legends = $legends;
         $this->columns = $columns;
@@ -57,7 +58,6 @@ class DivTable extends Div
         $this->rowcss["even"] = "";
         $this->rowcss["header"]= "";
         $this->legendcss= "";
-
 		$this->dataDiv = new TableCorp();
         $this->feed(
         	(new TableLegends($this->legends))->setClass($this->legendcss),
@@ -66,14 +66,26 @@ class DivTable extends Div
 			$this->dataDiv,
 		);
 
-        $datacount = count($this->DataArray);
-
-        //Todo use the RowFactory
-
-        for ($i = 0; $i < $datacount; $i++) {
-            $val = $this->DataArray[$i];
+        $rowFactory = new RowFactory(RowType::DIV, $this->columns);
+        $rowFactory->useBaseUrl($this->baseurl);
+        for ($i = 0; $i < count($this->DataArray); $i++) {
+            $value = $this->DataArray[$i];
             $parity = $i%2===0?'even':'odd';
-            $this->dataDiv->add((new TableRow($this->columns, $val, $i, $this->baseurl,$this->rowsclickable))->setClass($this->rowcss[$parity]));
+
+            if ($value instanceof Model) {
+                $tableRow = $rowFactory->rowFromModel($value, $i);
+            } elseif (is_object($value)) {
+                try {
+                    $tableRow = $rowFactory->rowFromObject($value, $i);
+                } catch (\ReflectionException $e) {
+                    throw $e;
+                }
+            } elseif (is_array($value)) {
+                $tableRow = $rowFactory->rowFromArray($value, $i);
+            } else {
+                throw new \Exception('Unsupported data type to generate row');
+            }
+            $this->addRow($tableRow->setClass($this->rowcss[$parity]));
         }
     }
 
@@ -83,5 +95,10 @@ class DivTable extends Div
     public function setRowcss(array $rowcss): void
     {
         $this->rowcss = $rowcss;
+    }
+
+    public function addRow(TableRow $tableRow)
+    {
+        $this->dataDiv->add($tableRow);
     }
 }

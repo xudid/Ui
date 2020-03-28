@@ -1,0 +1,21 @@
+.d-Flex {
+    display: flex;
+}
+.d-Block {
+    display: block;
+}
+.d-Inline {
+    display: inline;
+}
+
+.d-Inline-block {
+    display: inline-block;
+}
+
+.d-Table {
+    display: table;
+}
+
+.d-Inline-table {
+    display: inline-table;
+}

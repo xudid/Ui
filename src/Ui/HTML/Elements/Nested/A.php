@@ -12,9 +12,10 @@ class A extends Nested{
 	 * A constructor.
 	 * @param $href
 	 */
-	public function __construct($href){
+	public function __construct($content, string $href){
 		parent::__construct("a");
 		$this->startTag->setAttribute("href", $href);
+		$this->add($content);
 		return $this;
 	}
 }
