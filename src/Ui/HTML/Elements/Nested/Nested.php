@@ -1,10 +1,11 @@
 <?php
+
 namespace Ui\HTML\Elements\Nested;
+
 use ArrayAccess;
 use Ui\HTML\Elements\Bases\Base;
 use Ui\HTML\Elements\Bases\InnerText;
 use Ui\HTML\Elements\ElementInterface;
-use Ui\HTML\Elements\Empties\EmptyElement;
 
 /**
  * Class Nested
@@ -143,6 +144,11 @@ class Nested extends Base implements ArrayAccess
         $this->contentString = $this->contentString.$this->endTag;
     }
 
+    public function getChilds()
+    {
+       return $this->childs;
+    }
+
 	/**
 	 * @param $child
 	 * @return string
@@ -187,4 +193,3 @@ class Nested extends Base implements ArrayAccess
        unset($this->childs[$offset]);
      }
   }
-
