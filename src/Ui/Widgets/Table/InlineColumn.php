@@ -18,7 +18,8 @@ class InlineColumn extends Div
      * @param TableColumn $tableColumn
      * @param mixed $datas
      */
-    public function __construct(TableColumn $tableColumn,$datas){
+    public function __construct(TableColumn $tableColumn, $datas)
+    {
         parent::__construct();
         $this->setClass("div-row");
         $this->add(new Cell($tableColumn->getHeader(),false));
@@ -26,5 +27,18 @@ class InlineColumn extends Div
         {
             $this->add(new Cell($data,false));
         }
+    }
+
+    public function cells()
+    {
+        return $this->childs;
+    }
+
+    public function firstCell()
+    {
+        if (count($this->childs) > 0) {
+            return reset($this->childs);
+        }
+        return null;
     }
 }

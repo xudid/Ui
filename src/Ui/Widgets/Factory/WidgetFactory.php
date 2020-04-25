@@ -52,11 +52,12 @@ class WidgetFactory
         return $input;
     }
 
-    public function getSelectOption($name,$options, $id=null)
+    public function getSelectOption($name,$options, $id= '')
     {
         $selOption = new SelectOption($options);
         $selOption->setIndex($id);
         $selOption->setName($name);
+
         return $selOption;
     }
 

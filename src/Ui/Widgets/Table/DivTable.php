@@ -54,8 +54,8 @@ class DivTable extends Div
         $this->DataArray = $DataArray;
         $this->rowsclickable = $rowsclickable;
         $this->baseurl = $baseurl;
-        $this->rowcss["odd"] = " ";
-        $this->rowcss["even"] = "";
+        $this->rowcss["odd"] = "py-1";
+        $this->rowcss["even"] = 'py-1';
         $this->rowcss["header"]= "";
         $this->legendcss= "";
 		$this->dataDiv = new TableCorp();

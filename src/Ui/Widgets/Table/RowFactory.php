@@ -9,6 +9,7 @@ use Entity\Model\Model;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionObject;
+use Router\Route;
 use Router\Router;
 use Ui\HTML\Elements\Nested\A;
 
@@ -77,7 +78,7 @@ class RowFactory
             $tableRow->setOnClick("location.href='" . $this->baseUrl . '/' . $id ."'");
         } elseif(array_key_exists('id', $rowData)) {
             $a = new A((string)$rowData['id'], $this->baseUrl . '/' . $rowData['id']);
-            $a->setClass('btn btn-primary btn-xs');
+            $a->setClass('btn btn-primary btn-sm my-1');
             $cell = new Cell($a, false);
             $tableRow->add($cell);
         }
@@ -151,7 +152,7 @@ class RowFactory
         // route name convention shortClassName_action
         // and /scope/associationShortClassName/id for association
         // for show action action name is omitted
-        //Route::generateName($string shortClassName_action, string $action)
+        //Route::makeName(shortClassName_action,  $action)
         //$this->router->generateUrl($route_name);
         //dd($model::getClass(), $model::getShortClass());
         foreach ($this->tableColumns as $column) {

@@ -32,6 +32,18 @@ class HorizontalTable extends Div
      * @var array
      */
     private $rows;
+    /**
+     * @var \Ui\HTML\Elements\Bases\Base
+     */
+    private Div $colGroup;
+    /**
+     * @var \Ui\HTML\Elements\Bases\Base
+     */
+    private Div $headerCol;
+    /**
+     * @var array
+     */
+    private array $dataCols;
 
     /**
      * HorizontalTable constructor.
@@ -68,7 +80,7 @@ class HorizontalTable extends Div
     {
 
         $colCount = count($this->dataArray);
-        for ($i=0;$i<$colCount;$i++){
+        for ($i = 0; $i < $colCount; $i++) {
             $col = (new Div())->setClass("div-col");
             $this->dataCols[] = $col;
             $this->colGroup->add($col);
@@ -77,29 +89,52 @@ class HorizontalTable extends Div
 
     private function generateRows()
     {
-        foreach ($this->columns as $k =>$column){
-          $datas = array_column($this->dataArray,$column->getName());
-          $this->add(new InlineColumn($column,$datas));
+        foreach ($this->columns as $k => $column) {
+            $datas = array_column($this->dataArray, $column->getName());
+            $column = new InlineColumn($column, $datas);
+            $this->add($column);
         }
     }
 
     public function setTableClass($css)
     {
-        $this->setClass("div-table ".$css);
+        $this->setClass("div-table " . $css);
         return $this;
     }
 
     public function setHeaderClass($css)
     {
-        $this->headerCol->setClass("div-col ".$css);
-        return $this;
+        $columns = array_filter(
+            $this->childs,
+            function ($child) {
+                if ($child instanceof InlineColumn) {
+                    return $child;
+                }
+            }
+        );
+        foreach ($columns as $column) {
+            if($cell = $column->firstCell()) {
+                $column->firstCell()->setClass('div-cell ' . $css);
+            }
+        }
     }
 
     public function setColClass($css)
     {
-        foreach ($this->dataCols as $col)
-        {
-            $col->setClass("div-col ".$css);
+        $columns = array_filter(
+            $this->childs,
+            function ($child) {
+                if ($child instanceof InlineColumn) {
+                    return $child;
+                }
+            }
+        );
+        foreach ($columns as $column) {
+            $cells = $column->cells();
+            array_shift($cells);
+            foreach ($cells as $cell) {
+                $cell->setClass('div-cell ' . $css);
+            }
         }
     }
 }

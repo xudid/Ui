@@ -41,7 +41,7 @@ class Cell extends  Div{
             $value = (string)$value;
         }
         $this->add($value);
-        $this->setClass('div-cell large-30');
+        $this->setClass('div-cell');
         return $this;
     }
 }

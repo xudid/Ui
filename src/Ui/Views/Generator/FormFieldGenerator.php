@@ -34,10 +34,10 @@ class FormFieldGenerator extends ViewFactory
      * @throws Exception
      */
     function __construct($model)
-    {
+    {   
         try {
             parent::__construct($model);
-
+            
             //Setting columnsDefinitions
             $this->setFieldsDefinitions();
             $fieldSetTitle = $this->fieldsDefinitions->getDisplayFor($this->shortClassName);
@@ -80,12 +80,14 @@ class FormFieldGenerator extends ViewFactory
                     case "select":
                     {
                         $options = $this->fieldsDefinitions->getDataForListInput($fieldName);
-                        $selOption = WidgetFactory::getSelectOption($fieldName, $options);
-                        if (is_object($this->$this->model)) {
+                        $selOptionName = strtolower($this->shortClassName)  . '_' . $fieldName;
+                        $selOption = WidgetFactory::getSelectOption($selOptionName, $options);
+                        if (is_object($this->model)) {
                             $val = $this->$this->model->getPropertyValue($fieldName);
                             $index = array_keys($options, $val);
                             $selOption->setCheckedOption($index[0]);
                         }
+                        $selOption->setClass('form-control');
                         $this->namedFieldset->add($selOption);
                         if (!$this->inline) {
                             $this->namedFieldset->add(new Br());

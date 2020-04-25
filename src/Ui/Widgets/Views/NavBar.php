@@ -23,14 +23,14 @@ class NavBar extends Nav
   {
     parent::__construct();
     $this->setClass("navbar");
-    $this->leftColumn = (new Div())->setClass("nav_column_left");
+    $this->leftColumn = (new Div())->setClass("nav_column_left  py-1");
     $this->rightColumn = (new Div())->setClass("nav_column_right");
     $this->leftNavItems = new ItemList();
     $this->leftColumn->add($this->leftNavItems);
     $this->rightNavItems = new ItemList();
     $this->rightColumn->add($this->rightNavItems);
-    $this->leftNavItems->setClass("navbar_items");
-    $this->rightNavItems->setClass("navbar_items_right");
+    $this->leftNavItems->setClass("navbar_items mb-0");
+    $this->rightNavItems->setClass("navbar_items_right mb-0");
     parent::add($this->leftColumn);
     parent::add($this->rightColumn);
   }
