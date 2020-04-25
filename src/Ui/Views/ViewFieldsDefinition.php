@@ -20,6 +20,9 @@ class ViewFieldsDefinition implements ViewFieldsDefinitionInterface
    */
   protected $dataForListInput = [];
 
+
+  protected $associationSelectField = '';
+  protected $associationSelectKey = '';
   /**
    * An associative array that contains string
    * to display to user
@@ -52,11 +55,21 @@ class ViewFieldsDefinition implements ViewFieldsDefinitionInterface
     return $this->dataForListInput[$fieldname];
   }
 
+  public function getAssociationSelectField()
+  {
+      return $this->associationSelectField;
+  }
+
+  public function getAssociationSelectKey()
+  {
+      return $this->associationSelectKey;
+  }
+
   public function getDisplayFor(string $value):string
   {
     $string="";
     
-    if (\array_key_exists($value, $this->displays))
+    if (array_key_exists($value, $this->displays))
     {
       return $this->displays[$value];
     }
@@ -66,7 +79,6 @@ class ViewFieldsDefinition implements ViewFieldsDefinitionInterface
 
   public function getPathTemplateForAction(string $action):string
   {
-    return $templateForAction[$action];
+    return $this->templateForAction[$action];
   }
 }
-?>
