@@ -21,7 +21,6 @@ class DataTableView extends ViewFactory
 
     private $title = "";
     private $legends = [];
-    private $classname = "";
     private $data = [];
     private $drt = null;
     private $viewables;
@@ -46,7 +45,6 @@ class DataTableView extends ViewFactory
     public function __construct( $model, ModelManager $manager)
     {
         parent::__construct($model);
-
         $this->viewables = $this->getViewables();
 
         //Initialize columns
@@ -85,7 +83,6 @@ class DataTableView extends ViewFactory
 
         //Generate TableColumns
         $columns = ColumnsFactory::make($this->classNamespace);
-
         //Prepare Data to display
         $dataToDisplay = $this->processData();
 
@@ -94,7 +91,7 @@ class DataTableView extends ViewFactory
         $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
         //Init div container to return the table
         $view = new Div();
-        $view->setClass("d-flex justify-content-center row-lg m-4");
+        $view->setClass("d-flex ");
         $view->add($this->drt);
         return $view->__toString();
     }
@@ -104,6 +101,7 @@ class DataTableView extends ViewFactory
         if(is_null($this->manager)) {
             throw new \Exception("Can't retrieve data without ModelManager in : " . __CLASS__);
         } else {
+
             //Rettrieve data with filters
             if (count($this->whereparams) > 0) {
                 $this->data = $this->manager->findBy($this->whereparams);
@@ -129,7 +127,6 @@ class DataTableView extends ViewFactory
             if (\is_object($object) && $object instanceof Model) {
                 //Get Object Metadata
                 $columns = $object::getColumns();
-
                 // process DataColumns
                 foreach ($columns as $column) {
                     $value = $object->getPropertyValue($column->getName());
@@ -146,6 +143,7 @@ class DataTableView extends ViewFactory
 
     private function processAssociations($object, $key, array &$dataToDisplay)
     {
+        Model::class;
         $associations = $object::getAssociations();
         foreach ($associations as $association) {
             if ($association->getType() == "OneToMany" || $association->getType() == "ManyToMany") {
@@ -155,7 +153,10 @@ class DataTableView extends ViewFactory
 
             if ($association->getType() == "ManyToOne" || $association->getType() == "OneToOne") {
                 $view = $this->getOneAssociationView($object, $association);
-                $dataToDisplay[$key][$association->getName()] = $view;
+                if ($view) {
+                    $dataToDisplay[$key][$association->getName()] = $view;
+                }
+
             }
         }
     }
@@ -166,6 +167,7 @@ class DataTableView extends ViewFactory
         //   ->add('<i class="material-icons md-36">group</i>' . $association->getName())->setClass('btn btn-primary');
         $associationClassName = $association->getName();
         $outClassName = $association->getOutClassName();
+
         $collection = $this->manager->findAssociationValuesBy($outClassName, $object);
         $vfdClassName = DefaultResolver::getFieldDefinitions($outClassName);
         $viewFieldDefinitions = new $vfdClassName();
@@ -189,8 +191,12 @@ class DataTableView extends ViewFactory
     {
         $associationClassName = $association->getName();
         $value = $object->getPropertyValue($associationClassName);
-        $cellValueGenerator = new CellValueGenerator($value, "default");
-        return $cellValueGenerator->getValue();
+        if ($value) {
+            $cellValueGenerator = new CellValueGenerator($value, "default");
+            return $cellValueGenerator->getValue();
+        }
+
+        return false;
     }
     private function generateColumns(string $className)
     {
