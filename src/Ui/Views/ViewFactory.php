@@ -33,10 +33,12 @@ class ViewFactory
         if(!is_string($model) && ! $model instanceof Model) {
             throw new Exception('ViewFactory constructor take only a string or an instannce of Model class as parameter');
         }
+        $this->model = $model;
         if (is_string($model)) {
             $model = new $model([]);
         }
-        $this->model = $model;
+
+
         // Init class names
         $this->classNamespace = $model->getClass();
         $this->shortClassName = $model->getShortClass();

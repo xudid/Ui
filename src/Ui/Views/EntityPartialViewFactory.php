@@ -41,14 +41,13 @@ class EntityPartialViewFactory extends ViewFactory
         $this->subView = $subView;
     }
 
-
     /**
      * @param bool $subView
      * @return Base|CollapsibleItem
      */
     public function getPartialView(bool $subView)
     {
-        $this->viewables = $this->accessFilter->getViewablesFor($this->path);
+        $this->viewables = $this->accessFilter->getViewables();
 
         if ($this->iscollapsible) {
             $this->entityView = new CollapsibleItem();
@@ -74,7 +73,6 @@ class EntityPartialViewFactory extends ViewFactory
         foreach ($this->fields as $column) {
             if (in_array($column->getName(), $this->viewables)) {
                $val = $this->model->getPropertyValue($column->getName());
-               dump($val);
                 $display = $this->fieldsDefinitions->getDisplayFor($column->getName());
                 $fieldInfo = new FieldInfo($display, $val);
                 $this->entityView->add($fieldInfo);

@@ -30,6 +30,7 @@ class EntityViewFactory extends ViewFactory
      * @var [type]
      */
     private $view = null;
+    private array $associationViews = [];
 
     private CollapsibleList $collapsiblelist ;
 
@@ -111,6 +112,10 @@ class EntityViewFactory extends ViewFactory
             $this->view->add(($factory->getPartialView($subview)));
         }
             $this->processAssociations();
+        foreach ($this->associationViews as $associationView) {
+            $this->view->add($associationView);
+
+        }
         return $this->view;
     }
 
@@ -185,7 +190,7 @@ class EntityViewFactory extends ViewFactory
      * @param string $display that we see in collapsible header
      * @return
      */
-    private function addAssociationView($view, $display)
+    public function addAssociationView($view, $display='')
     {
         if ($this->iscollapsible) {
             $item = new CollapsibleItem();
@@ -193,11 +198,10 @@ class EntityViewFactory extends ViewFactory
             $item->setContent($view);
             $this->collapsiblelist->addItem($item);
         } else {
+            $container = (new Div)->setClass('view');
+            $container->add($view);
+            $this->associationViews[] = $container;
 
-            $div = new Div();
-            $div->setClass("view");
-            $div->add($view);
-            $this->view->add($div);
         }
     }
 }

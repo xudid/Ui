@@ -1,15 +1,16 @@
 <?php
-namespace Ui\Views;
 
+namespace Ui\Views;
+use App\App;
 use Ui\HTML\Elements\Nested\{Div, Form};
-use http\Exception\InvalidArgumentException;
+use Entity\DefaultResolver;
 use Ui\Views\Generator\FormFieldGenerator;
 use Ui\Views\Generator\ManyToManyViewGenerator;
 use Ui\Views\Generator\OneToManyViewGenerator;
 use Ui\Views\Generator\OneToOneViewGenerator;
 use Ui\Widgets\Button\{SubmitButton};
-use Entity\DefaultResolver;
-use Ui\Views\Holder\TraitInformationHolder;
+use Ui\Widgets\Input\SelectOption;
+use Ui\Widgets\Views\NamedFieldset;
 
 class FormFactory extends ViewFactory
 {
@@ -18,6 +19,8 @@ class FormFactory extends ViewFactory
     private $formAction = '';
     private $formMethod = 'POST';
     private $inline = false;
+
+    private $app;
     /**
      * @var FormFieldGenerator
      */
@@ -26,7 +29,6 @@ class FormFactory extends ViewFactory
      * @var $model
      */
     protected $model;
-    use TraitInformationHolder;
 
     /**
      *FormFactory
@@ -41,7 +43,6 @@ class FormFactory extends ViewFactory
 
             //Init FormFieldGenerator
             $this->fieldGenerator = new FormFieldGenerator($this->model, $this->accessFilter);
-
             $this->view = (new EntityView())->setClass("bg-light text-dark shadow-lg py-3 m-4");
             $this->form = new Form();
             $this->form->setAction($this->formAction)
@@ -58,9 +59,16 @@ class FormFactory extends ViewFactory
         $this->formAction = $action;
     }
 
-
-    public function getForm()
+    public function withMethod(string $method)
     {
+        $this->formMethod = $method;
+    }
+
+
+    public function getForm(App $app)
+    {
+        $this->app = $app;
+        $this->form->setAction($this->formAction);
         if ($this->inline) {
             $this->form->setClass("form_inline");
         }
@@ -74,13 +82,15 @@ class FormFactory extends ViewFactory
             }
             $this->view->setTitle($t);
         }
-
         //Get partial form for class or object given
         $this->form->add($this->fieldGenerator->getPartialForm());
-
         $this->view->add($this->form);
         //Test if entity or class has associations
-        $associations = $this->model::getAssociations();
+        $model = $this->model;
+        if (is_string($model)) {
+            $model = new $model([]);
+        }
+        $associations = $model::getAssociations();
         if (count($associations) > 0) {
             $this->processAssociations($associations);
         }
@@ -133,8 +143,15 @@ class FormFactory extends ViewFactory
                     }
                     $this->view->add((new Div())->setClass('row ml-0')->add($view));
                 } elseif (is_string($className)) {
-                    $fieldGenerator = new FormFieldGenerator($className, "default");
-                    $view = $fieldGenerator->getPartialForm();
+                    if ($associationType == "OneToOne") {
+                        $fieldGenerator = new FormFieldGenerator($className);
+                        $view = $fieldGenerator->getPartialForm();
+                    }
+
+                    if ($associationType == "ManyToMany") {
+                        $classNameModelManager = $this->app->getModelManager($className);
+                        $view = new AssociationSelect($classNameModelManager, $association);
+                    }
                     $this->form->add($view);
                 } else {
                 }
@@ -152,5 +169,6 @@ class FormFactory extends ViewFactory
         if (isset($title)) {
             $this->formTitle = $title;
         }
+        return $this;
     }
 }
