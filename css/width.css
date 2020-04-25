@@ -45,6 +45,10 @@
 .large-5{
     width:5%
 }
+
+.large-1{
+    width: 1%;
+}
 /*Legend*/
 .legend-top {display: table-caption;caption-side: top;padding: 0.5rem}
 .legend-top-colors{

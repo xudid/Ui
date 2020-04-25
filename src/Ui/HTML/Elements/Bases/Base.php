@@ -1,7 +1,6 @@
 <?php
 namespace Ui\HTML\Elements\Bases;
 
-use phpDocumentor\Reflection\Element;
 use Ui\HTML\Elements\ElementInterface;
 use Ui\HTML\Elements\Nested\Nested;
 use Ui\HTML\Tags\StartTag;
@@ -19,7 +18,7 @@ class Base implements ElementInterface
 
 	protected ?Nested $root = null;
 
-	protected $index ='';
+	protected $index = '';
 
     private $elementName = "";
 
@@ -122,8 +121,6 @@ class Base implements ElementInterface
     }
 
 
-
-
     /**
      * @param array $classes
      * @return $this
@@ -174,4 +171,3 @@ class Base implements ElementInterface
 
 
 }
-
