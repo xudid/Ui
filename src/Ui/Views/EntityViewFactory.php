@@ -31,6 +31,8 @@ class EntityViewFactory extends ViewFactory
      */
     private $view = null;
     private array $associationViews = [];
+    private $enableActionBar = false;
+    private $actions = [];
 
     private CollapsibleList $collapsiblelist ;
 
@@ -67,7 +69,7 @@ class EntityViewFactory extends ViewFactory
      * @param string $accessFilter
      */
 
-    public function __construct(ModelManager $manager, $id, $accessFilter = "default")
+    public function __construct(ModelManager $manager, $id)
     {
         $this->view = new EntityView();
         $this->manager = $manager;
@@ -84,17 +86,15 @@ class EntityViewFactory extends ViewFactory
         return $this->model?:false;
     }
 
-    private function processData()
-    {
-
-    }
-
     /**
      * [getView description]
      * @return string [description]
      */
     public function getView(bool $subview = false)
     {
+        if ($this->enableActionBar) {
+            $this->view->withActions($this->actions);
+        }
         if (!$this->model) {
             return 'information not found';
         }
@@ -140,6 +140,14 @@ class EntityViewFactory extends ViewFactory
     public function setCollapsible()
     {
         $this->iscollapsible = true;
+        return $this;
+    }
+
+
+    public function useAction(string $actionType, string $url)
+    {
+        $this->enableActionBar = true;
+        $this->actions[$actionType] = $url;
         return $this;
     }
 

@@ -11,9 +11,9 @@ use ReflectionException;
 use Ui\Widgets\Input\SelectOption;
 use Ui\Widgets\Views\NamedFieldset;
 
-class AssociationSelect
+class AssociationSelect extends SelectOption
 {
-    public function __construct(ModelManager $modelManager, Association $association)
+    public function __construct(ModelManager $modelManager,  $association)
     {
         // take a ManagerFactory as constructor parameter ?
         // need to change the FormFactory (ViewFactory parameter ) for a ManagerFactory
@@ -34,12 +34,9 @@ class AssociationSelect
 
                 $options[$model->getPropertyValue($selectKey)] = $model->getPropertyValue($selectValue);
             }
-            $selectOption = new SelectOption($options);
-            $selectOption->setName($association->getName() . '_' . $selectKey);
-            $selectOption->setClass('form-control');
-            $legend = $fieldsDefinitions->getDisplayFor($association->getName());
-            $view = new NamedFieldset($legend);
-            $view->add($selectOption)->setClass('m-3');
+            parent::__construct($options);
+            $this->setName($association->getName() . '_' . $selectKey);
+            $this->setClass('form-control');
         } catch (ReflectionException $exception) {
             throw $exception;
         }

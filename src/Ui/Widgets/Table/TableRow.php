@@ -45,72 +45,24 @@ class TableRow extends Div{
         return $this;
     }
 
-    private function getTableRowFromObject()
+    public function getCell(int $index) : Cell
     {
-
-        $ro = new ReflectionObject($this->val);
-        $hasgetId = false;
-        if ($ro->hasMethod("getId")) {
-            $hasgetId = true;
+        if (array_key_exists($index, $this->childs)) {
+            return $this->childs[$index];
         }
-
-        for ($i = 0; $i < $this->colCount; $i++) {
-            $column = $this->columns[$i];
-            $colname = $column->getName();
-            $isEditable = $column->isEditable();
-            $methodName = "get" . ucfirst($colname);
-            try {
-                $method = new ReflectionMethod($this->val, $methodName);
-            } catch (ReflectionException $e) {
-            }
-            $value = $method->invoke($this->val);
-            $cell = new Cell($value, $isEditable);
-            if ($column->isBaseIdSet()) {
-                $cell->setIndex($column->getBaseId() . $this->rowIndex);
-            }
-            $this->add($cell);
-            //Todo create a default row click action
-            //Todo allow to provide a row click action
-            if ($hasgetId && $this->rowsclickable) {
-                try {
-                    $method = new ReflectionMethod($this->val, "getId");
-                    $id = $method->invoke($this->val);
-                    $this->setOnClick("location.href='" . $this->baseUrl . "/" . $id . "'");
-                } catch (ReflectionException $e) {
-                    throw $e;
-                }
-
-            }
-        }
+        return false;
     }
 
-    private function getTableRow(){
-       if(array_key_exists("id" , $this->val)&&$this->rowsclickable)
-        {
-            $id = $this->val["id"];
-            $this->setOnClick("location.href='".$this->baseUrl."/".$id."'");
-        } elseif(array_key_exists("id" , $this->val)) {
-           $a = new A((string)$this->val['id'], $this->baseUrl . "/" . $this->val['id'] );
-           $a->setClass('btn btn-primary btn-xs');
-           $cell = new Cell($a,false);
-
-           $this->add($cell);
-       }
-        for($i=0;$i<$this->colCount;$i++)
-        {
-            $column = $this->columns[$i];
-            $isEditable = $column->isEditable();
-            $columnName = $column->getName();
-            if ($columnName != 'id') {
-                $cell = new Cell($this->val[$columnName],$isEditable);
-                if($column->isBaseIdSet())
-                {
-                    $cell->setIndex($column->getBaseId().$this->rowIndex);
-                }
-                $this->add($cell);
-            }
-
-        }
+    public function addCell(Cell $cell)
+    {
+        parent::add($cell);
+        return $this;
     }
 
+
+    public function add($cellContent)
+    {
+        parent::add(new Cell($cellContent));
+        return $this;
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace Ui\Widgets\Button;
+
 use Ui\HTML\Elements\Empties\Input;
 use Ui\HTML\Elements\Nested\Label;
 
@@ -28,7 +29,6 @@ class CheckBox extends Input
         if (isset($value) && !empty($value)) {
         	 $this->startTag->setAttribute("value", $value);
         }
-        return $this;
 	}
 
 	/**

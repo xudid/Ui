@@ -1,5 +1,7 @@
 <?php
+
 namespace Ui\HTML\Elements\Nested;
+
 use Ui\HTML\Elements\Nested\Nested;
 
 /**
@@ -31,31 +33,4 @@ class Label extends Nested{
     	}
     	return $this;
     }
-
-    /**
-     * @return string
-     */
-	public function __toString():string
-	{
-        $this->generateContentString();
-        return $this->contentString;
-        return $this;
-    }
-
-    /**
-     *
-     */
-	private function generateContentString()
-	{
-			$this->contentString = $this->startTag;
-			if(count($this->childs)>0)
-			{
-					foreach ($this->childs as $e)
-					{
-							$this->contentString = $this->contentString.$e ;
-					}
-					$this->contentString = $this->contentString ;
-			}
-			$this->contentString = $this->contentString.$this->endTag."\r\n";
-		}
 }

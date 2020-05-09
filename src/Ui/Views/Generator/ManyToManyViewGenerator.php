@@ -12,7 +12,7 @@ use Ui\Widgets\Views\FieldButton;
  * @package Ui\Views\Generator
  * @author Didier Moindreau <dmoindreau@gmail.com> on 02/11/2019.
  */
-class ManyToManyViewGenerator implements AssociationViewGenerator
+class ManyToManyViewGenerator
 {
     private $viewables;
     private $className;
@@ -27,7 +27,6 @@ class ManyToManyViewGenerator implements AssociationViewGenerator
         $accessFilterName = DefaultResolver::getFilter($this->className);
         $this->accessFilter = new $accessFilterName();
         $this->viewables = $this->accessFilter->getViewables();
-
     }
 
     /**
@@ -38,7 +37,7 @@ class ManyToManyViewGenerator implements AssociationViewGenerator
      * @param string $baseURL
      * @return FieldButton
      */
-    public function getView($datas,bool $clickable = false,string $baseURL="")
+    public function getView(string $baseURL="")
     {
     	$fieldsDefinitionClassName = DefaultResolver::getFieldDefinitions($this->className);
 		$fieldsDefinition = new $fieldsDefinitionClassName();

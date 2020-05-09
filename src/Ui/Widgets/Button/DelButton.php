@@ -14,7 +14,7 @@ class DelButton extends Button
  */
   function __construct()
   {
-    $text = '<i class="material-icons" style="font-size:16px;color:red;">remove</i>';
+    $text = '<i class="material-icons" style="font-size:24px;color:white;">delete</i>';
     parent::__construct($text);
 		$this->startTag->setAttribute("type", "button");
   }

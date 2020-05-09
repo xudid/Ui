@@ -31,28 +31,28 @@ class WidgetFactory
         return $input;
     }
 
-    public function getDateInput($name,$id=null)
+    public static function getDateInput($name,$id=null)
     {
         $input = new DateInput();
         self::initNameAndId($input,$id,$name);
         return  $input;
     }
 
-    public function getColorInput($name,$id=null)
+    public static function getColorInput($name,$id=null)
     {
         $input = new ColorInput();
         self::initNameAndId($input,$id,$name);
         return $input;
     }
 
-    public function getPasswordInput($name,$id=null)
+    public static function getPasswordInput($name,$id=null)
     {
         $input = new PasswordInput("password");
         self::initNameAndId($input,$id,$name);
         return $input;
     }
 
-    public function getSelectOption($name,$options, $id= '')
+    public static function getSelectOption($name,$options, $id= '')
     {
         $selOption = new SelectOption($options);
         $selOption->setIndex($id);
@@ -61,7 +61,7 @@ class WidgetFactory
         return $selOption;
     }
 
-    public function getEmailInput($name,$display="e.mail@mail.box.com",$id=null)
+    public static function getEmailInput($name,$display="e.mail@mail.box.com",$id=null)
     {
         $input = new EmailInput();
         self::initNameAndId($input,$id,$name);
@@ -69,7 +69,7 @@ class WidgetFactory
         return $input;
     }
 
-    public function getTextarea($name, $id=null,$value="")
+    public static function getTextarea($name, $id=null,$value="")
     {
         $input = new TextArea();
         $input->add($value);
@@ -77,21 +77,21 @@ class WidgetFactory
         return $input;
     }
 
-    public function getRadioButton($name,$id=null)
+    public static function getRadioButton($name,$id=null)
     {
         $input = new RadioButton();
         self::initNameAndId($input,$id,$name);
         return $input;
     }
 
-    public function getCheckBox($id,$name)
+    public static function getCheckBox($id,$name)
     {
         $input= new CheckBox();
         self::initNameAndId($input,$id,$name);
         return $input;
     }
 
-    public function getResetButton($id,$name)
+    public static function getResetButton($id,$name)
     {
         $input = new ResetButton();
         self::initNameAndId($input,$id,$name);

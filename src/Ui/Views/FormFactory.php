@@ -1,16 +1,14 @@
 <?php
 
 namespace Ui\Views;
+
 use App\App;
 use Ui\HTML\Elements\Nested\{Div, Form};
-use Entity\DefaultResolver;
 use Ui\Views\Generator\FormFieldGenerator;
 use Ui\Views\Generator\ManyToManyViewGenerator;
 use Ui\Views\Generator\OneToManyViewGenerator;
 use Ui\Views\Generator\OneToOneViewGenerator;
 use Ui\Widgets\Button\{SubmitButton};
-use Ui\Widgets\Input\SelectOption;
-use Ui\Widgets\Views\NamedFieldset;
 
 class FormFactory extends ViewFactory
 {
@@ -41,8 +39,7 @@ class FormFactory extends ViewFactory
         try {
             $this->setFieldsDefinitions();
 
-            //Init FormFieldGenerator
-            $this->fieldGenerator = new FormFieldGenerator($this->model, $this->accessFilter);
+
             $this->view = (new EntityView())->setClass("bg-light text-dark shadow-lg py-3 m-4");
             $this->form = new Form();
             $this->form->setAction($this->formAction)
@@ -57,11 +54,13 @@ class FormFactory extends ViewFactory
     public function withAction(string $action)
     {
         $this->formAction = $action;
+        return $this;
     }
 
     public function withMethod(string $method)
     {
         $this->formMethod = $method;
+        return $this;
     }
 
 
@@ -81,6 +80,12 @@ class FormFactory extends ViewFactory
                 $t = $this->shortClassName;
             }
             $this->view->setTitle($t);
+        }
+
+        //Init FormFieldGenerator
+        $this->fieldGenerator = new FormFieldGenerator($this->model, $this->accessFilter);
+        if ($this->inline) {
+            $this->fieldGenerator->setInline();
         }
         //Get partial form for class or object given
         $this->form->add($this->fieldGenerator->getPartialForm());
@@ -106,6 +111,10 @@ class FormFactory extends ViewFactory
 
     private function processAssociations(array $associations)
     {
+        //here we must create fields for unary relations and a link
+        // to a formtable to manage many associations
+        // to do that make a form optionnal on the first datatableview with ajax for crud
+
         foreach ($associations as $key => $association) {
             if (in_array(strtolower($association->getName()),
                 $this->accessFilter->getWritables())
@@ -113,11 +122,11 @@ class FormFactory extends ViewFactory
                 $associationType = $association->getType();
                 $className = $association->getOutClassName();
                 if (is_object($this->model)) {
+                    //$manager = $this->app->getModelManager($this->classNamespace);
 
-                    $value = $this->model->getPropertyValue($className);
+                    $value = $this->model->getPropertyValue($association->getName());
                     $view = null;
 
-                    if ($value != null) {
                         //ManyToOne Association display a form
                         if ($associationType == "ManyToOne") {
                             $fieldGenerator = new FormFieldGenerator($className, "default");
@@ -126,8 +135,8 @@ class FormFactory extends ViewFactory
                         }
                         //ManyToMany Association if "new" display a form if "edit" display a table
                         if ($associationType == "ManyToMany") {
-                            $view = (new ManyToManyViewGenerator($className))->getView($value, true);
-
+                            $manyGenerator = new ManyToManyViewGenerator($className);
+                            $view = $manyGenerator->getView();
                         }
                         //OneToMany Association if "new" display a form if "edit" display a table
                         if ($associationType == "OneToMany") {
@@ -138,10 +147,10 @@ class FormFactory extends ViewFactory
                         if ($associationType == "OneToOne") {
                             $view = (new OneToOneViewGenerator($className))->getView($value, true);
                         }
-                    } else {
 
+                    if ($view) {
+                        $this->view->add((new Div())->setClass('row ml-0')->add($view));
                     }
-                    $this->view->add((new Div())->setClass('row ml-0')->add($view));
                 } elseif (is_string($className)) {
                     if ($associationType == "OneToOne") {
                         $fieldGenerator = new FormFieldGenerator($className);
@@ -152,9 +161,7 @@ class FormFactory extends ViewFactory
                         $classNameModelManager = $this->app->getModelManager($className);
                         $view = new AssociationSelect($classNameModelManager, $association);
                     }
-                    $this->form->add($view);
-                } else {
-                }
+                } 
             }
         }
     }
@@ -162,6 +169,7 @@ class FormFactory extends ViewFactory
     public function setInline()
     {
         $this->inline = true;
+        return $this;
     }
 
     public function setFormTitle($title)

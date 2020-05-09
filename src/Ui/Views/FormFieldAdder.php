@@ -52,7 +52,7 @@ class FormFieldAdder extends ViewFactory
 
             case "email":
             {
-                $this->addInputToForm(
+                $this->addToContainer(
                     WidgetFactory::getEmailInput($fieldName),
                     $fieldName
                 );
@@ -61,7 +61,7 @@ class FormFieldAdder extends ViewFactory
             }
             case "password":
             {
-                $this->addInputToForm(
+                $this->addToContainer(
                     WidgetFactory::getPasswordInput($fieldName),
                     $fieldName
                 );
@@ -106,14 +106,14 @@ class FormFieldAdder extends ViewFactory
             }
             default:
             {
-                $this->addInputToForm(WidgetFactory::getTextInput($fieldName, $fieldName), $fieldName);
+                $this->addToContainer(WidgetFactory::getTextInput($fieldName, $fieldName), $fieldName);
                 break;
             }
         }
 
     }
 
-    private function addInputToForm($widget, $fieldName)
+    private function addToContainer($widget, $fieldName)
     {
         $widget->setClass('form-control');
         $this->container->add($widget);
@@ -128,7 +128,7 @@ class FormFieldAdder extends ViewFactory
             $fieldName = strtolower($this->shortClassName) . '_' . $fieldName;
             $widget->setPlaceholder($placeholder)->setName($fieldName);
         }
-        if (!$this->inline) {
+        if (!$this->isInline()) {
             $this->container->add(new Br());
         }
 

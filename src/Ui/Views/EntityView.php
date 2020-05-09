@@ -1,7 +1,13 @@
 <?php
 namespace Ui\Views;
+use Ui\HTML\Elements\Nested\Div;
 use Ui\HTML\Elements\Nested\Section;
+use Ui\Widgets\Button\AddButton;
+use Ui\Widgets\Button\DelButton;
+use Ui\Widgets\Button\EditButton;
+use Ui\Widgets\Button\SearchButton;
 use Ui\Widgets\Views\Title;
+use Ui\Widgets\Views\Row;
 
 /**
  * Class EntityView
@@ -13,6 +19,7 @@ class EntityView extends Section {
     private string $title = "";
     private string $name = "";
     private $titleElement=null;
+    private $actionBar = null;
 	/**
 	 * @var bool
 	 */
@@ -23,7 +30,9 @@ class EntityView extends Section {
      */
     public function __construct(bool $subView = false) {
         parent::__construct();
-        $this->childs = [];
+        $this->actionBar = new Row();
+
+        //$this->childs = [];
 		$this->subView = $subView;
 	}
 
@@ -38,6 +47,38 @@ class EntityView extends Section {
         $this->titleElement->setClass("bg-primary text-white text-center py-2 rounded-top rounded-lg mb-3");
         $this->setFirst($this->titleElement);
         return $this;
+    }
+
+    public function withActions(array $actions)
+    {
+        $this->actionBar->setClass('bg-white justify-center large-30 p-2 shadow border-rounded-sm mx-auto');
+        $this->add($this->actionBar);
+        foreach ($actions as $action => $url) {
+            $button = null;
+            switch (strtoupper($action)) {
+                case 'ADD':
+                    $button = (new AddButton())->setClass('btn bg-success mx-2');
+
+                    break;
+                case 'DELETE':
+                    $button = (new DelButton())->setClass('btn bg-danger mx-2');
+                    break;
+
+                case 'MODIFY':
+                    $button = (new EditButton())->setClass('btn bg-primary mx-2');
+                    break;
+                case 'SEARCH':
+                    $button = (new SearchButton())->setClass('btn bg-primary mx-2');
+                    break;
+
+                default:
+                    throw new \Exception('Try to add illegal acttion to view');
+            }
+            $button->setOnClick("location.href='$url'");
+            $this->actionBar->add($button);
+        }
+
+
     }
 
     /**

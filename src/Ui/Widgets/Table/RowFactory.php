@@ -68,7 +68,7 @@ class RowFactory
         $this->rowClickable = true;
     }
 
-    public function rowFromArray(array $rowData, int $i)
+    public function rowFromArray(array $rowData, int $i) : TableRow
     {
         $tableRow = new TableRow();
         if(array_key_exists('id' , $rowData) && $this->rowClickable)
@@ -80,7 +80,7 @@ class RowFactory
             $a = new A((string)$rowData['id'], $this->baseUrl . '/' . $rowData['id']);
             $a->setClass('btn btn-primary btn-sm my-1');
             $cell = new Cell($a, false);
-            $tableRow->add($cell);
+            $tableRow->addCell($cell);
         }
         for($i=0; $i<$this->colCount; $i++)
         {
@@ -93,14 +93,14 @@ class RowFactory
                 {
                     $cell->setIndex($column->getBaseId().$this->rowIndex);
                 }
-                $tableRow->add($cell);
+                $tableRow->addCell($cell);
             }
 
         }
         return $tableRow;
     }
 
-    public function rowFromObject($object)
+    public function rowFromObject($object) : TableRow
     {
         if (is_null($object)) {
             return false;
@@ -125,7 +125,7 @@ class RowFactory
             if ($column->isBaseIdSet()) {
                 $cell->setIndex($column->getBaseId() . $this->rowIndex);
             }
-            $tableRow->add($cell);
+            $tableRow->addCell($cell);
             //Todo create a default row click action
             //Todo allow to provide a row click action
             if ($hasgetId && $this->rowClickable) try {
@@ -139,7 +139,7 @@ class RowFactory
         return $tableRow;
     }
 
-    public function rowFromModel(Model $model)
+    public function rowFromModel(Model $model) : TableRow
     {
         $tableRow = new TableRow();
         if (!count($this->tableColumns)) {
@@ -162,7 +162,7 @@ class RowFactory
             if ($column->isBaseIdSet()) {
                 $cell->setIndex($column->getBaseId() . $this->rowIndex);
             }
-            $tableRow->add($cell);
+            $tableRow->addCell($cell);
         }
     return $tableRow;
     }

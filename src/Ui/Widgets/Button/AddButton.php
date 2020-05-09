@@ -9,7 +9,7 @@ class AddButton extends Button
 
   function __construct()
   {
-    $text = '<i class="material-icons" style="font-size:16px;color:white">add</i>';
+    $text = '<i class="material-icons" style="font-size:24px;color:white">add</i>';
     parent::__construct($text);
     $this->startTag->setAttribute("type", "button");
     $this->setClass('btn btn-primary');

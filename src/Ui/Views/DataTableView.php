@@ -141,10 +141,8 @@ class DataTableView extends ViewFactory
         return $dataToDisplay;
     }
 
-    private function processAssociations($object, $key, array &$dataToDisplay)
-    {
-        Model::class;
-        $associations = $object::getAssociations();
+    private function processAssociations(Model $object, $key, array &$dataToDisplay)
+    {    $associations = $object::getAssociations();
         foreach ($associations as $association) {
             if ($association->getType() == "OneToMany" || $association->getType() == "ManyToMany") {
                 $view = $this->getManyAssociationView($object, $association, $key);
@@ -165,12 +163,13 @@ class DataTableView extends ViewFactory
     {
         //$dataToDisplay[$key][$association->getName()] = (new A($app->getRoute($association->getName(),index))
         //   ->add('<i class="material-icons md-36">group</i>' . $association->getName())->setClass('btn btn-primary');
-        $associationClassName = $association->getName();
         $outClassName = $association->getOutClassName();
-
         $collection = $this->manager->findAssociationValuesBy($outClassName, $object);
+
         $vfdClassName = DefaultResolver::getFieldDefinitions($outClassName);
         $viewFieldDefinitions = new $vfdClassName();
+
+        $associationClassName = $association->getName();
         $title =  $viewFieldDefinitions->getDisplayFor($associationClassName);
         $columns = ColumnsFactory::make($outClassName);
         $drt = new DivTable(

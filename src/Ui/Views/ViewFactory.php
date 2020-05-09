@@ -14,7 +14,7 @@ class ViewFactory
     /**
      * @var string
      */
-    protected $accessFilter;
+    protected ?ViewFilterInterface $accessFilter;
     protected $classNamespace;
     /**
      * @var Model
@@ -62,13 +62,14 @@ class ViewFactory
     {
         if ($fieldsDefinitionInterface instanceof ViewFieldsDefinitionInterface) {
             $this->fieldsDefinitions = $fieldsDefinitionInterface;
-        }
-        $fieldsDefinitionsClass = DefaultResolver::getFieldDefinitions($this->classNamespace);
-        try {
-            $reflectionClass = new \ReflectionClass($fieldsDefinitionsClass);
-            $this->fieldsDefinitions = $reflectionClass->newInstanceArgs([$this->classNamespace]);
-        } catch (ReflectionException $exception) {
-            throw $exception;
+        } else {
+            $fieldsDefinitionsClass = DefaultResolver::getFieldDefinitions($this->classNamespace);
+            try {
+                $reflectionClass = new \ReflectionClass($fieldsDefinitionsClass);
+                $this->fieldsDefinitions = $reflectionClass->newInstanceArgs([$this->classNamespace]);
+            } catch (ReflectionException $exception) {
+                throw $exception;
+            }
         }
         return $this;
     }
@@ -93,5 +94,11 @@ class ViewFactory
             $result = $this->accessFilter->getWritables();
         }
         return $result;
+    }
+
+    protected function getSearchables()
+    {
+        $result = $this->accessFilter->getSearchables();
+        return $result ?? [];
     }
 }
