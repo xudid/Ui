@@ -8,6 +8,7 @@ use Ui\Widgets\Button\AddButton;
 use Ui\Widgets\Button\DelButton;
 use Ui\Widgets\Button\EditButton;
 use Ui\Widgets\Button\SearchButton;
+use Ui\Widgets\Button\ViewListButton;
 use Ui\Widgets\Views\Row;
 
 class Action extends Row
@@ -26,10 +27,13 @@ class Action extends Row
     {
         parent::__construct();
         $this->actions = $actions;
-        $this->setClass('bg-white justify-center large-30 p-2 shadow border-rounded-sm mx-auto');
+        $this->setClass('bg-white justify-center p-2 shadow border-rounded-sm mx-auto');
         foreach ($actions as $action => $url) {
             $button = null;
             switch (strtoupper($action)) {
+                case 'LIST':
+                    $button = (new ViewListButton())->setClass('btn bg-primary mx-2');
+                    break;
                 case 'ADD':
                     $button = (new AddButton())->setClass('btn bg-success mx-2');
 
