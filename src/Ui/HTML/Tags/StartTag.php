@@ -9,7 +9,7 @@
 
 namespace Ui\HTML\Tags;
 
-use Ui\Attributes\GlobalAttribute;
+use Ui\HTML\Attributes\GlobalAttribute;
 
 /**
  * Class StartTag
@@ -72,8 +72,14 @@ class StartTag
       */
     public function setAttribute($name, $value)
     {
-        $attributeclass = "Ui\HTML\Attributes\\".ucfirst($this->tagname)."Attribute";
-        $this->attributes[$name] = new $attributeclass($name, $value);
+        $namespace = str_replace('Tags', 'Attributes', __NAMESPACE__);
+        $attributeclass = $namespace . ucfirst($this->tagname)."Attribute";
+        if (class_exists($attributeclass)) {
+            $this->attributes[$name] = new $attributeclass($name, $value);
+        } else {
+            $this->attributes[$name] = new GlobalAttribute($name, $value);
+        }
+
         return $this;
     }
 
