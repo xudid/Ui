@@ -1,10 +1,11 @@
 <?php
+
 namespace Ui\HTML\Elements\Bases;
 
 use Ui\HTML\Elements\ElementInterface;
 use Ui\HTML\Elements\Nested\Nested;
-use Ui\HTML\Tags\StartTag;
 use Ui\HTML\Tags\EndTag;
+use Ui\HTML\Tags\StartTag;
 
 /**
  * Class Base
@@ -14,11 +15,11 @@ use Ui\HTML\Tags\EndTag;
 class Base implements ElementInterface
 {
 
-	protected ?Nested $parent = null;
+    protected ?Nested $parent = null;
 
-	protected ?Nested $root = null;
+    protected ?Nested $root = null;
 
-	protected $index = '';
+    protected $index = '';
 
     private $elementName = "";
 
@@ -62,11 +63,11 @@ class Base implements ElementInterface
 
 
     /**
-    * Set an Element attribute with value
-    * @ return self
-    * @ param name Element Attribute name
-    * @ param value Element Attribute value
-    */
+     * Set an Element attribute with value
+     * @ return self
+     * @ param name Element Attribute name
+     * @ param value Element Attribute value
+     */
     public function setAttribute($name, $value)
     {
         $this->startTag->setAttribute($name, $value);
@@ -79,9 +80,9 @@ class Base implements ElementInterface
      */
     public function setClass(string $class)
     {
-     if(isset($class))
-     $this->startTag->setAttribute("class",$class);
-     return $this;
+        if (isset($class))
+            $this->startTag->setAttribute("class", $class);
+        return $this;
     }
 
     /**
@@ -90,14 +91,14 @@ class Base implements ElementInterface
      */
     public function addClass(string $class)
     {
-      $this->startTag->addCssClass($class);
-      return $this;
+        $this->startTag->addCssClass($class);
+        return $this;
     }
 
     public function getIndex()
-	{
-		return $this->index;
-	}
+    {
+        return $this->index;
+    }
 
     /**
      * @param string $index
@@ -105,7 +106,7 @@ class Base implements ElementInterface
      */
     public function setIndex(string $index)
     {
-    	$this->index = $index;
+        $this->index = $index;
         return $this;
     }
 
@@ -115,8 +116,8 @@ class Base implements ElementInterface
      */
     public function setId(string $id)
     {
-    	$this->index = $id;
-        $this->startTag->setAttribute("id",$id);
+        $this->index = $id;
+        $this->startTag->setAttribute("id", $id);
         return $this;
     }
 
@@ -128,46 +129,44 @@ class Base implements ElementInterface
     public function setClasses(array $classes)
     {
         if (is_array($classes)) {
-            $this->setAttribute("class",$classes);
+            $this->setAttribute("class", $classes);
         }
         return $this;
     }
 
-	/**
-	 * @return Nested|null
-	 */
-	public function getParent(): ?Nested
-	{
-		return $this->parent;
-	}
+    /**
+     * @return Nested|null
+     */
+    public function getParent(): ?Nested
+    {
+        return $this->parent;
+    }
 
-	/**
-	 * @param Nested|null $parent
-	 * @return Base
-	 */
-	public function setParent(?Nested $parent)
-	{
-		$this->parent = $parent;
-		return $this;
-	}
+    /**
+     * @param Nested|null $parent
+     * @return Base
+     */
+    public function setParent(?Nested $parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
 
-	/**
-	 * @return Nested|null
-	 */
-	public function getRoot(): ?Nested
-	{
-		return $this->root;
-	}
+    /**
+     * @return Nested|null
+     */
+    public function getRoot(): ?Nested
+    {
+        return $this->root;
+    }
 
-	/**
-	 * @param Nested|null $root
-	 * @return Base
-	 */
-	public function setRoot(?Nested $root): Base
-	{
-		$this->root = $root;
-		return $this;
-	}
-
-
+    /**
+     * @param Nested|null $root
+     * @return Base
+     */
+    public function setRoot(?Nested $root): Base
+    {
+        $this->root = $root;
+        return $this;
+    }
 }
