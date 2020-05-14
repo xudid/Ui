@@ -1,6 +1,7 @@
 <?php
 
 namespace Ui\Widgets\Button;
+use Ui\HTML\Elements\Bases\I;
 use Ui\HTML\Elements\Nested\Button;
 
 /**
@@ -14,7 +15,9 @@ class DelButton extends Button
  */
   function __construct()
   {
-    $text = '<i class="material-icons" style="font-size:24px;color:white;">delete</i>';
+      $text = (new I('delete'))
+          ->setClass('material-icons')
+          ->setAttribute('style', "font-size:24px;color:white");
     parent::__construct($text);
 		$this->startTag->setAttribute("type", "button");
   }
