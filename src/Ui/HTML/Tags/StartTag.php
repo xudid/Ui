@@ -73,7 +73,7 @@ class StartTag
     public function setAttribute($name, $value)
     {
         $namespace = str_replace('Tags', 'Attributes', __NAMESPACE__);
-        $attributeclass = $namespace . ucfirst($this->tagname)."Attribute";
+        $attributeclass = $namespace . '\\' . ucfirst($this->tagname)."Attribute";
         if (class_exists($attributeclass)) {
             $this->attributes[$name] = new $attributeclass($name, $value);
         } else {
