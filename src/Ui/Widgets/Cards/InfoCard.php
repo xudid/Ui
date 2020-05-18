@@ -19,6 +19,10 @@ class InfoCard extends Div
 
     private $links = [];
 
+    private $body;
+
+    private $footer;
+
 
     /**
      * InfoCard constructor.
@@ -26,18 +30,18 @@ class InfoCard extends Div
     public function __construct(string $title = '', string $text = '', string $subtitle = '')
     {
         parent::__construct();
-        $this->setClass('card');
-        $this->title = (new H5($title))->setClass('card-title');
+        $this->setClass('card shadow m-2');
+        $this->title = (new H5($title))->setClass('card-title text-primary');
         $this->text = new P($text);
         !empty($subtitle) ? $this->subtitle = (new H6($subtitle))->setClass('card-subtitle mb-2 text-muted'):null;
-        $this->feed((new Div())
+        $this->body = (new Div())
             ->setClass('card-body')
             ->feed($this->title,
                 $this->subtitle,
                 $this->text,
                 implode(',', $this->links)
-            )
-        );
+            );
+        $this->feed($this->body);
         return $this;
     }
 }

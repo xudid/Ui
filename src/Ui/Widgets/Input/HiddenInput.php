@@ -12,6 +12,6 @@ class HiddenInput extends Input
     {
         parent::__construct();
         $this->startTag->setAttribute('type', 'hidden');
-        $this->startTag->setAttribute('name', '$name');
+        $this->startTag->setAttribute('name', $name);
     }
 }
