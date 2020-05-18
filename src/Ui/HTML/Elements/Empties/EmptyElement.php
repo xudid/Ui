@@ -96,7 +96,7 @@ class EmptyElement implements ElementInterface
     {
       if(isset($class))
       $this->startTag->setAttribute("class",$class);
-      return this;
+      return $this;
     }
 
 	/**
