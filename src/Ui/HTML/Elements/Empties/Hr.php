@@ -11,6 +11,5 @@ class Hr extends EmptyElement{
      */
 	public function __construct(){
 		parent::__construct("hr");
-        return $this;
 	}
 }
