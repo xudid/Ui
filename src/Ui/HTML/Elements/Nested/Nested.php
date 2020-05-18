@@ -192,4 +192,20 @@ class Nested extends Base implements ArrayAccess
 	 {
        unset($this->childs[$offset]);
      }
-  }
+
+     public function __call($name, $arguments)
+     {
+         if (property_exists(get_class($this),$name)) {
+             $ro = new \ReflectionObject($this);
+             $property = $ro->getProperty($name);
+             if ($property->isPrivate() || $property->isProtected()) {
+                 $property->setAccessible(true);
+                 $result = $property->getValue($this);
+                 $property->setAccessible(false);
+                 return $result;
+             }
+         }
+     }
+
+
+}
