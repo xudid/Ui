@@ -44,4 +44,12 @@ class InfoCard extends Div
         $this->feed($this->body);
         return $this;
     }
+
+    public function setClass(string $class)
+    {
+        $this->setAttribute('class', 'card shadow m-2 ' . $class);
+        return $this;
+    }
+
+
 }
