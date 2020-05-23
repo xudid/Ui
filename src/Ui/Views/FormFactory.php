@@ -9,6 +9,7 @@ use Ui\Views\Generator\ManyToManyViewGenerator;
 use Ui\Views\Generator\OneToManyViewGenerator;
 use Ui\Views\Generator\OneToOneViewGenerator;
 use Ui\Widgets\Button\{SubmitButton};
+use Ui\Widgets\Input\HiddenInput;
 
 class FormFactory extends ViewFactory
 {
@@ -36,9 +37,9 @@ class FormFactory extends ViewFactory
     public function __construct($model)
     {
         parent::__construct($model);
+
         try {
             $this->setFieldsDefinitions();
-
 
             $this->view = (new EntityView())->setClass("bg-light text-dark shadow-lg py-3 m-4");
             $this->form = new Form();
@@ -84,11 +85,14 @@ class FormFactory extends ViewFactory
 
         //Init FormFieldGenerator
         $this->fieldGenerator = new FormFieldGenerator($this->model, $this->accessFilter);
+
         if ($this->inline) {
             $this->fieldGenerator->setInline();
         }
         //Get partial form for class or object given
+        $this->fieldGenerator->setAccessFilter($this->accessFilter);
         $this->form->add($this->fieldGenerator->getPartialForm());
+
         $this->view->add($this->form);
         //Test if entity or class has associations
         $model = $this->model;
@@ -177,6 +181,12 @@ class FormFactory extends ViewFactory
         if (isset($title)) {
             $this->formTitle = $title;
         }
+        return $this;
+    }
+
+    public function addHiddenInput(HiddenInput $input)
+    {
+        $this->form->add($input);
         return $this;
     }
 }
