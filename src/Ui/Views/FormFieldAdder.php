@@ -117,7 +117,8 @@ class FormFieldAdder extends ViewFactory
     {
         $widget->setClass('form-control');
         $this->container->add($widget);
-        $placeholder = $fieldName;
+
+        $placeholder = $this->fieldsDefinitions->getDisplayFor($fieldName);
         if (is_object($this->model)) {
             $val = $this->model->getPropertyValue($fieldName);
             $fieldName = strtolower($this->shortClassName) . '_' . $fieldName;
@@ -125,8 +126,10 @@ class FormFieldAdder extends ViewFactory
                 ->setPlaceholder($placeholder)
                 ->setName($fieldName);
         } else {
+
             $fieldName = strtolower($this->shortClassName) . '_' . $fieldName;
             $widget->setPlaceholder($placeholder)->setName($fieldName);
+
         }
         if (!$this->isInline()) {
             $this->container->add(new Br());
