@@ -33,11 +33,11 @@ class ViewFactory
         if(!is_string($model) && ! $model instanceof Model) {
             throw new Exception('ViewFactory constructor take only a string or an instannce of Model class as parameter');
         }
+
         $this->model = $model;
         if (is_string($model)) {
             $model = new $model([]);
         }
-
 
         // Init class names
         $this->classNamespace = $model->getClass();
@@ -45,13 +45,18 @@ class ViewFactory
 
         // Model fields
         $this->fields = $model->getColumns();
+
         $this->setAccessFilter();
     }
     public function setAccessFilter($accessFilter = null)
     {
         if ($accessFilter == null) {
             $accessFilterName = DefaultResolver::getFilter($this->classNamespace);
-            $this->accessFilter = new $accessFilterName();
+            if (class_exists($accessFilterName)) {
+                $this->accessFilter = new $accessFilterName();
+            } else {
+                throw new Exception('Undefined form filter class : ' . $accessFilterName);
+            }
 
         } else {
             $this->accessFilter = $accessFilter;
