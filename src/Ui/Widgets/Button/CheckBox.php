@@ -3,14 +3,16 @@ namespace Ui\Widgets\Button;
 
 use Ui\HTML\Elements\Empties\Input;
 use Ui\HTML\Elements\Nested\Label;
+use Ui\HTML\Elements\Nested\Div;
 
 /**
  * Class CheckBox
  * @package Ui\Widgets\Button
  */
-class CheckBox extends Input
+class CheckBox extends Div
 {
 	private ?Label $label = null;
+	private Input $input ;
 	private string $name = "";
 	private string $value ="";
 
@@ -22,24 +24,17 @@ class CheckBox extends Input
 	function __construct(string $name, string $value = "")
 	{
 		parent::__construct();
-		$this->name = $name;
-		$this->value = $value;
-		$this->startTag->setAttribute("type", "checkbox");
-        $this->startTag->setAttribute("name", $name);
+        $this->name = $name;
+        $this->value = $value;
+        $this->setClass('form-check');
+        $this->input = (new Input())
+		    ->setAttribute('type', 'checkbox')
+            ->setAttribute("name", $name)
+            ->setClass('form-check-input');
         if (isset($value) && !empty($value)) {
-        	 $this->startTag->setAttribute("value", $value);
+            $this->input->setAttribute("value", $value);
         }
-	}
-
-	/**
-	 * @return string
-	 */
-	public function __toString()
-	{
-		$string ="";
-		if(isset($this->label)){$string = $string.$this->label."\r\n";}
-		$string = $string.parent::__toString();
-		return $string;
+        $this->add($this->input);
 	}
 
     /**
@@ -47,7 +42,7 @@ class CheckBox extends Input
      */
 	function setChecked()
 	{
-		$this->startTag->setAttribute("checked", "true");
+		$this->input->setAttribute("checked", "true");
 		return $this;
 	}
 
@@ -58,9 +53,11 @@ class CheckBox extends Input
      */
 	function withLabel(string $id, string $text)
 	{
-		$this->startTag->setAttribute("id",$id);
-		$this->label = new Label($text);
-		$this->label->setAttribute("for",$id);
+		$this->input->setAttribute("id",$id);
+		$this->label = (new Label($text))
+		    ->setAttribute("for",$id)
+		    ->setClass('form-check-label');
+		$this->add($this->label);
 		return $this;
 	}
 
