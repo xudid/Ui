@@ -88,14 +88,14 @@ class AppPage extends Page
 		$this->footer = (new Footer())->setClass('bg-dark text-white');
 		$this->footer->add("dmoindreau@gmail.com");
 
-		$this->main->feed($this->navbar, $this->second, $this->footer);
+		$this->main->feed($this->navbar, $this->second);
 
 		$this->contentView = new Div();
 		$this->contentView->setClass("container mt-4 ");
 		$this->second->feed($this->sidebar, $this->contentView);
 
 
-		$this->feedBody($this->main);
+		$this->feedBody($this->main, $this->footer);
 
 		return $this;
 	}
@@ -150,6 +150,7 @@ class AppPage extends Page
 		}
 		return $this;
 	}
+
 
 	public function feedNavbarLeft(...$items)
 	{
