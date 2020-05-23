@@ -161,20 +161,4 @@ class Page extends Html
         }
         return parent::__toString();
     }
-
-    /**
-     * @Deprecated use __toString() instead
-     */
-    public function render()
-    {
-        $this->renderDoctype();
-        $string = "";
-        $string = $string . $this->renderDoctype();
-        foreach ($this->childs as $value) {
-            $string = $string . $value . "\r\n";
-        }
-        $this->contentString = $string;
-        $this->renderBody($this->contentString);
-        $this->renderHtmlCloseBalise();
-    }
 }
