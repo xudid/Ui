@@ -1,8 +1,8 @@
 <?php
 namespace Ui\Views;
-use Ui\HTML\Elements\Nested\Div;
 use Ui\HTML\Elements\Nested\Section;
 use Ui\Widgets\Button\AddButton;
+use Ui\Widgets\Button\Button;
 use Ui\Widgets\Button\DelButton;
 use Ui\Widgets\Button\EditButton;
 use Ui\Widgets\Button\SearchButton;
@@ -17,6 +17,7 @@ use Ui\Widgets\Views\Row;
 class EntityView extends Section {
 
     private string $title = "";
+    private string $subTitle = "";
     private string $name = "";
     private $titleElement=null;
     private $actionBar = null;
@@ -40,11 +41,19 @@ class EntityView extends Section {
      * @param string $title
      * @return $this
      */
+    public function setSubTitle(string $title) {
+        $this->subTitle = $title;
+        $this->subTitleElement = (new Title(6, $this->subTitle));
+        $this->subTitleElement->setClass("bg-secondary text-white text-center py-2 mb-0");
+        $this->offsetSet(2,$this->subTitleElement);
+        return $this;
+    }
+
     public function setTitle(string $title) {
-    	$size = $this->subView?6:5;
+        $size = $this->subView?6:5;
         $this->title = $title;
         $this->titleElement = (new Title($size, $this->title));
-        $this->titleElement->setClass("bg-primary text-white text-center py-2 rounded-top rounded-lg mb-3");
+        $this->titleElement->setClass("bg-primary text-white text-center py-2 mb-0 rounded-top");
         $this->setFirst($this->titleElement);
         return $this;
     }
@@ -56,6 +65,8 @@ class EntityView extends Section {
         foreach ($actions as $action => $url) {
             $button = null;
             switch (strtoupper($action)) {
+                case 'LIST':
+                    $button = (new Button('All'))->setClass('btn bg-primary mx-2');
                 case 'ADD':
                     $button = (new AddButton())->setClass('btn bg-success mx-2');
 
