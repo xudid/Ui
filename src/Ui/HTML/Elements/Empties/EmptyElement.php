@@ -1,40 +1,37 @@
 <?php
+
 namespace Ui\HTML\Elements\Empties;
 
 use Ui\HTML\Elements\ElementInterface;
 use Ui\HTML\Elements\Nested\Nested;
 use Ui\HTML\Tags\StartTag;
-use Ui\HTML\Tags\EndTag;
 
 
 /**
- *
- * @author didux
- *
- *
+ * Class EmptyElement
+ * @package Ui\HTML\Elements\Empties
  */
 class EmptyElement implements ElementInterface
 {
-	protected ?Nested $parent = null;
+    protected ?Nested $parent = null;
 
-	protected ?Nested $root = null;
+    protected ?Nested $root = null;
 
-	protected $index ='';
+    protected $index = '';
 
-    protected $startTag = null;
+    protected StartTag $startTag;
 
-    private $endTag = "">"";
+    private $endTag = "" > "";
 
-    protected $contentString = "";
-
+    protected string $contentString = "";
 
     /**
-    * @param string elementName HtmlElement name in start and end Tag
-    *
-    */
-    public function __construct($elementName)
+     * EmptyElement constructor.
+     * @param string elementName HtmlElement name in start and end Tag
+     */
+    public function __construct(string $elementName)
     {
-    	$this->startTag = new StartTag($elementName);
+        $this->startTag = new StartTag($elementName);
     }
 
     /**
@@ -42,7 +39,7 @@ class EmptyElement implements ElementInterface
      */
     public function __toString()
     {
-        $this->contentString = $this->startTag->__toString() . $this->contentString . $this->endTag."\r\n";
+        $this->contentString = $this->startTag->__toString() . $this->contentString . $this->endTag . "\r\n";
         return $this->contentString;
     }
 
@@ -56,17 +53,17 @@ class EmptyElement implements ElementInterface
      */
     public function setAttribute(string $name, $value)
     {
-      $this->startTag->setAttribute($name, $value);
-      return $this;
+        $this->startTag->setAttribute($name, $value);
+        return $this;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getIndex():string
-	{
-		return $this->index;
-	}
+    /**
+     * @return string
+     */
+    public function getIndex(): string
+    {
+        return $this->index;
+    }
 
     /**
      * @param string $index
@@ -74,63 +71,64 @@ class EmptyElement implements ElementInterface
      */
     public function setIndex(string $index)
     {
-    	$this->index = $index;
+        $this->index = $index;
         return $this;
     }
 
     /**
-     * @param string $index
+     * @param string $id
      * @return self
      */
-    public function setId(string $id)
+    public function setId(string $id) : self
     {
-        $this->startTag->setAttribute("id",$id);
+        $this->startTag->setAttribute("id", $id);
         return $this;
     }
 
     /**
      * @param string $class
-     * @return void
+     * @return self
      */
-    public function setClass(string $class)
+    public function setClass(string $class) : self
     {
-      if(isset($class))
-      $this->startTag->setAttribute("class",$class);
-      return $this;
+        if (isset($class))
+            $this->startTag->addCssClass($class);
+        return $this;
     }
 
-	/**
-	 * @return Nested|null
-	 */
-	public function getParent(): ?Nested
-	{
-		return $this->parent;
-	}
+    /**
+     * @return Nested|null
+     */
+    public function getParent(): ?Nested
+    {
+        return $this->parent;
+    }
 
-	/**
-	 * @param Nested|null $parent
-	 * @return EmptyElement
-	 */
-	public function setParent(?Nested $parent){
-		$this->parent = $parent;
-		return $this;
-	}
+    /**
+     * @param Nested|null $parent
+     * @return EmptyElement
+     */
+    public function setParent(?Nested $parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
 
-	/**
-	 * @return Nested|null
-	 */
-	public function getRoot(): ?Nested
-	{
-		return $this->root;
-	}
+    /**
+     * @return Nested|null
+     */
+    public function getRoot(): ?Nested
+    {
+        return $this->root;
+    }
 
-	/**
-	 * @param Nested|null $root
-	 * @return EmptyElement
-	 */
-	public function setRoot(?Nested $root): EmptyElement
-	{
-		$this->root = $root;
-		return $this;
-	}
+    /**
+     * @param Nested|null $root
+     * @return EmptyElement
+     */
+    public function setRoot(?Nested $root): EmptyElement
+    {
+        $this->root = $root;
+        return $this;
+    }
 }
