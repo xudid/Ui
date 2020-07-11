@@ -19,15 +19,15 @@ class Base implements ElementInterface
 
     protected ?Nested $root = null;
 
-    protected $index = '';
+    protected string $index = '';
 
-    private $elementName = "";
+    private string $elementName;
 
-    protected $startTag = null;
+    protected StartTag $startTag;
 
-    protected $endTag = null;
+    protected EndTag $endTag;
 
-    protected $contentString = "";
+    protected string $contentString = "";
 
     /**
      * Base constructor.
@@ -68,7 +68,7 @@ class Base implements ElementInterface
      * @ param name Element Attribute name
      * @ param value Element Attribute value
      */
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, $value)
     {
         $this->startTag->setAttribute($name, $value);
         return $this;
@@ -81,7 +81,7 @@ class Base implements ElementInterface
     public function setClass(string $class)
     {
         if (isset($class))
-            $this->startTag->setAttribute("class", $class);
+            $this->startTag->addCssClass($class);
         return $this;
     }
 
@@ -111,7 +111,7 @@ class Base implements ElementInterface
     }
 
     /**
-     * @param string $index
+     * @param string $id
      * @return self
      */
     public function setId(string $id)
@@ -129,7 +129,7 @@ class Base implements ElementInterface
     public function setClasses(array $classes)
     {
         if (is_array($classes)) {
-            $this->setAttribute("class", $classes);
+            $this->setAttribute('class', $classes);
         }
         return $this;
     }
