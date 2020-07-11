@@ -37,6 +37,7 @@ class StartTag
     {
         $this->tagname = $tagname;
         $this->attributes = [];
+        $this->attributes['class'] = [];
     }
 
     /**
@@ -48,13 +49,16 @@ class StartTag
         $string = "<" . $this->tagname;
 
         foreach ($this->attributes as $att => $v) {
-            if ($att=="class"&&is_array($v)&&count($v)>0) {
-                $classes = 'class=';
+            if ($att == 'class' && count($v)) {
+                $classes = 'class="';
                 foreach ($v as $key => $value) {
-                    $classes .='"'.$value.'" ';
+                    $classes .=' '. $value . ' ';
                 }
-                $string = $string." ".$classes;
+                $string = $string." ".$classes . ' "';
             } else {
+                if (is_array($v)) {
+                    $v = implode(' ', $v);
+                }
                 $string = $string ." ".$v;
             }
         }
@@ -91,7 +95,13 @@ class StartTag
       */
     public function addCssClass(string $class)
     {
-        $this->attributes["class"][]= $class;
+        $classes = array_unique(explode(' ', $class));
+        foreach ($classes as $class)  {
+            if (!in_array($class,$this->attributes["class"])) {
+                $this->attributes["class"][]= $class;
+            }
+        }
+
         return $this;
     }
 }
