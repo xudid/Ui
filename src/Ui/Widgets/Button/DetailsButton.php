@@ -3,17 +3,14 @@
 namespace Ui\Widgets\Button;
 
 /**
- * Class MenuButton
+ * Class DetailsButton
  * @package Ui\Widgets\Button
  */
-class MenuButton extends IconButton
+class DetailsButton extends IconButton
 {
-    /**
-     * MenuButton constructor.
-     */
     public function __construct()
     {
-        $this->iconName = 'menu';
+        $this->iconName = 'details';
         parent::__construct();
     }
 }

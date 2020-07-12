@@ -1,18 +1,18 @@
 <?php
 namespace Ui\Widgets\Button;
-use Ui\HTML\Elements\Nested\Button;
+
 /**
-* 
-*/
-class ResetButton extends Button
+ * Class ResetButton
+ * @package Ui\Widgets\Button
+ */
+class ResetButton extends IconButton
 {
     /**
-     *  
-     * @param string $text :the button display text
+     * ResetButton constructor.
      */
-	function __construct(string $text)
-	{
-		parent::__construct($text);
-		$this->startTag->setAttribute("type", "reset");
-	}
+    public function __construct()
+    {
+        $this->iconName = 'undo';
+        parent::__construct();
+    }
 }

@@ -3,18 +3,16 @@
 namespace Ui\Widgets\Button;
 
 /**
- * Class DelButton
+ * Class RemoveButton
  * @package Ui\Widgets\Button
  */
-class DelButton extends IconButton
+class RemoveButton extends IconButton
 {
-    /**
-     * DelButton constructor.
-     */
     public function __construct()
     {
-        $this->iconName = 'delete';
+        $this->iconName = 'remove';
         $this->color = 'danger';
         parent::__construct();
+        $this->setClass('btn-danger');
     }
 }

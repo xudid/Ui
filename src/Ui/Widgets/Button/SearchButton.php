@@ -1,20 +1,19 @@
 <?php
+
 namespace Ui\Widgets\Button;
-use Ui\HTML\Elements\Bases\I;
-use Ui\HTML\Elements\Nested\Button;
+
 /**
- *
+ * Class SearchButton
+ * @package Ui\Widgets\Button
  */
-class SearchButton extends Button
+class SearchButton extends IconButton
 {
-
-  function __construct()
-  {
-      $text = (new I('search'))
-          ->setClass('material-icons')
-          ->setAttribute('style', "font-size:24px;color:white");
-    parent::__construct($text);
-		$this->startTag->setAttribute("type", "button");
-  }
+    /**
+     * SearchButton constructor.
+     */
+    public function __construct()
+    {
+        $this->iconName = 'search';
+        parent::__construct();
+    }
 }
-
