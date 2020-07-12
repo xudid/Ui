@@ -87,7 +87,7 @@ class SearchViewFactory extends ViewFactory
             }
 
         }
-        $submitButton = new SubmitButton('Valider');
+        $submitButton = new SubmitButton('Chercher');
         $submitButton->setClass('btn btn-primary');
         return $this->form->add($submitButton);
     }

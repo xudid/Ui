@@ -26,4 +26,9 @@ class CollapsibleList extends ItemList
   {
     $this->add($item);
   }
+
+    public function setClass(string $class)
+    {
+        $this->setAttribute('class', 'collapsible ' . $class);
+    }
 }

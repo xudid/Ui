@@ -2,7 +2,10 @@
 
 namespace Ui\Views;
 
-use App\App;
+use Entity\Model\ManagerInterface;
+use Entity\Model\ModelManager;
+use Router\Router;
+use Ui\HTML\Elements\Bases\H5;
 use Ui\HTML\Elements\Nested\{Div, Form};
 use Ui\Views\Generator\FormFieldGenerator;
 use Ui\Views\Generator\ManyToManyViewGenerator;
@@ -13,6 +16,8 @@ use Ui\Widgets\Input\HiddenInput;
 
 class FormFactory extends ViewFactory
 {
+    private ?Router $router;
+    private ?ModelManager $modelManager;
     private $form = null;
     private $formTitle = null;
     private $formAction = '';
@@ -65,14 +70,13 @@ class FormFactory extends ViewFactory
     }
 
 
-    public function getForm(App $app)
+    public function getForm()
     {
-        $this->app = $app;
         $this->form->setAction($this->formAction);
         if ($this->inline) {
             $this->form->setClass("form_inline");
         }
-        $this->form->setClass('justify-content-around');
+        $this->form->setClass('justify-content-around p-3');
         if (!$this->inline) {
             $t = "";
             if (isset($this->formTitle)) {
@@ -91,7 +95,8 @@ class FormFactory extends ViewFactory
         }
         //Get partial form for class or object given
         $this->fieldGenerator->setAccessFilter($this->accessFilter);
-        $this->form->add($this->fieldGenerator->getPartialForm());
+        $this->fieldGenerator->setContainer($this->form);
+        $this->fieldGenerator->getPartialForm();
 
         $this->view->add($this->form);
         //Test if entity or class has associations
@@ -125,47 +130,64 @@ class FormFactory extends ViewFactory
             ) {
                 $associationType = $association->getType();
                 $className = $association->getOutClassName();
+                $shortName = $association->getName();
+                $view = null;
                 if (is_object($this->model)) {
-                    //$manager = $this->app->getModelManager($this->classNamespace);
 
                     $value = $this->model->getPropertyValue($association->getName());
-                    $view = null;
 
-                        //ManyToOne Association display a form
-                        if ($associationType == "ManyToOne") {
-                            $fieldGenerator = new FormFieldGenerator($className, "default");
-                            $view = $fieldGenerator->getPartialForm();
+                    //ManyToOne Association display a form
+                    if ($associationType == "ManyToOne") {
+                        $fieldGenerator = new FormFieldGenerator($className, "default");
+                        $fieldGenerator->setContainer($this->form);
+                        $view = $fieldGenerator->getPartialForm();
 
-                        }
-                        //ManyToMany Association if "new" display a form if "edit" display a table
-                        if ($associationType == "ManyToMany") {
+                    }
+                    //ManyToMany Association if "new" display a form if "edit" display a table
+                    if ($associationType == "ManyToMany") {
+                        if ($value) {
+                            $associationTable = $association->getTableName();
+                            $url = $this->router->generateUrl($associationTable, ['id' => $this->model->getId(), 'GET']);
+                            $manyGenerator = new ManyToManyViewGenerator($className);
+                            $view = $manyGenerator->getView($url);
+                        } else {
                             $manyGenerator = new ManyToManyViewGenerator($className);
                             $view = $manyGenerator->getView();
                         }
-                        //OneToMany Association if "new" display a form if "edit" display a table
-                        if ($associationType == "OneToMany") {
-                            $view = (new OneToManyViewGenerator($className))->getView($value, true);
 
-                        }
-                        //ManyToOne Association display a form
-                        if ($associationType == "OneToOne") {
-                            $view = (new OneToOneViewGenerator($className))->getView($value, true);
-                        }
+
+                    }
+                    //OneToMany Association if "new" display a form if "edit" display a table
+                    if ($associationType == "OneToMany") {
+                        $view = (new OneToManyViewGenerator($className))->getView($value, true);
+
+                    }
+                    //ManyToOne Association display a form
+                    if ($associationType == "OneToOne") {
+                        $view = (new OneToOneViewGenerator($className))->getView($value, true);
+                    }
 
                     if ($view) {
-                        $this->view->add((new Div())->setClass('row ml-0')->add($view));
+                        $this->form->add((new Div())->setClass('row ml-0')->add($view));
                     }
                 } elseif (is_string($className)) {
+                    $title = $this->fieldsDefinitions->getDisplayFor($shortName);
+                    $this->form->add((new H5($title)));
                     if ($associationType == "OneToOne") {
                         $fieldGenerator = new FormFieldGenerator($className);
+                        $fieldGenerator->setContainer($this->form);
                         $view = $fieldGenerator->getPartialForm();
                     }
 
                     if ($associationType == "ManyToMany") {
-                        $classNameModelManager = $this->app->getModelManager($className);
+                        $classNameModelManager = $this->modelManager->manage($className);
                         $view = new AssociationSelect($classNameModelManager, $association);
                     }
-                } 
+                    if ($view) {
+                        $this->form->add((new Div())->setClass('row m-2')->add($view));
+                    }
+                }
+
             }
         }
     }
@@ -187,6 +209,18 @@ class FormFactory extends ViewFactory
     public function addHiddenInput(HiddenInput $input)
     {
         $this->form->add($input);
+        return $this;
+    }
+
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+        return $this;
+    }
+
+    public function setManager(ManagerInterface $manager)
+    {
+        $this->modelManager = $manager;
         return $this;
     }
 }

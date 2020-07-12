@@ -26,6 +26,7 @@ class NavbarItem extends Li
 		$this->position = $position;
 		$margin = $position == NavbarItem::LEFT ? 'mr-2' : 'ml-2';
 		if ($content instanceof ElementInterface) {
+
 		    $content->setClass('d-inline ' . $margin);
 
         }

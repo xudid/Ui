@@ -23,44 +23,44 @@ class AppPage extends Page
 	/*
 	* @var object $maindiv
 	*/
-	private Div $main;
+	protected Div $main;
 
 	/**
 	 * @var Div $header
 	 */
-	private Div $header;
+	protected Div $header;
 
 	/**
 	 * @var Footer $footer
 	 */
-	private Footer $footer;
+	protected Footer $footer;
 
 	/**
 	 * @var object $navbar
 	 */
-	private $navbar = null;
+	protected $navbar = null;
 
 	/**
 	 * @var object $sidebar
 	 */
 
-	private $sidebar = null;
+	protected $sidebar = null;
 
 	/**
 	 * @var string $sideBarTitle
 	 */
 
-	private $sideBarTitle = "Menu";
+	protected $sideBarTitle = "Menu";
 	/**
 	 * @var $header
 	 */
 
 
-	private $contentView = null;
+	protected $contentView = null;
 	/**
 	 * @var Div
 	 */
-	private $second;
+	protected $second;
 
 
 	/**
@@ -145,8 +145,7 @@ class AppPage extends Page
 	public function addNavBarItem(NavbarItem $item, string $position = NavbarItem::LEFT)
 	{
 		if ($item) {
-			if ($position == NavbarItem::RIGHT || $position == NavbarItem::LEFT) $item->setPosition($position);
-			$this->navbar->addMenu($item);
+		    $this->navbar->addMenu($item);
 		}
 		return $this;
 	}

@@ -51,13 +51,7 @@ class ViewFactory
     public function setAccessFilter($accessFilter = null)
     {
         if ($accessFilter == null) {
-            $accessFilterName = DefaultResolver::getFilter($this->classNamespace);
-            if (class_exists($accessFilterName)) {
-                $this->accessFilter = new $accessFilterName();
-            } else {
-                throw new Exception('Undefined form filter class : ' . $accessFilterName);
-            }
-
+            $this->accessFilter = DefaultResolver::getFilter($this->classNamespace);
         } else {
             $this->accessFilter = $accessFilter;
         }
@@ -68,11 +62,10 @@ class ViewFactory
         if ($fieldsDefinitionInterface instanceof ViewFieldsDefinitionInterface) {
             $this->fieldsDefinitions = $fieldsDefinitionInterface;
         } else {
-            $fieldsDefinitionsClass = DefaultResolver::getFieldDefinitions($this->classNamespace);
             try {
-                $reflectionClass = new \ReflectionClass($fieldsDefinitionsClass);
-                $this->fieldsDefinitions = $reflectionClass->newInstanceArgs([$this->classNamespace]);
-            } catch (ReflectionException $exception) {
+               $this->fieldsDefinitions  = DefaultResolver::getFieldDefinitions($this->classNamespace);
+            } catch (Exception $exception) {
+                dump($exception);
                 throw $exception;
             }
         }
@@ -94,11 +87,8 @@ class ViewFactory
      */
     protected function getWritables()
     {
-        $result = array();
-        if (isset($this->accessFilter)) {
-            $result = $this->accessFilter->getWritables();
-        }
-        return $result;
+        $result = $this->accessFilter->getWritables();
+        return $result ?? [];
     }
 
     protected function getSearchables()

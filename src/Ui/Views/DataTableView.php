@@ -4,16 +4,21 @@ namespace Ui\Views;
 
 
 use Entity\DefaultResolver;
+use Entity\Model\ManagerInterface;
 use Entity\Model\Model;
 use Entity\Model\ModelManager;
 use ReflectionException;
+use Ui\HTML\Elements\Bases\Span;
+use Ui\HTML\Elements\Nested\A;
 use Ui\HTML\Elements\Nested\Div;
 use Ui\Views\Generator\CellValueGenerator;
+use Ui\Widgets\Icons\MaterialIcon;
 use Ui\Widgets\Table\ColumnsFactory;
 use Ui\Widgets\Table\DivTable;
 use Ui\Widgets\Table\TableColumn;
 use Ui\Widgets\Table\TableLegend;
 use Ui\Widgets\Views\Modal;
+use Router\Router;
 
 
 class DataTableView extends ViewFactory
@@ -27,13 +32,13 @@ class DataTableView extends ViewFactory
     private $whereparams = [];
     private $rowsclickable = false;
     private $baseurl = "";
-    //private $informationHolder = null;
+    private ?Router $router = null;
     private array $columns;
 
     /**
      * @var ModelManager
      */
-    private ModelManager $manager;
+    private ManagerInterface $manager;
 
     /**
      * DataTableView constructor.
@@ -42,7 +47,7 @@ class DataTableView extends ViewFactory
      * @param ModelManager $manager
      * @throws ReflectionException
      */
-    public function __construct( $model, ModelManager $manager)
+    public function __construct($model, ManagerInterface $manager)
     {
         parent::__construct($model);
         $this->viewables = $this->getViewables();
@@ -80,25 +85,26 @@ class DataTableView extends ViewFactory
     {
         //Retrieve data
         $this->retrieveData();
-
         //Generate TableColumns
         $columns = ColumnsFactory::make($this->classNamespace);
         //Prepare Data to display
         $dataToDisplay = $this->processData();
-
-        //Create the Table with Data
-
-        $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
-        //Init div container to return the table
-        $view = new Div();
-        $view->setClass("d-flex ");
-        $view->add($this->drt);
-        return $view->__toString();
+        if ($columns) {
+            //Create the Table with Data
+            $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
+            //Init div container to return the table
+            $view = new Div();
+            $view->setClass("d-flex ");
+            $view->add($this->drt);
+            return $view->__toString();
+        } else {
+            throw new \Exception('Failed to generate table');
+        }
     }
 
     private function retrieveData()
     {
-        if(is_null($this->manager)) {
+        if (is_null($this->manager)) {
             throw new \Exception("Can't retrieve data without ModelManager in : " . __CLASS__);
         } else {
 
@@ -112,11 +118,11 @@ class DataTableView extends ViewFactory
         }
 
     }
+
     //don't recursivly call
-     private function processData()
+    private function processData()
     {
         $dataToDisplay = [];
-
         // on parcours les données récupérées
         //pour chaque enregistrement on traite les columns et les association
         // on contruit ici les Rows d'une table avec les données de l'objet et les données
@@ -142,11 +148,15 @@ class DataTableView extends ViewFactory
     }
 
     private function processAssociations(Model $object, $key, array &$dataToDisplay)
-    {    $associations = $object::getAssociations();
+    {
+        $associations = $object::getAssociations();
         foreach ($associations as $association) {
             if ($association->getType() == "OneToMany" || $association->getType() == "ManyToMany") {
                 $view = $this->getManyAssociationView($object, $association, $key);
-                $dataToDisplay[$key][$association->getName()] = $view;
+                if ($view) {
+                    $dataToDisplay[$key][$association->getName()] = $view;
+                }
+
             }
 
             if ($association->getType() == "ManyToOne" || $association->getType() == "OneToOne") {
@@ -165,31 +175,45 @@ class DataTableView extends ViewFactory
         //   ->add('<i class="material-icons md-36">group</i>' . $association->getName())->setClass('btn btn-primary');
         $outClassName = $association->getOutClassName();
         $collection = $this->manager->findAssociationValuesBy($outClassName, $object);
-
-        $vfdClassName = DefaultResolver::getFieldDefinitions($outClassName);
-        $viewFieldDefinitions = new $vfdClassName();
-
+        $viewFieldDefinitions = DefaultResolver::getFieldDefinitions($outClassName);
         $associationClassName = $association->getName();
-        $title =  $viewFieldDefinitions->getDisplayFor($associationClassName);
+        $title = $viewFieldDefinitions->getDisplayFor($associationClassName);
         $columns = ColumnsFactory::make($outClassName);
-        $drt = new DivTable(
-            [new TableLegend($title, TableLegend::TOP_LEFT)],
-            $columns,
-            $collection ,
-            false,
-            " "
-        );
-        // generate id with association name _$key  ? replace key by object Id
-        $modal = new Modal(strtolower($associationClassName) . '_' . $key, $drt);
-        $modal->setHeaderText($associationClassName);
-        $modal->setTriggerText($associationClassName);
-        return $modal;
+        $view = null;
+        if ($columns) {
+            if ($collection) {
+                $drt = new DivTable(
+                    [new TableLegend($title, TableLegend::TOP_LEFT)],
+                    $columns,
+                    $collection,
+                    false,
+                    " "
+                );
+                // generate id with association name _$key  ? replace key by object Id
+                $modal = new Modal(strtolower($associationClassName) . '_' . $key, $drt);
+                $modal->setHeaderText($associationClassName);
+                $modal->setTriggerText($associationClassName);
+                $view = $modal;
+
+            } else {
+                $routeName = $this->model::getTableName() . '_' . $association->getName() . '_new';
+                $url = $this->router->generateUrl($routeName, ['id' => $object->getId()],);
+                $icon = new MaterialIcon('add');
+                $icon->color('white')->size('xs');
+                $span = new Span($association->getName());
+                $span->setAttribute('style', 'vertical-align:bottom;');
+                $view = (new A($icon . ' ' . $span, $url))->setClass('btn btn-xs btn-primary');
+            }
+        }
+        return $view;
     }
 
     public function getOneAssociationView($object, $association)
     {
-        $associationClassName = $association->getName();
-        $value = $object->getPropertyValue($associationClassName);
+        $associationClassName = $association->getOutClassName();
+        dump($object, $association);
+        $value = $this->manager->findAssociationValuesBy($associationClassName, $object);
+        dump($value, $object);
         if ($value) {
             $cellValueGenerator = new CellValueGenerator($value, "default");
             return $cellValueGenerator->getValue();
@@ -197,6 +221,7 @@ class DataTableView extends ViewFactory
 
         return false;
     }
+
     private function generateColumns(string $className)
     {
         $columns = [];
@@ -225,6 +250,12 @@ class DataTableView extends ViewFactory
     public function addALegend(TableLegend $legend)
     {
         $this->legends[] = $legend;
+    }
+
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+        return $this;
     }
 
     /**

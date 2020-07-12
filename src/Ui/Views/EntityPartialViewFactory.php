@@ -45,7 +45,7 @@ class EntityPartialViewFactory extends ViewFactory
      * @param bool $subView
      * @return Base|CollapsibleItem
      */
-    public function getPartialView(bool $subView)
+    public function getPartialView(bool $subView = false)
     {
         $this->viewables = $this->accessFilter->getViewables();
 
