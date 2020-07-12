@@ -3,16 +3,18 @@
 
 namespace Ui\Widgets\Table;
 
-// RowFactory->getRow($object, $index)
-// RowFactory->rowClickable(bool)
+use Doctrine\Common\Inflector\Inflector;
 use Entity\Model\Model;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionObject;
-use Router\Route;
 use Router\Router;
 use Ui\HTML\Elements\Nested\A;
 
+/**
+ * Class RowFactory
+ * @package Ui\Widgets\Table
+ */
 class RowFactory
 {
     use ColumnsFactory;
@@ -68,13 +70,16 @@ class RowFactory
         $this->rowClickable = true;
     }
 
-    public function rowFromArray(array $rowData, int $i) : TableRow
+    public function  rowFromArray(array $rowData, int $rowIndex) : TableRow
     {
+        $this->rowIndex = $rowIndex;
         $tableRow = new TableRow();
-        if(array_key_exists('id' , $rowData) && $this->rowClickable)
-        {
+        $id = null;
+        if(array_key_exists('id' , $rowData)) {
             $id = $rowData["id"];
-
+        }
+        if($id && $this->rowClickable)
+        {
             $tableRow->setOnClick("location.href='" . $this->baseUrl . '/' . $id ."'");
         } elseif(array_key_exists('id', $rowData)) {
             $a = new A((string)$rowData['id'], $this->baseUrl . '/' . $rowData['id']);
@@ -86,12 +91,13 @@ class RowFactory
         {
             $column = $this->tableColumns[$i];
             $isEditable = $column->isEditable();
-            $columnName = $column->getName();
+            $columnName = Inflector::tableize($column->getName());
             if ($columnName != 'id') {
                 $cell = new Cell($rowData[$columnName],$isEditable);
-                if($column->isBaseIdSet())
+                if($column->isBaseIdSet() && $id)
                 {
-                    $cell->setIndex($column->getBaseId().$this->rowIndex);
+                    $baseId = $column->getBaseId();
+                    $cell->setId($baseId . '_' . $id);
                 }
                 $tableRow->addCell($cell);
             }
@@ -155,10 +161,19 @@ class RowFactory
         //Route::makeName(shortClassName_action,  $action)
         //$this->router->generateUrl($route_name);
         //dd($model::getClass(), $model::getShortClass());
+        // TableColumn->isAssociation
+        // TableColumn->routeName
         foreach ($this->tableColumns as $column) {
             $columnName = $column->getName();
             $isEditable = $column->isEditable();
-            $cell = new Cell($model->getPropertyValue($columnName), $isEditable);
+            if($columnName == 'id'){
+                $value =  new A((string)$model->getId(), $this->baseUrl . '/' . $model->getId());
+                $value->setClass('btn btn-xs btn-primary');
+            } else {
+                $value = $model->getPropertyValue($columnName);
+            }
+
+            $cell = new Cell($value, $isEditable);
             if ($column->isBaseIdSet()) {
                 $cell->setIndex($column->getBaseId() . $this->rowIndex);
             }

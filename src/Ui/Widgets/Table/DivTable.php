@@ -4,6 +4,7 @@ namespace Ui\Widgets\Table;
 
 use Entity\Model\Model;
 use Ui\HTML\Elements\Nested\Div;
+
 /**
  * Class DivRowTable
  * @package Ui\Widgets\Table
@@ -12,7 +13,6 @@ use Ui\HTML\Elements\Nested\Div;
  */
 class DivTable extends Div
 {
-
     private array $legends = [];
     private array $columns = [];
     private array $DataArray = [];
@@ -65,7 +65,6 @@ class DivTable extends Div
 			(new TableHeader($this->columns))->setClass($this->rowcss["header"]),
 			$this->dataDiv,
 		);
-
         $rowFactory = new RowFactory(RowType::DIV, $this->columns);
         $rowFactory->useBaseUrl($this->baseurl);
         for ($i = 0; $i < count($this->DataArray); $i++) {

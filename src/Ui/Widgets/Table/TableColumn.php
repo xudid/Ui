@@ -1,4 +1,5 @@
 <?php
+
 namespace Ui\Widgets\Table;
 
 /**
@@ -8,126 +9,127 @@ namespace Ui\Widgets\Table;
  */
 class TableColumn
 {
-/**
- * [colname description]
- * @var string $colname
- */
-  private $colname="";
+    /**
+     * @var string $colname
+     */
+    private string $colname;
+    /**
+     * @var string $header
+     */
+    private $header = '';
 
-/**
- * [$header description]
- * @var string $header
- */
-  private $header="";
-/**
- * [$iseditable description]
- * @var bool $iseditable
- */
-  private $iseditable=false;
-/**
- * [$displayheader description]
- * @var bool $displayheader
- */
-  private $displayheader=true;
+    /**
+     * @var bool $iseditable
+     */
+    private $iseditable = false;
 
-/**
- * [$baseId description]
- * @var string $baseId
- */
-  private $baseId="";
+    /**
+     * @var bool $displayheader
+     */
+    private $displayheader = true;
 
+    /**
+     * @var string $baseId
+     */
+    private string $baseId = '';
 
-  /**
-   * [__construct description]
-   * @param string $colname       [description]
-   * @param string $header [description]
-   */
-  function __construct(string $colname,string $header)
-  {
-    $this->colname = $colname;
-    $this->header = $header;
-  }
+    /**
+     * @var array $dataAttributes
+     */
+    private $dataAttributes = [];
 
-/**
- * [getName description]
- * @return string [description]
- */
-  public function getName():string
-  {
-    return $this->colname;
-  }
+    /**
+     * TableColumn constructor.
+     * @param string $colname
+     * @param string $header
+     */
+    function __construct(string $colname, string $header)
+    {
+        $this->colname = $colname;
+        $this->header = $header;
+    }
 
-  public function getHeader()
-  {
-    return $this->header;
-  }
-/**
- * [setColumnEditable description]
- * @return self [description]
- */
-  public function setColumnEditable():self
-  {
-    $this->iseditable = true;
-    return $this;
-  }
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->colname;
+    }
 
-/**
- * [isEditable description]
- * @return bool [description]
- */
-  public function isEditable()
-  {
-    return $this->iseditable;
-  }
+    /**
+     * @return string
+     */
+    public function getHeader()
+    {
+        return $this->header;
+    }
 
-  /**
-   * [hideHeader description]
-   * @return self [description]
-   */
-  public function hideHeader():self
-  {
-    $this->displayheader=false;
-    return $this;
-  }
+    /**
+     * @return $this
+     */
+    public function setColumnEditable(): self
+    {
+        $this->iseditable = true;
+        return $this;
+    }
 
-/**
- * [mustDisplay description]
- * @return [type] [description]
- */
-  public function mustDisplay()
-  {
-    return $this->displayheader;
-  }
+    /**
+     * @return bool
+     */
+    public function isEditable()
+    {
+        return $this->iseditable;
+    }
 
-/**
- * [getBaseId description]
- * @return string [description]
- */
-  public function getBaseId():string
-  {
-    return $this->baseId;
-  }
+    /**
+     * @return $this
+     */
+    public function hideHeader(): self
+    {
+        $this->displayheader = false;
+        return $this;
+    }
 
+    /**
+     * @return bool
+     */
+    public function mustDisplay()
+    {
+        return $this->displayheader;
+    }
 
-/**
- * [setBaseId description]
- * @param string $baseId [description]
- * @return self
- */
-  public function setBaseId(string $baseId):self
-  {
-    $this->baseId = $baseId;
-    return $this;
-  }
+    /**
+     * @return string
+     */
+    public function getBaseId(): string
+    {
+        return $this->baseId;
+    }
 
+    /**
+     * @param string $baseId
+     * @return $this
+     */
+    public function setBaseId(string $baseId): self
+    {
+        $this->baseId = $baseId;
+        return $this;
+    }
 
-/**
- * [isBaseIdSet description]
- * @return bool [description]
- */
-  public function isBaseIdSet():bool
-  {
-    return (strlen($this->baseId)>0);
-  }
+    /**
+     * @return bool
+     */
+    public function isBaseIdSet(): bool
+    {
+        return (strlen($this->baseId) > 0);
+    }
+
+    /**
+     * @param array $dataAttributes
+     */
+    public function dataAttributes(array $dataAttributes)
+    {
+        $this->dataAttributes = $dataAttributes;
+    }
 }
-

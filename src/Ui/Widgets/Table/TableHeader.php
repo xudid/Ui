@@ -15,7 +15,6 @@ class TableHeader extends Header {
       */
     private array $columns;
 
-
     /**
      * TableHeader constructor.
      * @param array $columns
@@ -24,21 +23,14 @@ class TableHeader extends Header {
     {
         parent::__construct();
         $this->columns = $columns;
-        $this->setClass("div-head div-head-primary");
+        $this->setClass("div-head div-head-primary text-white");
         foreach($this->columns as $col)
         {
             if($col->mustDisplay())
             {
                 $this->add(new Cell(ucfirst($col->getHeader()),false));
             }
-
         }
-        return $this;
-    }
-
-    public function setClass($class)
-    {
-        parent::setClass("div-head div-head-primary text-white".$class);
         return $this;
     }
 }
