@@ -1,6 +1,5 @@
 <?php
 namespace Ui\HTML\Elements\Nested;
-use Ui\HTML\Elements\Nested\Nested;
 
 /**
  * Class A
@@ -8,15 +7,15 @@ use Ui\HTML\Elements\Nested\Nested;
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
 class A extends Nested{
-	/**
-	 * A constructor.
-	 * @param $href
-	 */
-	public function __construct($content, string $href){
-		parent::__construct("a");
-		$this->startTag->setAttribute("href", $href);
+    /**
+     * A constructor.
+     * @param string $content
+     * @param string $href
+     */
+	public function __construct($content = '', string $href = ''){
+		parent::__construct('a');
+		$this->startTag->setAttribute('href', $href);
 		$this->add($content);
 		return $this;
 	}
 }
-
