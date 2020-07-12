@@ -14,19 +14,39 @@ use Ui\HTML\Tags\StartTag;
  */
 class Base implements ElementInterface
 {
-
+    /**
+     * @var Nested|null $parent
+     */
     protected ?Nested $parent = null;
 
+    /**
+     * @var Nested|null $root
+     */
     protected ?Nested $root = null;
 
-    protected string $index = '';
+    /**
+     * @var mixed $index
+     */
+    protected $index = '';
 
+    /**
+     * @var string $elementName
+     */
     private string $elementName;
 
+    /**
+     * @var StartTag $startTag
+     */
     protected StartTag $startTag;
 
+    /**
+     * @var EndTag $endTag
+     */
     protected EndTag $endTag;
 
+    /**
+     * @var string $contentString
+     */
     protected string $contentString = "";
 
     /**
