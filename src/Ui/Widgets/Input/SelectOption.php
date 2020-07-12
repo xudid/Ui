@@ -17,8 +17,8 @@ class SelectOption extends Select
   {
     parent::__construct();
     if (isset($options)) {
-        foreach ($options as $key) {
-          $opt = new Option($key,$key);
+        foreach ($options as $key => $value) {
+          $opt = new Option($value,$key);
           $this->add($opt);
       }
     }
