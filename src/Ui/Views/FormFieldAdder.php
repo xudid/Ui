@@ -48,7 +48,8 @@ class FormFieldAdder extends ViewFactory
 
     public function add(string $fieldName, $values = null, string $display = '')
     {
-        switch ($this->fieldsDefinitions->getInputTypeFor($fieldName)) {
+        $inputType = $this->fieldsDefinitions->getInputTypeFor($fieldName);
+        switch ($inputType) {
 
             case "email":
             {
@@ -76,7 +77,7 @@ class FormFieldAdder extends ViewFactory
                 $selOptionName = strtolower($this->shortClassName) . '_' . $fieldName;
                 $selOption = WidgetFactory::getSelectOption($selOptionName, $options);
                 if (is_object($this->model)) {
-                    $val = $this->$this->model->getPropertyValue($fieldName);
+                    $val = $this->model->getPropertyValue($fieldName);
                     $index = array_keys($options, $val);
                     $selOption->setCheckedOption($index[0]);
                 }
