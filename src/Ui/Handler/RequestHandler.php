@@ -2,9 +2,8 @@
 
 namespace Ui\Handler;
 
-use App\Security\Password;
+use Core\Security\Password;
 use Entity\Model\Model;
-use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 
 class RequestHandler
@@ -12,7 +11,7 @@ class RequestHandler
     /**
      * @var ServerRequestInterface
      */
-    private ServerRequest $request;
+    private ServerRequestInterface $request;
 
     /**
      * RequestHandler constructor.
@@ -47,7 +46,6 @@ class RequestHandler
      */
     private function parseRequestFields(Model $model, $prefix)
     {
-        $modelFields = $model::getColumns();
         $fields = $model::getColumns();
         $requestDatas = $this->request->getParsedBody() ?? [];
         foreach ($fields as $field) {
