@@ -1,11 +1,4 @@
 <?php
-/**
- * This file contains StartTag class and its methods.
- * @package xudid\Ui\HTML\Tags
- * @author Didier Moindreau
- * @license
- *
- */
 
 namespace Ui\HTML\Tags;
 
@@ -49,7 +42,7 @@ class StartTag
         $string = "<" . $this->tagname;
 
         foreach ($this->attributes as $att => $v) {
-            if ($att == 'class' && count($v)) {
+            if ($att == 'class' && is_array($v) && count($v)) {
                 $classes = 'class="';
                 foreach ($v as $key => $value) {
                     $classes .=' '. $value . ' ';

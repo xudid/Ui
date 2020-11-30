@@ -83,17 +83,21 @@ class DataTableView extends ViewFactory
     // Todo pass a base URL to Get view and use Router to generate url foreach link
     public function getView($app)
     {
+        $view = new Div();
+
         //Retrieve data
         $this->retrieveData();
+        //Prepare Data to display
+        $rows = $this->processData();
+        if (!$rows) {
+            $view->add('No data found');
+        }
         //Generate TableColumns
         $columns = ColumnsFactory::make($this->classNamespace);
-        //Prepare Data to display
-        $dataToDisplay = $this->processData();
         if ($columns) {
             //Create the Table with Data
-            $this->drt = new DivTable($this->legends, $columns, $dataToDisplay, $this->rowsclickable, $this->baseurl);
+            $this->drt = new DivTable($this->legends, $columns, $rows, $this->rowsclickable, $this->baseurl);
             //Init div container to return the table
-            $view = new Div();
             $view->setClass("d-flex ");
             $view->add($this->drt);
             return $view->__toString();
@@ -116,13 +120,12 @@ class DataTableView extends ViewFactory
                 $this->data = $this->manager->findAll();
             }
         }
-
     }
 
     //don't recursivly call
     private function processData()
     {
-        $dataToDisplay = [];
+        $row = [];
         // on parcours les données récupérées
         //pour chaque enregistrement on traite les columns et les association
         // on contruit ici les Rows d'une table avec les données de l'objet et les données
@@ -136,45 +139,48 @@ class DataTableView extends ViewFactory
                 // process DataColumns
                 foreach ($columns as $column) {
                     $value = $object->getPropertyValue($column->getName());
-                    $dataToDisplay[$key][$column->getName()] = $value;
+                    $row[$key][$column->getName()] = $value;
                 }
-                $this->processAssociations($object, $key, $dataToDisplay);
+                $this->processAssociations($object, $key, $row);
             } else {
                 // make TableRow From Array
-                $dataToDisplay[$key] = $this->data[$key];
+                $row[$key] = $this->data[$key];
             }
         }
-        return $dataToDisplay;
+        return $row;
     }
 
-    private function processAssociations(Model $object, $key, array &$dataToDisplay)
+    private function processAssociations(Model $object, $key, array &$row)
     {
         $associations = $object::getAssociations();
         foreach ($associations as $association) {
             if ($association->getType() == "OneToMany" || $association->getType() == "ManyToMany") {
                 $view = $this->getManyAssociationView($object, $association, $key);
-                if ($view) {
-                    $dataToDisplay[$key][$association->getName()] = $view;
-                }
-
             }
 
             if ($association->getType() == "ManyToOne" || $association->getType() == "OneToOne") {
                 $view = $this->getOneAssociationView($object, $association);
-                if ($view) {
-                    $dataToDisplay[$key][$association->getName()] = $view;
-                }
-
+            }
+            if ($view) {
+                $row[$key][$association->getName()] = $view;
             }
         }
+    }
+    
+    private function associationGetter($outClassName)
+    {
+        $associationModel = Model::model($outClassName);
+        return 'get' . ucfirst($associationModel::getTableName());
     }
 
     private function getManyAssociationView($object, $association, $key)
     {
-        //$dataToDisplay[$key][$association->getName()] = (new A($app->getRoute($association->getName(),index))
+        //$row[$key][$association->getName()] = (new A($app->getRoute($association->getName(),index))
         //   ->add('<i class="material-icons md-36">group</i>' . $association->getName())->setClass('btn btn-primary');
         $outClassName = $association->getOutClassName();
-        $collection = $this->manager->findAssociationValuesBy($outClassName, $object);
+        
+        $getter = $this->associationGetter($outClassName);
+        $collection = $object->$getter();
         $viewFieldDefinitions = DefaultResolver::getFieldDefinitions($outClassName);
         $associationClassName = $association->getName();
         $title = $viewFieldDefinitions->getDisplayFor($associationClassName);
@@ -212,7 +218,9 @@ class DataTableView extends ViewFactory
     {
         $associationClassName = $association->getOutClassName();
         dump($object, $association);
-        $value = $this->manager->findAssociationValuesBy($associationClassName, $object);
+        $outClassName = $association->getOutClassName();
+        $getter = $this->associationGetter($outClassName);
+        $value = $object->$getter();
         dump($value, $object);
         if ($value) {
             $cellValueGenerator = new CellValueGenerator($value, "default");
@@ -277,4 +285,3 @@ class DataTableView extends ViewFactory
         return $this;
     }
 }
-
