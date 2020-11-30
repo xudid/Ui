@@ -111,7 +111,7 @@ class EntityViewFactory extends ViewFactory
             $this->view->add(($factory->getPartialView($subview)));
         }
         if(!$this->basic) {
-            $this->processAssociations();
+           $this->processAssociations();
         }
 
         foreach ($this->associationViews as $associationView) {
@@ -174,36 +174,42 @@ class EntityViewFactory extends ViewFactory
                 $viewFieldDefinitions = DefaultResolver::getFieldDefinitions($association->getOutClassName());
                 $title = $viewFieldDefinitions->getDisplayFor($association->getName());
                 $columns = ColumnsFactory::make($association->getOutClassName());
-                $collection = $this->manager->findAssociationValuesBy($association->getOutClassName(), $this->model);
-                $routeName = $this->model::getTableName() . '_' . $association->getName();
+                $getter = 'get' . ucfirst($association->getName());
+                $collection = $this->model->$getter();
+                $routeName = $this->model::getTableName() . '_' . $association->getName() . '_new';
                 try {
                     $url = $this->router->generateUrl($routeName,['id'=> $this->model->getId()]);
                 } catch (\Exception $exception) {
                     dump($exception);
                 }
+                // Todo always show table and replace button with a modal within a form to add items
 
-                if ($collection) {
-                    //$dataTableView = new DataTableView($association->getOutClassName(),$this->manager);
-                    //$view = $dataTableView->getView($this->app);
-                    $icon = new MaterialIcon('add');
-                    $icon->color('white')->size('xs');
-                    $span = new Span($association->getName());
-                    $span->setAttribute('style', 'vertical-align:bottom;');
-                    $legendA = (new A($icon . ' ' . $span, $url))->setClass('btn btn-xs btn-success mb-1');
-                    $view = new DivTable(
-                    [new TableLegend($legendA)],
-                    $columns,
-                    $collection,
-                    false,
-                    " "
-                );
-                } else {
-
-                   $view = new FieldButton($association->getName(), $url);
-                }
-
-
-                $section->add($view);
+                //$dataTableView = new DataTableView($association->getOutClassName(),$this->manager);
+                //$view = $dataTableView->getView($this->app);
+                $factory = new FormFactory($association->getOutClassName());
+                $icon = new MaterialIcon('add');
+                $icon->color('white')->size('xs');
+                $span = new Span($association->getName());
+                $span->setAttribute('style', 'vertical-align:bottom;');
+                $form = $factory->setFormTitle('Add ' . $association->getName())
+                    ->withAction($url)
+                    ->withMethod('POST')
+                    ->getForm();
+                $form->setClass('full-large m-0');
+                    ;
+                $modal = new Modal($id, $form);
+                $modal->popup()->setClass('popup-md justify-center');
+                $modal->setTriggerText($icon . ' ' . $span);
+                //$modal->setHeaderText('Add ' . $association->getName());
+                $legendA = (new A($icon . ' ' . $span, $url))->setClass('btn btn-xs btn-success mb-1');
+                $view = new DivTable(
+                [new TableLegend($modal)],
+                $columns,
+                $collection,
+                false,
+                "/phases"
+            );
+            $section->add($view);
 
                 // $a = new A($url);
                 //$dataToDisplay[$key][$association->getName()] = (
@@ -225,9 +231,17 @@ class EntityViewFactory extends ViewFactory
             }
 
             if ($type == "ManyToOne" || $type == "OneToOne") {
+                $routeName = $association->getName() . 's_show';
                 $value = $this->manager->findAssociationValuesBy($association->getOutClassName(), $this->model);
+                try {
+                    $url = $this->router->generateUrl($routeName,['id'=> $value->getId()]);
+                } catch (\Exception $exception) {
+                    dump($exception);
+                }
+                $view = new FieldButton($association->getName(), $url);
+                /*
                 $partialViewFactory = new EntityPartialViewFactory($value);
-                $view = $partialViewFactory->getPartialView();
+                $view = $partialViewFactory->getPartialView();*/
                 $this->view->add($view);
             }
         }
