@@ -12,7 +12,6 @@
     "autoload":{
       "psr-4" : {
           "Ui\\" : "src/Ui",
-          "Usage\\" :"usage"
       }
     },
     "require": {
