@@ -153,7 +153,7 @@ class Nested extends Base implements ArrayAccess
 	 * @param $child
 	 * @return string
 	 */
-    private function getChildsString($child) 
+    protected function getChildsString($child)
 	{
 		if($child !== $this) {
 			if (is_array($child)) {
