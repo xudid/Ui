@@ -5,25 +5,22 @@ namespace Ui\Widgets\Views;
 
 
 use Ui\HTML\Elements\Bases\H2;
+use Ui\HTML\Elements\Bases\Span;
 use Ui\HTML\Elements\Nested\A;
 use Ui\HTML\Elements\Nested\Div;
+use Ui\HTML\Elements\Nested\Nested;
+use Ui\Widgets\Button\Button;
 
-class Modal extends Div
+class Modal extends Nested
 {
 	/**
 	 * @var \Ui\HTML\Elements\Bases\Base
 	 */
 	protected $id = "id";
-	private $modalTrigger;
-	private $triggerText = 'Let me pop';
+	private Button $trigger;
+	private string $triggerText = 'Let me pop';
 	private $contentText = '';
-	/**
-	 * @var \Ui\HTML\Elements\Bases\Base
-	 */
-	private $popup;
-	/**
-	 * @var \Ui\HTML\Elements\Bases\Base
-	 */
+
 	private $content;
 	/**
 	 * @var \Ui\HTML\Elements\Bases\Base
@@ -31,30 +28,58 @@ class Modal extends Div
 	private $modal;
 
 	private $headerText = '';
-	private $modalTriggerAnchor;
 	/**
 	 * @var H2
 	 */
 	private $header;
+	/**
+	 * @var Button
+	 */
+	private Button $close;
+	/**
+	 * @var Div
+	 */
+	private Div $contentContainer;
 
-	public function __construct($id, $children)
+	public function __construct($id, array $children = [])
 	{
-		parent::__construct();
-		$this->setClass('modal_container');
-		$this->modalTrigger = (new Div())->setClass('modal_trigger');
-		$this->modalTriggerAnchor = (new A($this->triggerText, '#modal_' . $id))->setClass('button');
-		$this->modalTrigger->add($this->modalTriggerAnchor);
-		$this->add($this->modalTrigger);
-		$this->modal = (new Div())->setId('modal_' . $id)->setClass('overlay');
-		$this->popup = (new Div())->setClass('popup');
-		$this->header = new H2($this->headerText);
-		$this->popup->add($this->header);
+		parent::__construct('');
+		$this->trigger = new Button($this->triggerText);
+		$this->trigger->setClass('modal-trigger');
+		$this->trigger->setAttribute('data-target',$id);
+		/*<button id="myBtn" class="modal-trigger" data-target="myModal">Open Modal 1</button>*/
 
-		$this->popup->add((new A('&times;', '#'))->setClass('close'));
-		$this->content = (new Div())->setClass('modal_content');
-		$this->content->feed($children);
-		$this->popup->add($this->content);
-		$this->modal->add($this->popup);
+		 /*The Modal*/
+		$this->modal = new Div();
+		$this->modal->setId($id)->setClass('modal');
+		/*<div id="myModal" class="modal">*/
+
+
+		/*Modal content*/
+		$this->content = new Div();
+		$this->content->setClass('modal-content');
+		$this->modal->add($this->content);
+		/*div class="modal-content">
+
+		/*Close button*/
+		$this->close = new Button('&times;');
+		$this->close->setClass('close flex-end');
+		$this->close->setAttribute('data-target',$id);
+
+		$this->headerText = new Span($this->headerText);
+		$this->title = new Div($this->headerText);
+		$this->title->setClass('grow-1 flex-valign-end');
+		$this->closeDiv = new Div($this->close);
+		$this->header = new Div($this->title, $this->closeDiv);
+		$this->header->setClass('d-flex flex-row py-15x');
+
+		$this->content->add($this->header);
+
+		$this->contentContainer = new Div($children);
+		$this->content->add($this->contentContainer);
+    	/*<span class="close" data-target="myModal"></span>*/
+
+		$this->add($this->trigger);
 		$this->add($this->modal);
 	}
 
@@ -65,7 +90,7 @@ class Modal extends Div
 	public function setTriggerText(string $triggerText): Modal
 	{
 		$this->triggerText = $triggerText;
-		$this->modalTriggerAnchor->setContentString($this->triggerText);
+		$this->trigger->setContentString($this->triggerText);
 		return $this;
 	}
 
@@ -76,7 +101,7 @@ class Modal extends Div
 	public function setContentText(string $contentText): Modal
 	{
 		$this->contentText = $contentText;
-		$this->content->setContentString($this->contentText);
+		$this->contentContainer->setContentString($this->contentText);
 		return $this;
 	}
 
@@ -86,8 +111,7 @@ class Modal extends Div
 	 */
 	public function setHeaderText(string $headerText): Modal
 	{
-		$this->headerText = $headerText;
-		$this->header->setContentString($headerText);
+		$this->headerText->setContentString($headerText);
 		return $this;
 	}
 
@@ -99,14 +123,29 @@ class Modal extends Div
 	{
 		$this->id = $id;
 		$this->modal->setId($this->id);
-		$this->modalTriggerAnchor = (new A('$this->triggerText','#' . $this->id))->setClass('button');
-		$this->modalTrigger->setContentString($this->modalTriggerAnchor);
+		$this->trigger->setAttribute('data-target',$id);
+		$this->close->setAttribute('data-target',$id);
 		return $this;
 	}
 
 	public function getTrigger()
-    {
-        return $this->modalTrigger;
-    }
+	{
+		return $this->trigger;
+	}
+
+	public function __toString(): string
+	{
+		$this->generateContentString();
+		return $this->contentString;
+	}
+
+	protected function generateContentString()
+	{
+		if (count($this->childs) > 0) {
+			foreach ($this->childs as $child) {
+				$this->contentString .= $this->getChildsString($child);
+			}
+		}
+	}
 
 }
