@@ -1,0 +1,26 @@
+<?php
+namespace Ui\HTML\Attribute;
+
+/**
+ * This file contains ParamAttribute class and its methods.
+ * @package X\HTML\Attributes
+ * @author Didier Moindreau
+ * ParamAttribute class contains Param element attributes and common attributes
+ */
+class ParamAttribute extends GlobalAttribute
+{
+    const NAME = "name";
+    const VALUE = "value";
+
+    /**
+     * Construct the Attribute from its name and value
+     * @param string $name the name of the Attribute
+     * @param mixed $value the value of the Attribute a string or an array
+     * for the class attribute
+     */
+    public function __construct($name, $value)
+    {
+        parent::__construct($name, $value);
+        $this->value = $value;
+    }
+}
