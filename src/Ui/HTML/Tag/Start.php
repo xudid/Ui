@@ -1,32 +1,21 @@
 <?php
 
-namespace Ui\HTML\Tags;
+namespace Ui\HTML\Tag;
 
-use Ui\HTML\Attributes\GlobalAttribute;
-use Ui\HTML\Attributes\UserDataAttribute;
+use Ui\HTML\Attribute\GlobalAttribute;
+use Ui\HTML\Attribute\UserDataAttribute;
 
 /**
- * Class StartTag
- * @package Ui\HTML\Tags
+ * Class Start
+ * @package X\HTML\Tags
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  * StarTag acts as the start of an HTML element and hold the attributes
  */
-class StartTag
+class Start
 {
-  /** @var string Must contain the HTML element name */
     protected $tagname;
-
-/** @var array Should contain the HTML element attributes */
     protected $attributes;
 
-
-    /**
-      * StartTag Constructor
-      *
-      * @param string $tagname the HTML element name
-      *
-      * @return self
-      */
     public function __construct($tagname)
     {
         $this->tagname = $tagname;
@@ -34,13 +23,9 @@ class StartTag
         $this->attributes['class'] = [];
     }
 
-    /**
-      * Return the HTML element as a string
-      * @return string
-      */
     public function __toString()
     {
-        $string = "<" . $this->tagname;
+        $string = '<' . $this->tagname;
 
         foreach ($this->attributes as $att => $v) {
             if ($att == 'class' && is_array($v) && count($v)) {
@@ -54,28 +39,20 @@ class StartTag
                 if (is_array($v)) {
                     $v = implode(' ', $v);
                 }
-                $string = $string ." ".$v;
+                $string = $string .' '.$v;
             }
         }
-        $string = $string . ">";
+        $string .= '>';
         return $string;
     }
 
-    /**
-      * Setup an attribute value for the HTML element
-      *
-      * @param string $name the attribute name
-      * @param mixed $value the attribute value
-      *
-      * @return self
-      */
     public function setAttribute($name, $value)
     {
     	if (strpos($name, 'data-') == 0) {
 			$this->attributes[$name] = new UserDataAttribute($name, $value);
 		} else {
-			$namespace = str_replace('Tags', 'Attributes', __NAMESPACE__);
-			$attributeclass = $namespace . '\\' . ucfirst($this->tagname)."Attribute";
+			$namespace = str_replace('Tag', 'Attribute', __NAMESPACE__);
+			$attributeclass = $namespace . '\\' . ucfirst($this->tagname).'Attribute';
 			if (class_exists($attributeclass)) {
 				$this->attributes[$name] = new $attributeclass($name, $value);
 			} else {
@@ -87,21 +64,25 @@ class StartTag
         return $this;
     }
 
-    /**
-      * Add a value to the "class" attribute
-      * @param string $class the css class name we want to add
-      * @return self
-      *Todo manage class by name with add and remove ? rename this method ?
-      */
     public function addCssClass(string $class)
     {
         $classes = array_unique(explode(' ', $class));
         foreach ($classes as $class)  {
-            if (!in_array($class,$this->attributes["class"])) {
-                $this->attributes["class"][]= trim($class);
+            if (!in_array($class,$this->attributes['class'])) {
+                $this->attributes['class'][]= trim($class);
             }
         }
 
         return $this;
+    }
+
+    public function removeClass($classToRemove)
+    {
+        $classes = $this->attributes['class'];
+        $classes = array_filter($classes, function ($class) use($classToRemove) {
+            return $class != $classToRemove;
+        });
+
+        $this->attributes['class'] = $classes;
     }
 }
