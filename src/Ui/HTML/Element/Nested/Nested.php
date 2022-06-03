@@ -10,7 +10,6 @@ use Ui\HTML\Element\SimpleInterface;
 
 /**
  * Class Nested
- * @package Ui\HTML\Elements\Nested
  * @author Didier Moindreau <dmoindreau@gmail.com> on 21/10/2019.
  */
 class Nested extends Base implements ArrayAccess
