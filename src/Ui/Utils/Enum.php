@@ -1,23 +1,17 @@
 <?php
+
 namespace Ui\Utils;
 
+use Exception;
 use ReflectionClass;
 
-/**
- *
- * @author didux
- *
- */
 class Enum
 {
-
-    /**
-     */
     public function __construct($name)
     {
         $c = new ReflectionClass($this);
-        if (! in_array($name, $c->getConstants())) {
-            throw IllegalArgumentException();
+        if (!in_array($name, $c->getConstants())) {
+            throw new Exception();
         }
         $this->name = $name;
     }
