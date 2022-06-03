@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Ui\HTML\Attributes;
+namespace Ui\HTML\Attribute;
 
 
 class UserDataAttribute
