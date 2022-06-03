@@ -1,0 +1,46 @@
+@use "color";
+@use "padding";
+@use "margin";
+@use "text";
+
+.table {
+  margin: margin.$margin-md;
+  display: table;
+  width: 100%;
+}
+
+.table-xs {
+  width: 25%;
+}
+
+.table-sm {
+  width:50%
+}
+
+.table-md {
+  width:75%
+}
+
+.legend-top {display: table-caption;caption-side: top;}
+.legend-left {display: table-cell;text-align: left;}
+.legend-right {display: table-cell;text-align: right;}
+
+.legend-bottom {display: table-caption;caption-side: bottom;}
+.legend-bottom-left {display: table-caption;caption-side: bottom;text-align: left;}
+.legend-bottom-right {display: table-caption;caption-side: bottom;text-align: right;}
+
+.head {display: table-header-group;text-align:center;background: color.$primary}
+.foot {display: table-footer-group;}
+.row {display: table-row;}
+.row:nth-child(odd) {background: lighten(color.$primary, 40);color: white;}
+.row:nth-child(even) {background: lighten(color.$primary, 30);color: white; }
+.row:hover {background: lighten(color.$success, 20);cursor:pointer;font-weight: bold;}
+.col {display: table-column;}
+.corp {display: table-row-group }
+.colgroup {display: table-column-group;}
+.cell {
+  display: table-cell;
+  padding: padding.$padding-md;
+  border-bottom:  2px solid color.$shaded;
+  text-align: center;
+}

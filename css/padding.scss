@@ -1,0 +1,64 @@
+$sizes: 0, 4, 8, 12, 16, 20, 24, 30;
+$padding-xs:4px;
+$padding-sm:8px;
+$padding-md:12px;
+$padding-lg:16px;
+$padding-xl:20px;
+$padding-xxl:24px;
+$padding-xxxl:30px;
+
+$padding :(
+        xs: $padding-xs,
+        sm: $padding-sm,
+        md: $padding-md,
+        lg: $padding-lg,
+        xl: $padding-xl,
+        xxl: $padding-xxl,
+        xxxl: $padding-xxxl,
+);
+
+@each $size in $sizes {
+  .p-#{$size} {
+    padding: #{$size}px;
+   }
+}
+
+@each $size in $sizes {
+  .py-#{$size} {
+    padding-top: #{$size}px;
+    padding-bottom: #{$size}px;
+  }
+}
+
+@each $size in $sizes {
+  .px-#{$size} {
+    padding-left: #{$size}px;
+    padding-right: #{$size}px;
+  }
+}
+
+
+@each $size in $sizes {
+  .pt-#{$size} {
+	padding-top: #{$size}px;
+  }
+}
+
+
+@each $size in $sizes {
+  .pb-#{$size} { 
+        padding-bottom: #{$size}px;
+  }
+}
+
+@each $size in $sizes {
+  .pr-#{$size} { 
+        padding-right: #{$size}px;
+  }
+}
+
+@each $size in $sizes {
+  .pl-#{$size} { 
+        padding-left: #{$size}px;
+  }
+}

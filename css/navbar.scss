@@ -1,0 +1,93 @@
+@use "color";
+@use "padding";
+@use "margin";
+
+.navbar {
+  padding: padding.$padding-md;
+  font-size: 105%;
+  background: color.$primary;
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-column-left {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-column-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.navbar-items {
+  display: flex;
+  list-style-type: none;
+  vertical-align: middle;
+}
+
+.navbar-items-right {
+  display: flex;
+  list-style-type: none;
+  vertical-align: middle;
+  padding-right: padding.$padding-lg;
+}
+
+.navbar-button {
+  background: color.$primary;
+  color: white;
+}
+
+.navbar-item {
+  padding: padding.$padding-md;
+}
+
+.navbar-item:hover {
+    background-color: lighten(color.$primary, 30);
+}
+
+.navbar-item a {
+  text-decoration: none;
+}
+
+.navbar-item-right {
+  padding-right: 1em;
+  background: color.$primary;
+  text-align: right;
+
+}
+
+.navbar-button-right {
+  margin-left: auto;
+  margin-right: 0;
+  background: color.$primary;
+}
+
+
+/*
+.navbar{
+  width: 100%;
+  padding:  1em 1em 1em 1em;
+  font-size: 105%;
+  position:relative;
+}
+
+.navbar_items{
+  list-style-type: none;
+  vertical-align: middle;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.navbar_item{
+  float: left;
+}
+.navbar_item_right{
+  padding-right: 1em;
+}
+.navbar_button_right{
+  margin-left:auto;
+  margin-right:0;
+}*/

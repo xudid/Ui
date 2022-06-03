@@ -1,0 +1,113 @@
+@use 'border';
+@use 'margin';
+@use 'padding';
+@use 'color';
+
+.textfield{
+  margin: margin.$margin-lg;
+}
+.textfield-outlined {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding: padding.$padding-xs;
+  border-radius: border.$radius-sm;
+  border: 2px solid color.setColor(shaded, dark);
+  label {
+    margin-top: - margin.$margin-xl;
+    padding: padding.$padding-xs;
+    margin-left: 10px;
+    .label-style {
+      padding-left: padding.$padding-xs;
+      padding-right: padding.$padding-xs;
+      background: #fff;
+      color: color.setColor(shaded, dark);
+      font-weight: bold;
+      font-size: 105%;
+    }
+  }
+  input {
+    border: none;
+  }
+  input:hover {
+    outline: none;
+  }
+  input:focus-visible {
+    outline: none;
+  }
+
+}
+
+.textfield-outlined:focus-within {
+  border: 2px solid color.setColor(primary, base);
+  .label-style {
+    color: color.setColor(primary, base);
+  }
+}
+
+.textfield-help{
+  display: block;
+  color: color.setColor(shaded, dark);
+}
+
+/*input
+{
+  width: 200px;
+  border-radius: 3px;
+}
+
+input[type=text]:focus
+{
+  background-color: #b91f91;
+  color: white;
+
+}*/
+
+
+
+/*
+input[type=email]:focus
+{
+  background-color: #b91f91;
+  color: white;
+}
+
+input:hover{
+  background-color: #b91f91;
+  color: white;
+}
+
+input:hover::-moz-placeholder{
+  color: white;
+}
+
+input:hover::-webkit-input-placeholder{
+  color: white;
+}
+
+input:focus::-moz-placeholder
+{
+  color: white;
+  opacity: 1;
+}
+input:focus::-webkit-input-placeholder
+{
+  color: white;
+  opacity: 1;
+}
+
+
+input[type="checkbox"]{
+  margin: 0px auto;
+  width: 20px;
+  height: 20px;
+  background-color: goldenrod;
+  border: 5px;
+}
+
+input[type="radio"]{
+  margin: 0px auto;
+  width: 20px;
+  background-color: greenyellow;
+  border: 5px dotted blue;
+}*/

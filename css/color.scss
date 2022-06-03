@@ -1,0 +1,56 @@
+@use 'sass:map';
+@import "variables";
+
+$colors: (
+   primary: (
+     base: $primary,
+     light: lighten($primary,40),
+     dark: darken($primary,20),
+     text: white
+   ),
+   secondary: (
+      base: $secondary,
+     light: lighten($secondary,20),
+     dark : darken($secondary,20),
+     text : white,
+  ),
+  success: (
+     base: $success,
+     light: lighten($success,20),
+     dark: darken($success,20),
+     text:white,
+  ),
+  danger: (
+     base: $danger,
+     light: lighten($danger,40),
+     dark: darken($danger,20),
+     text:white,
+  ),
+  shaded: (
+     base: $shaded,
+     light: lighten($shaded,20),
+     dark: darken($shaded,20),
+     text:darken($shaded,70)
+  ),
+);
+// Fonction pour appeler les couleurs facilement
+@function setColor($scheme, $tone: base) {
+  @return map-get(map-get($colors, $scheme), $tone);
+}
+
+$theme-colors: map.keys($colors);
+
+@each $color, $glyph in $theme-colors {
+  .bg-#{$color} {
+    background-color: setColor($color,base);
+    color: setColor($color,text);
+   }
+  .bg-#{$color}-light {
+    background-color:setColor($color,light);
+    color:setColor($color,text);
+  }
+  .bg-#{$color}-dark { 
+    background-color:setColor($color,dark);
+    color:setColor($color,text);
+  }	
+}

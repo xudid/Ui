@@ -1,0 +1,163 @@
+@use "margin";
+
+$form-margin: margin.$margin-0;
+$form-bg-color: inherit;
+$form-color: inherit;
+form {
+  margin: $form-margin;
+  background-color:$form-bg-color;
+  color: $form-color;
+}
+
+.form-inline {
+  .textfield, .btn {
+    display: inline-block;
+  }
+}
+//
+//
+//form input{
+//
+//  text-align: center;
+//  margin: 10px auto;
+//  width: 200px;
+//  border-radius: 3px;
+//  background-color: gainsboro;
+//}
+//
+//form input[type=text]:focus{
+//  background-color: #b91f91;
+//  color: white;
+//}
+//form [type="checkbox"]{
+//  vertical-align: text-top;
+//  display: inline;
+//  margin: 10px auto;
+//  border-radius: 5px;
+//  background-color: gainsboro;
+//}
+//
+//form input[type="radio"]{
+//  vertical-align: baseline;
+//  display: inline;
+//  margin: 10px auto;
+//  border-radius: 5px;
+//  background-color: gainsboro;
+//}
+//
+//
+//form input :valid {
+//  box-shadow: 0 0 2px 1px green;
+//
+//}
+//
+//form select{
+//  width: 200px;
+//  margin:10px;
+//  border-radius: 3px;
+//  text-align: center;
+//
+//  background-color: gainsboro;
+//}
+//
+//form select:hover{
+//  background-color: #b91f91;
+//  color: white;
+//}
+//
+//
+//
+//
+//form button{
+//  background: lightgray ;
+//  border-radius: 5px;
+//  display:block;
+//  width: 110px;
+//  margin:0 auto;
+//  margin-top: 10px;
+//  margin-bottom: 10px;
+//
+//
+//}
+//
+//form button:hover{
+//  background:#00aa33;
+//  color: white;
+//}
+
+/*
+.form_inline{
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+
+  !*padding: 28px ;*!
+  border-radius: 12px;
+  !* background-color: lightgray;*!
+
+}
+
+.form_inline_button{
+  display: block;
+  background: lightgray ;
+  float: right;
+  border-radius: 5px;
+}*/
+
+/*
+.form_title{
+  font-weight: bold;
+  font-size: 1.5em;
+  border-bottom: 1px solid white;
+
+}*/
+
+/*form select{
+  width: 200px;
+  margin:10px;
+
+
+}
+
+form button{
+  display:block;
+  width: 110px;
+  margin:0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+
+}*/
+
+/*
+form input[type="radio"]{
+  vertical-align: baseline;
+  display: inline;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+
+form input :valid {
+  box-shadow: 0 0 2px 1px green;
+
+}*/
+
+/*
+form input{
+  margin: 10px auto;
+  width: 200px;
+}
+
+
+form [type="checkbox"]{
+  vertical-align: text-top;
+  display: inline;
+  margin: 10px auto;
+}
+*/
+/*
+fieldset{
+  border-radius: 12px;
+}*/

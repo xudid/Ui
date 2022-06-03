@@ -1,0 +1,83 @@
+@use "color";
+@use "border";
+@use "margin";
+@use "padding";
+
+.collapsible{
+  background: inherit;
+  color: white;
+  list-style-type: none;
+  padding: padding.$padding-sm;
+  margin: margin.$margin-xs 0 margin.$margin-sm 0;
+}
+
+.collapsible-header{
+  cursor: pointer;
+  padding: padding.$padding-sm;
+  background-color: color.setColor(shaded, dark);
+  color: white;
+  font-weight: bold;
+  font-size: 105%;
+  .caret {
+    vertical-align: middle;
+  }
+}
+
+.collapsible-body{
+  max-height: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: white;
+  color: color.setColor(shaded, dark);
+  cursor: pointer;
+  transition: max-height 0.3s ease-out;
+  border-bottom: border.$sm solid color.$shaded;
+}
+
+.collapsible-body::-webkit-scrollbar {
+display: none;
+}
+
+/*
+.collapsible{
+  background: #4444aa ;
+  color: white;
+  list-style-type: none;
+  border-top: 1px solid #aaa;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px ;
+  border-right: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px ;
+  padding: 1rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.collapsible-header{
+  cursor: pointer;
+  padding: 1em;
+  background-color: #00a;
+  color: white;
+  border-bottom: 1px solid white;
+  !* margin-bottom: 3px; *!
+}
+
+.collapsible-body{
+  max-height: 0;
+  overflow: hidden;
+  background: #4444aa ;
+  color: white;
+  cursor: pointer;
+
+  !* border-bottom: 1px solid #aaa; *!
+  !* margin-bottom: 5px; *!
+  transition: max-height 0.3s ease-out;
+
+}
+*/
+
+
+
+

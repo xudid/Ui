@@ -1,0 +1,101 @@
+$sizes: 0, 4, 8, 12, 16, 20, 24, 30, auto;
+$margin-0: 0px;
+$margin-xs:4px;
+$margin-sm:8px;
+$margin-md:12px;
+$margin-lg:16px;
+$margin-xl:20px;
+$margin-xxl:24px;
+$margin-xxxl:30px;
+$margin-xxxxl:34px;
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .m-#{$size} {
+      margin: #{$size}px;
+    }
+  } @else {
+    .m-#{$size} {
+      margin: #{$size};
+    }
+  }
+}
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .mt-#{$size} {
+      margin-top: #{$size}px;
+    }
+  } @else {
+    .mt-#{$size} {
+      margin-top: #{$size};
+    }
+  }
+}
+
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .mb-#{$size} {
+      margin-bottom: #{$size}px;
+    }
+  } @else {
+    .mb-#{$size} {
+      margin-bottom: #{$size};
+    }
+  }
+}
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .mr-#{$size} {
+      margin-right: #{$size}px;
+    }
+  } @else {
+    .mr-#{$size} {
+      margin-right: #{$size};
+    }
+  }
+}
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .ml-#{$size} {
+      margin-left: #{$size}px;
+    }
+  }@else {
+    .ml-#{$size} {
+      margin-left: #{$size};
+    }
+  }
+}
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .mx-#{$size} {
+      margin-left: #{$size}px;
+      margin-right: #{$size}px;
+    }
+  }
+}
+
+@each $size in $sizes {
+  @if type-of($size) == number {
+    .my-#{$size} {
+      margin-top: #{$size}px;
+      margin-bottom: #{$size}px;
+    }
+  }
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
+.my-auto {
+  margin: auto 0;
+}
+
+.m-auto {
+  margin: auto;
+}

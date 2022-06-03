@@ -1,21 +1,25 @@
-.d-Flex {
-    display: flex;
-}
-.d-Block {
-    display: block;
-}
-.d-Inline {
-    display: inline;
+.d-flex {
+  display: flex;
 }
 
-.d-Inline-block {
-    display: inline-block;
+.d-block {
+  display: block;
 }
 
-.d-Table {
-    display: table;
+.d-inline {
+  display: inline;
 }
 
-.d-Inline-table {
-    display: inline-table;
+.d-inline-block {
+  display: inline-block;
 }
+
+.d-table {
+  display: table;
+}
+
+.d-inline-table {
+  display: inline-table;
+}
+
+/*# sourceMappingURL=display.css.map */

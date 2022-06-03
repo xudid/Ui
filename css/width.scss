@@ -1,0 +1,24 @@
+.w-1 {
+  width: 1%;
+}
+@for $i from 20 through 100 {
+  @if $i % 5 == 0 {
+    $width: percentage($i/100);
+    .w-#{$i} {
+      width: $width;
+    }
+  }
+}
+
+.width-auto{
+  width: auto;
+}
+.w-full{
+  width:100%;
+}
+
+.w-half {
+  width:50%
+}
+
+

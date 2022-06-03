@@ -1,0 +1,35 @@
+$displays : flex, block, inline, inline-block, table, inline-table;
+
+@each $display in $displays {
+  .d-#{$display} {
+    display: $display;
+  }
+}
+
+.d-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.d-row-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.d-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.d-col-reverse {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.nogrow {
+  flex-grow: 0;
+}

@@ -1,0 +1,30 @@
+@use "breakpoint";
+@use "margin";
+
+.col-4 {
+  margin: margin.$margin-lg;
+  @media screen and (max-width: #{map-get(breakpoint.$breakpoint, handset-sm-max)}px){
+    max-width: #{floor(map-get(breakpoint.$breakpoint, handset-sm-max) / 4)}px;
+  }
+  @media screen and (max-width: #{map-get(breakpoint.$breakpoint, handset-md-max)}px){
+    max-width: #{floor(map-get(breakpoint.$breakpoint, handset-md-max) / 4)}px;
+  }
+
+  @media screen and (max-width: #{map-get(breakpoint.$breakpoint, handset-lg-max)}px){
+    max-width: #{floor(map-get(breakpoint.$breakpoint, handset-lg-max) / 4)}px;
+  }
+
+}
+
+.col-6 {
+  margin: margin.$margin-lg;
+}
+
+.col-8 {
+
+}
+
+.col-12 {
+  margin: margin.$margin-lg;
+}
+

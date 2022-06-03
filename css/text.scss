@@ -1,0 +1,61 @@
+@use 'color';
+
+.text-white{
+  color: white;
+}
+.text-primary {
+  color: color.$primary;
+}
+.text-secondary {
+  color: color.$secondary;
+}
+
+.text-success {
+  color: color.$success;
+}
+
+.text-danger {
+  color: color.$danger;
+}
+
+.text-shaded {
+  color: color.$shaded;
+}
+$text-center: center;
+$text-horizontal-alignments: (left, right, $text-center);
+@each $alignment in $text-horizontal-alignments {
+    .text-#{$alignment} {
+      text-align: $alignment;
+    }
+}
+
+$text-vertical-alignments: (baseline, top, middle, bottom, sub, text-top);
+@each $alignment in $text-vertical-alignments {
+    .text-#{$alignment} {
+     vertical-align: $alignment;
+    }
+}
+
+.text-no-decoration {
+  text-decoration: none;
+}
+
+
+
+.text-decoration-primary {
+  text-decoration-color: color.$primary;
+}
+
+.text-decoration-secondary {
+  text-decoration-color: color.$secondary;
+}
+.text-decoration-white {
+  text-decoration-color: white;
+}
+
+/*Decorations*/
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
