@@ -3,6 +3,8 @@
 namespace Ui\Widgets\Table;
 
 use PHPUnit\Framework\TestCase;
+use Ui\Widgets\Table\Column\Column;
+use Ui\Widgets\Table\Row\TableRow;
 
 class TableRowTest extends TestCase
 {
@@ -27,7 +29,7 @@ class TableRowTest extends TestCase
     {
         $this->columns = [];
         foreach ($columns as $k=>$column) {
-            $mock = $this->createMock(TableColumn::class);
+            $mock = $this->createMock(Column::class);
             $mock->method('getName')->willReturn($column);
             $mock->method('getHeader')->willReturn(ucfirst($column));
             $mock->method('isEditable')->willReturn(false);

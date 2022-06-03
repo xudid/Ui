@@ -9,7 +9,7 @@ class SearchButtonTest extends TestCase
 
     public function test__construct()
     {
-        $button = new SearchButton();
-        $this->assertInstanceOf(SearchButton::class,$button);
+        $button = new Search();
+        $this->assertInstanceOf(Search::class,$button);
     }
 }

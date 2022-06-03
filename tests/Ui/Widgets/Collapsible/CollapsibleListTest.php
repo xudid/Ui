@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\Widgets\Accordeon;
+namespace Ui\Widgets\Collapsible;
 
 use PHPUnit\Framework\TestCase;
 

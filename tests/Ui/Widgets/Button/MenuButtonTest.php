@@ -9,7 +9,7 @@ class MenuButtonTest extends TestCase
 
     public function test__construct()
     {
-        $button = new MenuButton();
-        $this->assertInstanceOf(MenuButton::class,$button);
+        $button = new Menu();
+        $this->assertInstanceOf(Menu::class,$button);
     }
 }

@@ -9,7 +9,7 @@ class ColorInputTest extends TestCase
 
     public function test__construct()
     {
-        $input = new ColorInput();
-        $this->assertInstanceOf(ColorInput::class,$input);
+        $input = new Color();
+        $this->assertInstanceOf(Color::class,$input);
     }
 }

@@ -9,7 +9,7 @@ class TextInputTest extends TestCase
 
     public function test__construct()
     {
-        $input = new TextInput();
-        $this->assertInstanceOf(TextInput::class,$input);
+        $input = new Text();
+        $this->assertInstanceOf(Text::class,$input);
     }
 }

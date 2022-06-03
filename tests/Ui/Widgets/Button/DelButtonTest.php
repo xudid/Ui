@@ -9,7 +9,7 @@ class DelButtonTest extends TestCase
 
     public function test__construct()
     {
-        $button = new DelButton();
-        $this->assertInstanceOf(DelButton::class,$button);
+        $button = new Delete();
+        $this->assertInstanceOf(Delete::class,$button);
     }
 }

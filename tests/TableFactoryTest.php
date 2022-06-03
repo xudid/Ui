@@ -2,11 +2,11 @@
 
 
 use PHPUnit\Framework\TestCase;
-use Ui\Widgets\Table\DivTable;
-use Ui\Widgets\Table\TableColumn;
-use Ui\Widgets\Table\TableLegend;
+use Ui\Widgets\Table\Column\Column;
+use Ui\Widgets\Table\Legend\TableLegend;
+use Ui\Widgets\Table\ModelTableFactory;
 
-class DivTableTest extends TestCase
+class TableFactoryTest extends TestCase
 {
     /**
      * @var array
@@ -28,13 +28,11 @@ class DivTableTest extends TestCase
         $this->legends = $this->getLegends([["content"=>"Legend",'position'=>"TOP_LEFT"]]);
         $this->datas = $this->getDatas();
     }
-
-
     private function getColumns($columns)
     {
         $this->columns = [];
         foreach ($columns as $k=>$column) {
-            $mock = $this->createMock(TableColumn::class);
+            $mock = $this->createMock(Column::class);
             $mock->method('getName')->willReturn($column);
             $mock->method('getHeader')->willReturn(ucfirst($column));
             $mock->method('isEditable')->willReturn(false);
@@ -46,10 +44,11 @@ class DivTableTest extends TestCase
     private function getLegends(array $datas):array
     {
         $legends =[];
-        foreach ($datas as $k =>$data) {
+        foreach ($datas as $data) {
             $mock = $this->createMock(TableLegend::class);
             $mock->method('getContent')->willReturn($data['content']);
             $mock->method('getPosition')->willReturn($data['position']);
+            $legends[] = $mock;
         }
 
         return $legends;
@@ -66,7 +65,7 @@ class DivTableTest extends TestCase
     }
     public function testCanConstruct()
     {
-        $drt = new DivTable($this->legends,$this->columns,$this->datas);
-        $this->assertInstanceOf(DivTable::class,$drt);
+        $drt = (new ModelTableFactory())->setLegends($this->legends)->setColumns($this->columns)->setDataArray($this->datas);
+        $this->assertInstanceOf(ModelTableFactory::class,$drt);
     }
 }

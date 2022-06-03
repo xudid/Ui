@@ -3,6 +3,8 @@
 namespace Ui\Widgets\Table;
 
 use PHPUnit\Framework\TestCase;
+use Ui\Widgets\Table\Legend\TableLegend;
+use Ui\Widgets\Table\Legend\TableLegends;
 
 class TableLegendsTest extends TestCase
 {

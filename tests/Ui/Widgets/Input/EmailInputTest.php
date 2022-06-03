@@ -9,7 +9,7 @@ class EmailInputTest extends TestCase
 
     public function test__construct()
     {
-        $input = new EmailInput();
-        $this->assertInstanceOf(EmailInput::class,$input);
+        $input = new Email();
+        $this->assertInstanceOf(Email::class,$input);
     }
 }

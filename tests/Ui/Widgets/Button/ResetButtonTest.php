@@ -9,7 +9,7 @@ class ResetButtonTest extends TestCase
 
     public function test__construct()
     {
-        $button = new ResetButton("test");
-        $this->assertInstanceOf(ResetButton::class,$button);
+        $button = new Reset("test");
+        $this->assertInstanceOf(Reset::class,$button);
     }
 }

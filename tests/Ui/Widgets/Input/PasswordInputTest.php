@@ -9,7 +9,7 @@ class PasswordInputTest extends TestCase
 
     public function test__construct()
     {
-        $input = new PasswordInput("pass");
-        $this->assertInstanceOf(PasswordInput::class,$input);
+        $input = new Password("pass");
+        $this->assertInstanceOf(Password::class,$input);
     }
 }

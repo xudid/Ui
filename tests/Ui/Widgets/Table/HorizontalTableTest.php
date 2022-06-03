@@ -3,6 +3,8 @@
 namespace Ui\Widgets\Table;
 
 use PHPUnit\Framework\TestCase;
+use Ui\Widgets\Table\Column\Column;
+use Ui\Widgets\Table\Legend\TableLegend;
 
 class HorizontalTableTest extends TestCase
 {
@@ -32,7 +34,7 @@ class HorizontalTableTest extends TestCase
     {
         $this->columns = [];
         foreach ($columns as $k=>$column) {
-            $mock = $this->createMock(TableColumn::class);
+            $mock = $this->createMock(Column::class);
             $mock->method('getName')->willReturn($column);
             $mock->method('getHeader')->willReturn(ucfirst($column));
             $this->columns[]= $mock;

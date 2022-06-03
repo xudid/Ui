@@ -3,6 +3,8 @@
 namespace Ui\Widgets\Table;
 
 use PHPUnit\Framework\TestCase;
+use Ui\Widgets\Table\Column\Inline;
+use Ui\Widgets\Table\Column\Column;
 
 class InlineColumnTest extends TestCase
 {
@@ -14,7 +16,7 @@ class InlineColumnTest extends TestCase
     protected function setUp():void
     {
         parent::setUp();
-        $this->tableColumn = $this->createMock(TableColumn::class);
+        $this->tableColumn = $this->createMock(Column::class);
         $this->tableColumn->method('getName')->willReturn("name");
         $this->tableColumn->method('getHeader')->willReturn("Name");
 
@@ -27,17 +29,17 @@ class InlineColumnTest extends TestCase
 
 
     /**
-     *  public function __construct(TableColumn $tableColumn,$datas)
+     *  public function __construct(Column $tableColumn,$datas)
      */
     public function test__constructWithEmtyDatas()
     {
-        $inlineColumn = new InlineColumn($this->tableColumn,[]);
-        $this->assertInstanceOf(InlineColumn::class,$inlineColumn);
+        $inlineColumn = new Inline($this->tableColumn,[]);
+        $this->assertInstanceOf(Inline::class,$inlineColumn);
     }
 
     public function test__constructWithDatas()
     {
-        $inlineColumn = new InlineColumn($this->tableColumn,$this->getDatas());
-        $this->assertInstanceOf(InlineColumn::class,$inlineColumn);
+        $inlineColumn = new Inline($this->tableColumn,$this->getDatas());
+        $this->assertInstanceOf(Inline::class,$inlineColumn);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\Widgets\Views;
+namespace Ui\Widgets\View;
 
 use PHPUnit\Framework\TestCase;
 

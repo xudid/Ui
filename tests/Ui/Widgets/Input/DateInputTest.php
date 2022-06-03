@@ -9,7 +9,7 @@ class DateInputTest extends TestCase
 
     public function test__construct()
     {
-        $input = new DateInput();
-        $this->assertInstanceOf(DateInput::class,$input);
+        $input = new Date();
+        $this->assertInstanceOf(Date::class,$input);
     }
 }

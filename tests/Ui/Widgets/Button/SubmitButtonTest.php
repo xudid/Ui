@@ -9,7 +9,7 @@ class SubmitButtonTest extends TestCase
 
     public function test__construct()
     {
-        $button = new SubmitButton("test");
-        $this->assertInstanceOf(SubmitButton::class,$button);
+        $button = new Submit("test");
+        $this->assertInstanceOf(Submit::class,$button);
     }
 }

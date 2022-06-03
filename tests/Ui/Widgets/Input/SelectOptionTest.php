@@ -9,7 +9,7 @@ class SelectOptionTest extends TestCase
 
     public function test__construct()
     {
-        $select = new SelectOption([]);
-        $this->assertInstanceOf(SelectOption::class,$select);
+        $select = new Select([]);
+        $this->assertInstanceOf(Select::class,$select);
     }
 }

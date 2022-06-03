@@ -3,6 +3,7 @@
 namespace Ui\Widgets\Table;
 
 use PHPUnit\Framework\TestCase;
+use Ui\Widgets\Table\Cell\Cell;
 
 class CellTest extends TestCase
 {

@@ -8,7 +8,7 @@ class AddButtonTest extends TestCase
 {
     public function test__construct()
     {
-        $button = new AddButton();
-        $this->assertInstanceOf(AddButton::class,$button);
+        $button = new Add();
+        $this->assertInstanceOf(Add::class,$button);
     }
 }

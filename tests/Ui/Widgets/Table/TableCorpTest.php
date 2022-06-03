@@ -9,7 +9,7 @@ class TableCorpTest extends TestCase
 
     public function test__construct()
     {
-        $boby = new TableCorp();
-        $this->assertInstanceOf(TableCorp::class,$boby);
+        $boby = new RowGroup();
+        $this->assertInstanceOf(RowGroup::class,$boby);
     }
 }
