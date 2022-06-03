@@ -1,5 +1,6 @@
 {
     "name": "xudid/ui",
+    "minimum-stability": "dev",
     "description": "a package to generate html5 objects",
     "type": "library",
     "license": "MIT",
@@ -15,11 +16,8 @@
       }
     },
     "require": {
-        "psr/http-server-middleware": "^1.0",
-        "psr/container": "1.0.0",
-        "xudid/entity": "0.02",
-        "xudid/router": "^0.05.0",
-        "xudid/core": "^0.0.18"
+        "xudid/core": "^0.0.19",
+        "doctrine/inflector": "2.1.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^8",
