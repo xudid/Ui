@@ -156,6 +156,7 @@ class Nested extends Base implements ArrayAccess
     public function __call($name, $arguments)
     {
         if (property_exists(get_class($this), $name)) {
+            $result = $this;
             $ro = new ReflectionObject($this);
             $property = $ro->getProperty($name);
             $propertyAccessModified = false;
@@ -172,11 +173,7 @@ class Nested extends Base implements ArrayAccess
                 $property->setAccessible(false);
             }
 
-            if ($result) {
-                return $result;
-            } else {
-                return $this;
-            }
+            return $result;
         }
     }
 }
