@@ -12,6 +12,7 @@ class Form extends Nested
     public function __construct()
     {
         parent::__construct("form");
+        $this->startTag->setAttribute("method", 'POST');
         return $this;
     }
 
