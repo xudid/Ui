@@ -9,19 +9,18 @@ use Ui\HTML\Element\Simple\Input;
 
 class Text extends Div
 {
-
     private ?Label $label = null;
     private ?Span $help = null;
 
     function __construct()
-	{
-		parent::__construct();
+    {
+        parent::__construct();
         $this->input = new Input();
-		$this->input->setType('text');
+        $this->input->setType('text');
         $this->input->setClass(' my-4');
         $this->setClass('textfield');
-		return $this;
-	}
+        return $this;
+    }
 
     public function label(string $label)
     {
@@ -33,7 +32,19 @@ class Text extends Div
     public function help(string $help)
     {
         $this->help = new Span($help);
-       return $this;
+        return $this;
+    }
+
+    public function name(string $name)
+    {
+        $this->input->setName($name);
+        return $this;
+    }
+
+    public function value(string $name)
+    {
+        $this->input->setValue($name);
+        return $this;
     }
 
     public function __toString(): string
