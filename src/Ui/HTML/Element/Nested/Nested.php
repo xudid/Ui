@@ -134,7 +134,7 @@ class Nested extends Base implements ArrayAccess
         return isset($this->children[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->children[$offset] ?? null;
     }
