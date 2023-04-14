@@ -109,6 +109,11 @@ abstract class X
         return new Text();
     }
 
+    public static function Password($name)
+    {
+        return (new Text())->name($name)->type('password');
+    }
+
     public static function Button($text)
     {
         return new Button($text);
@@ -130,7 +135,7 @@ abstract class X
         return new Div(...$children);
     }
 
-    public function Submit($text)
+    public static function Submit($text)
     {
         return new Submit($text);
     }
