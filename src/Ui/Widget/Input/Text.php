@@ -9,10 +9,11 @@ use Ui\HTML\Element\Simple\Input;
 
 class Text extends Div
 {
-    private ?Label $label = null;
-    private ?Span $help = null;
+    protected ?Label $label = null;
+    protected ?Span $help = null;
+    protected Input $input;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->input = new Input();
@@ -22,28 +23,34 @@ class Text extends Div
         return $this;
     }
 
-    public function label(string $label)
+    public function label(string $label): static
     {
         $span = (new Span($label))->setClass('label-style');
         $this->label = new Label($span);
         return $this;
     }
 
-    public function help(string $help)
+    public function help(string $help): static
     {
         $this->help = new Span($help);
         return $this;
     }
 
-    public function name(string $name)
+    public function name(string $name): static
     {
         $this->input->setName($name);
         return $this;
     }
 
-    public function value(string $name)
+    public function value(string $name): static
     {
         $this->input->setValue($name);
+        return $this;
+    }
+
+    public function type(string $type): static
+    {
+        $this->input->setType($type);
         return $this;
     }
 
