@@ -20,7 +20,7 @@
         "symfony/var-dumper": "^5.0"
     },
     "require": {
-        "xudid/core": "^0.0.22",
+        "xudid/core": ">=0.0.22",
         "doctrine/inflector": "^2.0"
     }
 }
