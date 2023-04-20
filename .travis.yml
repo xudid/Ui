@@ -1,8 +1,0 @@
-language: php
-php:
- - '7.4snapshot'
-before_script:
-  - composer dump-autoload -o
-
-script:
-  - phpunit --coverage-html coverage
