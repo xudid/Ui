@@ -1,17 +1,15 @@
 <?php
 namespace Xudid\Ui\Widget\Input;
 
-use Xudid\Ui\HTML\Element\Simple\Input;
-
 /**
  * Class Date
- * @package UI\Widget\Input
+ * @package Xudid\UI\Widget\Input
  */
-class Date extends Input
+class Date extends Text
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->startTag->setAttribute("type", "date");
+		$this->input->setType('date');
 	}
 }

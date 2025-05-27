@@ -11,13 +11,14 @@ use Xudid\Ui\HTML\Element\Simple\Br;
 use Xudid\Ui\HTML\Element\Simple\Img;
 use Xudid\Ui\Widget\Button\Button;
 use Xudid\Ui\Widget\Button\Submit;
+use Xudid\Ui\Widget\Input\Date;
 use Xudid\Ui\Widget\Input\Select;
 use Xudid\Ui\Widget\Input\Text;
 use Xudid\Ui\Widget\Lists\ItemList;
 use Xudid\Ui\Widget\View\Navbar\IconItem;
 use Xudid\Ui\Widget\View\Navbar\Item;
-use Xudid\Ui\Widget\View\Navbar\TextItem;
 use Xudid\Ui\Widget\View\Navbar\Navbar;
+use Xudid\Ui\Widget\View\Navbar\TextItem;
 use Xudid\Ui\Widget\View\Page\Page;
 
 abstract class X
@@ -27,7 +28,12 @@ abstract class X
        return new A($content, $href);
     }
 
-    public function B($text)
+	public static function Date()
+	{
+		return new Date();
+	}
+
+	public function B($text)
     {
         return new B($text);
     }
