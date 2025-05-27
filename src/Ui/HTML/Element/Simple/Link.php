@@ -16,6 +16,5 @@ class Link extends Simple
             $this->startTag->setAttribute("rel", $rel);
             $this->startTag->setAttribute("href", $href);
         }
-        return $this;
     }
 }

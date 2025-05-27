@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\Widget\Input;
+namespace Xudid\Ui\Widget\Input;
 
-use Ui\HTML\Element\Simple\Input;
+use Xudid\Ui\HTML\Element\Simple\Input;
 
 class Hidden extends Input
 {

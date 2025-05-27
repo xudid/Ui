@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
 /**
  * Class Select
@@ -12,40 +12,44 @@ class Select extends Nested
     public function __construct()
     {
         parent::__construct("select");
-        return $this;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): static
     {
         if (isset($name)) {
             $this->startTag->setAttribute("name", $name);
         }
+
         return $this;
     }
 
-    public function setSize(int $size):static
+    public function setSize(int $size): static
     {
         if (isset($name)) {
             $this->startTag->setAttribute("size", $name);
         }
+
         return $this;
     }
 
-    public function setMultiple():static
+    public function setMultiple(): static
     {
         $this->startTag->setAttribute("multiple", true);
+
         return $this;
     }
 
-    public function setRequired():static
+    public function setRequired(): static
     {
         $this->startTag->setAttribute("required", true);
+
         return $this;
     }
 
-    public function setDisabled():static
+    public function setDisabled(): static
     {
         $this->startTag->setAttribute("disabled", true);
+
         return $this;
     }
 }

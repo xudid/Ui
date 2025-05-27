@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Base;
+namespace Xudid\Ui\HTML\Element\Base;
 /**
  * Class I
  * @package Ui\HTML\Elements\Bases

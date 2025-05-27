@@ -1,5 +1,5 @@
 <?php
-namespace Ui\HTML\Attribute;
+namespace Xudid\Ui\HTML\Attribute;
 /**
  * This file contains FormAttribute class and its methods.
  * @package X\HTML\Attributes
@@ -26,6 +26,7 @@ class FormAttribute extends GlobalAttribute
     public function __construct($name, $value)
     {
         parent::__construct($name, $value);
+
         $this->value = $value;
     }
 }

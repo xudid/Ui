@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\Button;
+namespace Xudid\Ui\Widget\Button;
 
-use Ui\HTML\Element\Base\I;
-use Ui\HTML\Element\Nested\Button;
+use Xudid\Ui\HTML\Element\Base\I;
+use Xudid\Ui\HTML\Element\Nested\Button;
 
 /**
  * Class IconButton
@@ -49,6 +49,7 @@ class IconButton extends  Button
         if (in_array($size, array_keys($this->sizes))) {
             $this->iconSize = $size;
         }
+
         return $this;
     }
 
@@ -67,6 +68,7 @@ class IconButton extends  Button
     public function color(string $color)
     {
         $this->color = $color;
+
         return $this;
     }
 

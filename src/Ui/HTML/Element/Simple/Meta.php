@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Simple;
+namespace Xudid\Ui\HTML\Element\Simple;
 
 /**
  * Class Meta
@@ -17,6 +17,5 @@ class Meta extends Simple
         if (strlen($content)) {
             $this->setAttribute('content', $content);
         }
-        return $this;
     }
 }

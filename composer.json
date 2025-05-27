@@ -12,7 +12,7 @@
     ],
     "autoload":{
       "psr-4" : {
-          "Ui\\" : "src/Ui"
+          "Xudid\\Ui\\" : "src/Ui"
       }
     },
     "require-dev": {

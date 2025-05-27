@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Base;
+namespace Xudid\Ui\HTML\Element\Base;
 /**
  * Class InnerText
  * @package Ui\HTML\Elements\Bases

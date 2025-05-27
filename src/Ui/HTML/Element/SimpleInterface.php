@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\HTML\Element;
+namespace Xudid\Ui\HTML\Element;
 
-use Ui\HTML\Element\Nested\Nested;
+use Xudid\Ui\HTML\Element\Nested\Nested;
 
 /**
  * Interface SimpleInterface

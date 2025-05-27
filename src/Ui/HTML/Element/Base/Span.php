@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Base;
+namespace Xudid\Ui\HTML\Element\Base;
 /**
  * Class H4
  * @package Ui\HTML\Elements\Bases
@@ -14,6 +14,5 @@ class Span extends Base
         if (isset($text)) {
             $this->setContentString($text);
         }
-        return $this;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\Widgets\Button;
+namespace Xudid\Ui\Widget\Button;
 
 /**
  * Class Delete

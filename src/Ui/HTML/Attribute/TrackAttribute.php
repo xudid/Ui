@@ -1,5 +1,5 @@
 <?php
-namespace Ui\HTML\Attribute;
+namespace Xudid\Ui\HTML\Attribute;
 
 /**
  * This file contains TrackAttribute class and its methods.

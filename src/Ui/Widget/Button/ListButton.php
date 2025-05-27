@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\Widget\Button;
+namespace Xudid\Ui\Widget\Button;
 
 class ListButton extends IconButton
 {

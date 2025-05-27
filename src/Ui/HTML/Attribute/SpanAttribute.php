@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Ui\HTML\Attribute;
+namespace Xudid\Ui\HTML\Attribute;
 
 
 class SpanAttribute extends GlobalAttribute

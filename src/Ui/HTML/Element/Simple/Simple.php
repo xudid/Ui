@@ -1,10 +1,10 @@
 <?php
 
-namespace Ui\HTML\Element\Simple;
+namespace Xudid\Ui\HTML\Element\Simple;
 
-use Ui\HTML\Element\Nested\Nested;
-use Ui\HTML\Element\SimpleInterface;
-use Ui\HTML\Tag\Start;
+use Xudid\Ui\HTML\Element\Nested\Nested;
+use Xudid\Ui\HTML\Element\SimpleInterface;
+use Xudid\Ui\HTML\Tag\Start;
 
 /**
  * Class Simple
@@ -32,14 +32,16 @@ class Simple implements SimpleInterface
     public function __toString()
     {
         $this->contentString = $this->startTag->__toString() . $this->contentString . $this->endTag . "\r\n";
-        return $this->contentString;
+
+		return $this->contentString;
     }
 
 
-    public function setAttribute(string $name, string$value):static
+    public function setAttribute(string $name, string$value): static
     {
         $this->startTag->setAttribute($name, $value);
-        return $this;
+
+		return $this;
     }
 
     public function getIndex(): string
@@ -47,22 +49,25 @@ class Simple implements SimpleInterface
         return $this->index;
     }
 
-    public function setIndex(string $index):static
+    public function setIndex(string $index): static
     {
         $this->index = $index;
-        return $this;
+         return $this;
     }
 
-    public function setId(string $id):static
+    public function setId(string $id): static
     {
         $this->startTag->setAttribute("id", $id);
-        return $this;
+
+		return $this;
     }
 
-    public function setClass(string $class):static
+    public function setClass(string $class): static
     {
-        if (isset($class))
-            $this->startTag->addCssClass($class);
+        if (isset($class)) {
+			$this->startTag->addCssClass($class);
+		}
+
         return $this;
     }
 
@@ -85,6 +90,7 @@ class Simple implements SimpleInterface
     public function setRoot(?Nested $root): static
     {
         $this->root = $root;
+
         return $this;
     }
 }

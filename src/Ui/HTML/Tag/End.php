@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Tag;
+namespace Xudid\Ui\HTML\Tag;
 /**
  * Class End
  * @package X\HTML\Tags

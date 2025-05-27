@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
 /**
  * Class Script
@@ -24,7 +24,6 @@ class Script extends Nested
         } else {
             $this->add($source);
         }
-        return $this;
     }
 
     public function getPosition(): string
@@ -35,6 +34,7 @@ class Script extends Nested
     public function setPosition(string $position): static
     {
         $this->position = $position;
+
         return $this;
     }
 }

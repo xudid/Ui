@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
 /**
  * Class Label
@@ -23,6 +23,7 @@ class Label extends Nested
         if (isset($id)) {
             $this->startTag->setAttribute("for", $id);
         }
+
         return $this;
     }
 }

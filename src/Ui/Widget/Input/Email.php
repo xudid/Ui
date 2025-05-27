@@ -1,6 +1,7 @@
 <?php
-namespace Ui\Widget\Input;
-use Ui\HTML\Element\Simple\Input;
+namespace Xudid\Ui\Widget\Input;
+
+use Xudid\Ui\HTML\Element\Simple\Input;
 
 /**
  * Class Email

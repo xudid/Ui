@@ -1,11 +1,11 @@
 <?php
 
-namespace Ui\HTML\Element\Base;
+namespace Xudid\Ui\HTML\Element\Base;
 
-use Ui\HTML\Element\Nested\Nested;
-use Ui\HTML\Element\SimpleInterface;
-use Ui\HTML\Tag\End;
-use Ui\HTML\Tag\Start;
+use Xudid\Ui\HTML\Element\Nested\Nested;
+use Xudid\Ui\HTML\Element\SimpleInterface;
+use Xudid\Ui\HTML\Tag\End;
+use Xudid\Ui\HTML\Tag\Start;
 
 /**
  * Class Base

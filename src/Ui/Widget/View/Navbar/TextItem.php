@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\Widget\View\Navbar;
+namespace Xudid\Ui\Widget\View\Navbar;
 
-use Ui\HTML\Element\Nested\A;
+use Xudid\Ui\HTML\Element\Nested\A;
 
 /**
  * Class TextItem

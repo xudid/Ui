@@ -1,23 +1,23 @@
 <?php
 
 
-namespace Ui\Widgets\View;
+namespace Xudid\Ui\Widget\View;
 
 
-use Ui\HTML\Element\Base\Span;
-use Ui\HTML\Element\Base\I;
-use Ui\HTML\Element\Nested\A;
-use Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Base\Span;
+use Xudid\Ui\HTML\Element\Base\I;
+use Xudid\Ui\HTML\Element\Nested\A;
+use Xudid\Ui\HTML\Element\Nested\Div;
 
 class FieldButton extends Div
 {
 
 	/**
-	 * @var \Ui\HTML\Element\Base\Base
+	 * @var Xudid\Ui\HTML\Element\Base\Base
 	 */
 	private $fieldGroup;
 	/**
-	 * @var \Ui\HTML\Element\Base\Base
+	 * @var Xudid\Ui\HTML\Element\Base\Base
 	 */
 	private $inputGroupAppend;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\Button;
+namespace Xudid\Ui\Widget\Button;
 
-use Ui\HTML\Element\Simple\Input;
-use Ui\HTML\Element\Nested\Label;
+use Xudid\Ui\HTML\Element\Simple\Input;
+use Xudid\Ui\HTML\Element\Nested\Label;
 
 /**
  * Class RadioButton
@@ -23,25 +23,29 @@ class RadioButton extends Input
 		$this->startTag->setAttribute("type", "radio");
 				$this->startTag->setAttribute("name", $name);
 				$this->startTag->setAttribute("value", $value);
-				return $this;
 	}
 
 	public function __toString(){
 		$string ="";
 		if(isset($this->label)){$string = $string.$this->label."\r\n";}
 		$string = $string.parent::__toString();
+
 		return $string;
 	}
 
-	public function setChecked(){
+	public function setChecked(): static
+	{
 		$this->startTag->setAttribute("checked", "true");
+
 		return $this;
 	}
 
-	function withLabel($id,$text){
+	function withLabel($id,$text): static
+	{
 		$this->startTag->setAttribute("id",$id);
 		$this->label = new Label($text);
 		$this->label->setAttribute("for",$id);
+
 		return $this;
 	}
 }

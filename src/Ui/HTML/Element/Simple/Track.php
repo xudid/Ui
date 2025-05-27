@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Simple;
+namespace Xudid\Ui\HTML\Element\Simple;
 
 /**
  * Class Track
@@ -11,6 +11,5 @@ class Track extends Simple
     public function __construct()
     {
         parent::__construct("track");
-        return $this;
     }
 }

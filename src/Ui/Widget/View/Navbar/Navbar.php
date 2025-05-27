@@ -1,10 +1,10 @@
 <?php
 
-namespace Ui\Widget\View\Navbar;
+namespace Xudid\Ui\Widget\View\Navbar;
 
-use Ui\HTML\Element\Nested\Div;
-use Ui\HTML\Element\Nested\Nav;
-use Ui\Widget\Lists\ItemList;
+use Xudid\Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Nested\Nav;
+use Xudid\Ui\Widget\Lists\ItemList;
 
 /**
  * Class Navbar
@@ -36,34 +36,34 @@ class Navbar extends Nav
         parent::add($this->rightColumn);
     }
 
-    public function feed(...$items): Navbar
+    public function feed(...$items): static
     {
         foreach ($items as $item) {
             $this->addMenu($item);
         }
+
         return $this;
     }
 
-    /**
-     * @param $item
-     * @param $position
-     */
-    public function addMenu(Item $item)
+    public function addMenu(Item $item): static
     {
         if ($item && $item->getPosition() == Item::LEFT) {
             $this->leftNavItems->add($item);
         } elseif ($item && $item->getPosition() == Item::RIGHT) {
             $this->rightNavItems->add($item);
         }
+
+		return $this;
     }
 
     public function setClass(string $class):static
     {
         parent::setClass("navbar " . $class);
+
         return $this;
     }
 
-    public function setMenuClass(string $css)
+    public function setMenuClass(string $css): static
     {
         if ($this->hasMenu()) {
             foreach ($this->rightNavItems as $item) {
@@ -73,9 +73,11 @@ class Navbar extends Nav
                 $item->setClass($css);
             }
         }
+
+		return $this;
     }
 
-    private function hasMenu()
+    private function hasMenu(): bool
     {
         return ($this->leftNavItems->hasItem() || $this->rightNavItems->hasItem());
     }

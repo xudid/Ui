@@ -1,10 +1,10 @@
 <?php
 
-namespace Ui\Widget\View\Navbar;
+namespace Xudid\Ui\Widget\View\Navbar;
 
-use Ui\HTML\Element\SimpleInterface;
-use Ui\HTML\Element\Nested\Li;
-use Ui\Widgets\View\Modal;
+use Xudid\Ui\HTML\Element\SimpleInterface;
+use Xudid\Ui\HTML\Element\Nested\Li;
+use Xudid\Ui\Widget\View\Modal;
 
 /**
  * Class Item
@@ -36,6 +36,7 @@ class Item extends Li
 	public function setClass(string $class=''):static
 	{
 		parent::setClass('navbar-item ' . $class);
+
 		return $this;
 	}
 
@@ -47,6 +48,7 @@ class Item extends Li
 	public function setPosition(string $position):static
 	{
 		$this->position = $position;
+
 		return $this;
 	}
 }

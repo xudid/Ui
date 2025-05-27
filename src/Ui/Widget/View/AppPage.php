@@ -1,18 +1,18 @@
 <?php
 
-namespace Ui\Widget\View;
+namespace Xudid\Ui\Widget\View;
 
-use Ui\HTML\Element\Nested\{A, Div};
-use Ui\Widget\Button\ClickableImage;
-use Ui\Widget\View\Navbar\NavBar;
-use Ui\Widget\View\Navbar\Item;
-use Ui\Widget\View\Page\Footer;
-use Ui\Widget\View\Page\Page;
+use Xudid\Ui\HTML\Element\Nested\{A, Div};
+use Xudid\Ui\Widget\Button\ClickableImage;
+use Xudid\Ui\Widget\View\Navbar\NavBar;
+use Xudid\Ui\Widget\View\Navbar\Item;
+use Xudid\Ui\Widget\View\Page\Footer;
+use Xudid\Ui\Widget\View\Page\Page;
 
 
 /**
  * Class AppPage
- * @package X\Widget\Views
+ * @package Xudid\Ui\Widget\View
  */
 //AppPage is root node
 //AppPage has four branch header navbar content footer

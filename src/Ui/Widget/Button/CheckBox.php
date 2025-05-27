@@ -1,9 +1,9 @@
 <?php
-namespace Ui\Widget\Button;
+namespace Xudid\Ui\Widget\Button;
 
-use Ui\HTML\Element\Simple\Input;
-use Ui\HTML\Element\Nested\Label;
-use Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Simple\Input;
+use Xudid\Ui\HTML\Element\Nested\Label;
+use Xudid\Ui\HTML\Element\Nested\Div;
 
 /**
  * Class CheckBox

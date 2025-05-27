@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\View\Page;
+namespace Xudid\Ui\Widget\View\Page;
 
-use Ui\HTML\Attribute\GlobalAttribute;
-use Ui\HTML\Element\Nested\{Body, Head, Html, Script};
+use Xudid\Ui\HTML\Attribute\GlobalAttribute;
+use Xudid\Ui\HTML\Element\Nested\{Body, Head, Html, Script};
 
 /**
  * Class Page
@@ -36,16 +36,16 @@ class Page extends Html
         $this->body = new Body();
         $this->add($this->head);
         $this->add($this->body);
-        return $this;
     }
 
     /**
      * @param $base
      * @return $this
      */
-    public function setBase(string $base)
+    public function setBase(string $base): static
     {
         $this->head->setBase($base);
+
         return $this;
     }
 
@@ -53,31 +53,35 @@ class Page extends Html
      * @param $lang
      * @return $this
      */
-    public function setLang(string $lang)
+    public function setLang(string $lang): static
     {
         $this->setAttribute(GlobalAttribute::LANG, $lang);
+
         return $this;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title): static
     {
         $this->head->setTitle($title);
+
         return $this;
     }
 
-    public function feedBody(...$elements): self
+    public function feedBody(...$elements): static
     {
         $this->body->feed(...$elements);
+
         return $this;
     }
 
-    public function addBodyCss($css)
+    public function addBodyCss($css): static
     {
         $this->body->setClass($css);
+
         return $this;
     }
 
-    public function addScript(Script $script): self
+    public function addScript(Script $script): static
     {
         $position = $script->getPosition();
         if ($script instanceof Script &&
@@ -87,6 +91,7 @@ class Page extends Html
             && strcmp($position, Script::SCRIPT_TO_HEAD) == 0) {
                 $this->head->addScript($script);
         }
+
         return $this;
     }
 
@@ -96,15 +101,16 @@ class Page extends Html
      * @param string $css : the css file path or URI
      * @return self
      */
-    public function importCss(...$cssPaths)
+    public function importCss(...$cssPaths): static
     {
         foreach ($cssPaths as $cssPath) {
             $this->head->addLink($cssPath, "stylesheet");
         }
+
         return $this;
     }
 
-    public function importScript(...$scripts): self
+    public function importScript(...$scripts): static
     {
         foreach ($scripts as $script) {
             $this->addScript(new Script($script));
@@ -118,6 +124,7 @@ class Page extends Html
     );",
                 false));
         }
+
         return $this;
     }
 
@@ -125,17 +132,20 @@ class Page extends Html
      * @param $meta
      * @return $this
      */
-    public function addMeta($meta)
+    public function addMeta($meta): static
     {
         $this->head->addMeta($meta);
+
         return $this;
     }
 
-    public function importMeta(...$metas)
+    public function importMeta(...$metas): static
     {
         foreach ($metas as $meta) {
             $this->addMeta($meta);
         }
+
+		return $this;
     }
 
     /**

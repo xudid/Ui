@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\Lists;
+namespace Xudid\Ui\Widget\Lists;
 
-use Ui\HTML\Element\Nested\Ol;
-use Ui\HTML\Element\Nested\Li;
+use Xudid\Ui\HTML\Element\Nested\Ol;
+use Xudid\Ui\HTML\Element\Nested\Li;
 
 /**
  * Class OrderedItemList
@@ -39,11 +39,13 @@ class OrderedItemList extends Ol
       foreach($this->items as $item){
         $this->add(new Li($item));
       }
-      return $this;
     }
 
-    public function setNumberType($type){
+    public function setNumberType($type): static
+	{
         $this->setAttribute("type",$type);
+
+		return $this;
     }
   }
 

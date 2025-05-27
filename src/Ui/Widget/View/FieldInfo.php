@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Ui\Widgets\View;
+namespace Xudid\Ui\Widgets\View;
 
 
-use Ui\HTML\Element\Base\Span;
-use Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Base\Span;
+use Xudid\Ui\HTML\Element\Nested\Div;
 
 class FieldInfo extends Div
 {
 	/**
-	 * @var \Ui\HTML\Element\Base\Base
+	 * @var Xudid\Ui\HTML\Element\Base\Base
 	 */
 	private $fieldGroup;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\HTML\Tag;
+namespace Xudid\Ui\HTML\Tag;
 
-use Ui\HTML\Attribute\GlobalAttribute;
-use Ui\HTML\Attribute\UserDataAttribute;
+use Xudid\Ui\HTML\Attribute\GlobalAttribute;
+use Xudid\Ui\HTML\Attribute\UserDataAttribute;
 
 /**
  * Class Start
@@ -46,7 +46,7 @@ class Start
         return $string;
     }
 
-    public function setAttribute($name, $value)
+    public function setAttribute($name, $value): static
     {
     	if (strpos($name, 'data-') == 0) {
 			$this->attributes[$name] = new UserDataAttribute($name, $value);
@@ -64,7 +64,7 @@ class Start
         return $this;
     }
 
-    public function addCssClass(string $class)
+    public function addCssClass(string $class): static
     {
         $classes = array_unique(explode(' ', $class));
         foreach ($classes as $class)  {
@@ -76,7 +76,7 @@ class Start
         return $this;
     }
 
-    public function removeClass($classToRemove)
+    public function removeClass($classToRemove): static
     {
         $classes = $this->attributes['class'];
         $classes = array_filter($classes, function ($class) use($classToRemove) {
@@ -84,5 +84,7 @@ class Start
         });
 
         $this->attributes['class'] = $classes;
+
+		return $this;
     }
 }

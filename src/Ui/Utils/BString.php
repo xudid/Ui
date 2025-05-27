@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\Utils;
+namespace Xudid\Ui\Utils;
 
 /**
  * BString class offers utils function on string

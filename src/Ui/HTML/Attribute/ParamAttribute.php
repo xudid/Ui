@@ -1,5 +1,5 @@
 <?php
-namespace Ui\HTML\Attribute;
+namespace Xudid\Ui\HTML\Attribute;
 
 /**
  * This file contains ParamAttribute class and its methods.

@@ -1,7 +1,8 @@
 <?php
 
-namespace Ui\Widget\Button;
-use Ui\HTML\Element\Nested\Button;
+namespace Xudid\Ui\Widget\Button;
+
+use Xudid\Ui\HTML\Element\Nested\Button;
 
 /**
  * Class Submit

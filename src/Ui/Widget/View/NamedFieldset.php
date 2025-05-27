@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\Widgets\View;
+namespace Xudid\Ui\Widgets\View;
 
-use Ui\HTML\Element\Nested\{Fieldset,Legend};
+use Xudid\Ui\HTML\Element\Nested\{Fieldset,Legend};
 
 /**
  * Class NamedFieldset
@@ -17,7 +17,6 @@ class NamedFieldset extends Fieldset
     parent::__construct();
     $legend = new Legend($legend);
     $this->add($legend);
-    return $this;
   }
 }
 

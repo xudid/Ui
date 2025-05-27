@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\Utils;
+namespace Xudid\Ui\Utils;
 
 use Exception;
 use ReflectionClass;

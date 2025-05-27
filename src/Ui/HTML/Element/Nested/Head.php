@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
-use Ui\HTML\Element\Simple\Link;
-use Ui\HTML\Element\Simple\Meta;
+use Xudid\Ui\HTML\Element\Simple\Link;
+use Xudid\Ui\HTML\Element\Simple\Meta;
 
 /**
  * Class Head
@@ -29,6 +29,7 @@ class Head extends Nested
     public function __toString(): string
     {
         $this->generateContentString();
+
         return $this->contentString;
     }
 
@@ -48,11 +49,13 @@ class Head extends Nested
     private function renderTitle(): self
     {
         if (!$this->title) {
+
             return $this;
         }
 
         $this->add('<title>' . $this->title . '</title>' . "\r\n");
-        return $this;
+
+		return $this;
     }
 
     private function renderMeta(): self
@@ -60,6 +63,7 @@ class Head extends Nested
         foreach ($this->meta as $value) {
             $this->add($value);
         }
+
         return $this;
     }
 
@@ -68,6 +72,7 @@ class Head extends Nested
         foreach ($this->scripts as $value) {
             $this->add($value);
         }
+
         return $this;
     }
 
@@ -76,42 +81,49 @@ class Head extends Nested
         foreach ($this->links as $value) {
             $this->add($value);
         }
+
         return $this;
     }
 
     public function addScript($script): static
     {
         $this->scripts[] = $script;
+
         return $this;
     }
 
     public function addLink($href, string $rel = 'stylesheet'): static
     {
         $this->links[] = new Link($href, $rel);
+
         return $this;
     }
 
     public function addMeta($meta): static
     {
         $this->meta[] = $meta;
+
         return $this;
     }
 
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
         return $this;
     }
 
     public function setCharset(string $charset): static
     {
         $this->charset = $charset;
+
         return $this;
     }
 
     public function setBase(string $base): static
     {
         $this->base = $base;
+
         return $this;
     }
 }

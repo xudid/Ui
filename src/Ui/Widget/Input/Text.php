@@ -1,11 +1,11 @@
 <?php
 
-namespace Ui\Widget\Input;
+namespace Xudid\Ui\Widget\Input;
 
-use Ui\HTML\Element\Base\Span;
-use Ui\HTML\Element\Nested\Div;
-use Ui\HTML\Element\Nested\Label;
-use Ui\HTML\Element\Simple\Input;
+use Xudid\Ui\HTML\Element\Base\Span;
+use Xudid\Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Nested\Label;
+use Xudid\Ui\HTML\Element\Simple\Input;
 
 class Text extends Div
 {
@@ -20,37 +20,41 @@ class Text extends Div
         $this->input->setType('text');
         $this->input->setClass(' my-4');
         $this->setClass('textfield');
-        return $this;
     }
 
     public function label(string $label): static
     {
         $span = (new Span($label))->setClass('label-style');
         $this->label = new Label($span);
+
         return $this;
     }
 
     public function help(string $help): static
     {
         $this->help = new Span($help);
+
         return $this;
     }
 
     public function name(string $name): static
     {
         $this->input->setName($name);
+
         return $this;
     }
 
     public function value(string $name): static
     {
         $this->input->setValue($name);
+
         return $this;
     }
 
     public function type(string $type): static
     {
         $this->input->setType($type);
+
         return $this;
     }
 

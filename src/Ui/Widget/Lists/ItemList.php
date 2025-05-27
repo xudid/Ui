@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\Lists;
+namespace Xudid\Ui\Widget\Lists;
 
-use Ui\HTML\Element\Nested\Ul;
-use Ui\HTML\Element\Nested\Li;
+use Xudid\Ui\HTML\Element\Nested\Ul;
+use Xudid\Ui\HTML\Element\Nested\Li;
 
 /**
  * Class ItemList
@@ -24,20 +24,21 @@ class ItemList extends Ul
     foreach($this->items as $item){
       $this->add(new Li($item));
     }
-    return $this;
   }
 
   /**
    * @param $item
    */
-  public function addItem($item)
+  public function addItem($item): static
   {
     $this->add(new Li($item));
+
+	return $this;
   }
 
   public function hasItem()
   {
-  	return count($this->items)>0?true:false;
+  	return count($this->items) > 0 ?true : false;
   }
 }
 

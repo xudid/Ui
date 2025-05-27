@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\Widget\View\Navbar;
+namespace Xudid\Ui\Widget\View\Navbar;
 
-use Ui\Widget\Button\ClickableImage;
+use Xudid\Ui\Widget\Button\ClickableImage;
 
 /**
  * Class IconItem

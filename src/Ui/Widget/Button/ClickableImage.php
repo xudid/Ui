@@ -1,7 +1,8 @@
 <?php
-namespace Ui\Widget\Button;
-use Ui\HTML\Element\Simple\Img;
-use Ui\HTML\Element\Nested\A;
+namespace Xudid\Ui\Widget\Button;
+
+use Xudid\Ui\HTML\Element\Simple\Img;
+use Xudid\Ui\HTML\Element\Nested\A;
 
 /**
  * Class ClickableImage

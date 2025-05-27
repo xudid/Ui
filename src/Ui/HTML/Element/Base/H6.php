@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Base;
+namespace Xudid\Ui\HTML\Element\Base;
 /**
  * Class H6
  * @package Ui\HTML\Elements\Bases
@@ -14,6 +14,7 @@ class H6 extends Base
         if (isset($text)) {
             $this->setContentString($text);
         }
+
         return $this;
     }
 }

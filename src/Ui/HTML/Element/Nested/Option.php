@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
 /**
  * Class Option
@@ -14,6 +14,5 @@ class Option extends Nested
         parent::__construct("option");
         $this->startTag->setAttribute("value", $value);
         $this->add($display);
-        return $this;
     }
 }

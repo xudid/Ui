@@ -1,7 +1,7 @@
 <?php
-namespace Ui\HTML\Attribute;
+namespace Xudid\Ui\HTML\Attribute;
 
-use Ui\Utils\Enum;
+use Xudid\Ui\Utils\Enum;
 
 /**
  * This file contains GlobalAttribute class and its methods.

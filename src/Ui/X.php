@@ -1,24 +1,24 @@
 <?php
 
-namespace Ui;
+namespace Xudid\Ui;
 
-use Ui\HTML\Element\Base\{B, H1, H2, H3, H4, H5, H6};
-use Ui\HTML\Element\Nested\A;
-use Ui\HTML\Element\Nested\Div;
-use Ui\HTML\Element\Nested\Form;
-use Ui\HTML\Element\Nested\P;
-use Ui\HTML\Element\Simple\Br;
-use Ui\HTML\Element\Simple\Img;
-use Ui\Widget\Button\Button;
-use Ui\Widget\Button\Submit;
-use Ui\Widget\Input\Select;
-use Ui\Widget\Input\Text;
-use Ui\Widget\Lists\ItemList;
-use Ui\Widget\View\Navbar\IconItem;
-use Ui\Widget\View\Navbar\Item;
-use Ui\Widget\View\Navbar\TextItem;
-use Ui\Widget\View\Navbar\Navbar;
-use Ui\Widget\View\Page\Page;
+use Xudid\Ui\HTML\Element\Base\{B, H1, H2, H3, H4, H5, H6};
+use Xudid\Ui\HTML\Element\Nested\A;
+use Xudid\Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Nested\Form;
+use Xudid\Ui\HTML\Element\Nested\P;
+use Xudid\Ui\HTML\Element\Simple\Br;
+use Xudid\Ui\HTML\Element\Simple\Img;
+use Xudid\Ui\Widget\Button\Button;
+use Xudid\Ui\Widget\Button\Submit;
+use Xudid\Ui\Widget\Input\Select;
+use Xudid\Ui\Widget\Input\Text;
+use Xudid\Ui\Widget\Lists\ItemList;
+use Xudid\Ui\Widget\View\Navbar\IconItem;
+use Xudid\Ui\Widget\View\Navbar\Item;
+use Xudid\Ui\Widget\View\Navbar\TextItem;
+use Xudid\Ui\Widget\View\Navbar\Navbar;
+use Xudid\Ui\Widget\View\Page\Page;
 
 abstract class X
 {

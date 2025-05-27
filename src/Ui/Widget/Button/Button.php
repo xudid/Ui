@@ -1,6 +1,7 @@
 <?php
-namespace Ui\Widget\Button;
-use Ui\HTML\Element\Nested\Button as Btn;
+namespace Xudid\Ui\Widget\Button;
+
+use Xudid\Ui\HTML\Element\Nested\Button as Btn;
 
 /**
 *

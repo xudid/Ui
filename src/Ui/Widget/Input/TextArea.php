@@ -1,6 +1,7 @@
 <?php
-namespace Ui\Widget\Input;
-use Ui\HTML\Element\Nested\Nested;
+namespace Xudid\Ui\Widget\Input;
+
+use Xudid\Ui\HTML\Element\Nested\Nested;
 
 
 /**
@@ -18,22 +19,19 @@ class TextArea extends Nested
 		parent::__construct("textarea");
 	}
 
-	/**
-	 * @param $name
-	 * @return self
-	 */
-	public function setName(string $name){
-		if(isset($name))
-		{$this->startTag->setAttribute("name",$name);}
+	public function setName(string $name): static
+	{
+		if(isset($name)) {
+			$this->startTag->setAttribute("name",$name);
+		}
+
 		return $this;
 	}
 
-	/**
-	 * @param string $value
-	 * @return $this
-	 */
-	public function setPlaceholder(string $value){
+	public function setPlaceholder(string $value): static
+	{
 		$this->startTag->setAttribute("placeholder", $value);
+
 		return $this;
 	}
 
@@ -42,36 +40,45 @@ class TextArea extends Nested
 		return $this;
 	}
 
-	public function setRows(int $num){
+	public function setRows(int $num): static
+	{
 		$this->startTag->setAttribute("rows", $num);
+
 		return $this;
 	}
 
-	public function setMinLength(int $num){
+	public function setMinLength(int $num)
+	{
 		$this->startTag->setAttribute("minlength", $num);
+
 		return $this;
 	}
 
-	public function setMaxLength(int $num){
+	public function setMaxLength(int $num): static
+	{
 		$this->startTag->setAttribute("maxlength", $num);
+
 		return $this;
 	}
 
-	public function setRequired()
+	public function setRequired(): static
 	{
 		$this->startTag->setAttribute("required", true);
+
 		return $this;
 	}
 
-	public function setReadOnly()
+	public function setReadOnly(): static
 	{
 		$this->startTag->setAttribute("readonly", true);
+
 		return $this;
 	}
 
-	public function setDisabled()
+	public function setDisabled(): static
 	{
 		$this->startTag->setAttribute("disabled", true);
+
 		return $this;
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\Widget\Input;
+namespace Xudid\Ui\Widget\Input;
 
-use Ui\HTML\Element\Simple\Input;
+use Xudid\Ui\HTML\Element\Simple\Input;
 
 /**
  * Class Integer
@@ -28,30 +28,35 @@ class Integer extends Input
     public function setMin(int $min):self
     {
         $this->min = $min;
+
         return $this;
     }
 
     public function setMax(int $max):self
     {
         $this->max = $max;
+
         return $this;
     }
 
     public function setStep(int $step):self
     {
         $this->step = $step;
+
         return $this;
     }
 
     public function onChange(string $url):self
     {
         $this->changeUrl = $url;
+
         return $this;
     }
 
     public function OnInput(string $url):self
     {
         $this->inputUrl = $url;
+
         return $this;
     }
 
@@ -68,6 +73,7 @@ class Integer extends Input
         if ($this->inputUrl) {
             $this->setAttribute('oninput', "Input.input('$this->inputUrl', this)");
         }
+
         return parent::__toString();
     }
 }

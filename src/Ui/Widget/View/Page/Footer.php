@@ -1,8 +1,8 @@
 <?php
 
-namespace Ui\Widget\View\Page;
+namespace Xudid\Ui\Widget\View\Page;
 
-use Ui\HTML\Element\Nested\Footer as Foot;
+use Xudid\Ui\HTML\Element\Nested\Footer as Foot;
 
 class Footer extends Foot
 {

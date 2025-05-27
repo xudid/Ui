@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\Input;
+namespace Xudid\Ui\Widget\Input;
 
-use Ui\HTML\Element\Nested\Select as BaseSelect;
-use Ui\HTML\Element\Nested\Option;
+use Xudid\Ui\HTML\Element\Nested\Select as BaseSelect;
+use Xudid\Ui\HTML\Element\Nested\Option;
 
 /**
  * Class Select
@@ -29,11 +29,14 @@ class Select extends BaseSelect
   /**
    * @param $numOption
    */
-  public function setCheckedOption($numOption){
+  public function setCheckedOption($numOption): static
+  {
     if($numOption >=0 && $this->offsetExists($numOption)){
       $opt = $this->offsetGet($numOption);
       $opt->setAttribute("selected",null);
     }
+
+	return $this;
   }
 }
 

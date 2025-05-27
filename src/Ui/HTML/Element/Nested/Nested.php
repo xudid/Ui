@@ -1,12 +1,12 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
 use ArrayAccess;
 use ReflectionObject;
-use Ui\HTML\Element\Base\Base;
-use Ui\HTML\Element\Base\InnerText;
-use Ui\HTML\Element\SimpleInterface;
+use Xudid\Ui\HTML\Element\Base\Base;
+use Xudid\Ui\HTML\Element\Base\InnerText;
+use Xudid\Ui\HTML\Element\SimpleInterface;
 
 /**
  * Class Nested
@@ -21,14 +21,14 @@ class Nested extends Base implements ArrayAccess
     {
         parent::__construct($elementName);
         $this->children = array();
-        return $this;
     }
 
-    public function feed(...$children)
+    public function feed(...$children): static
     {
         foreach ($children as $child) {
             $this->add($child);
         }
+
         return $this;
     }
 
@@ -40,6 +40,7 @@ class Nested extends Base implements ArrayAccess
     public function __toString()
     {
         $this->generateContentString();
+
         return $this->contentString;
     }
 
@@ -47,10 +48,11 @@ class Nested extends Base implements ArrayAccess
     {
         $this->children = [$string];
         $this->generateContentString();
+
         return $this;
     }
 
-    public function add($element)
+    public function add($element): static
     {
         if ($element instanceof SimpleInterface) {
             $index = $element->getIndex();
@@ -67,17 +69,20 @@ class Nested extends Base implements ArrayAccess
             $innerText->setIndex($this->lastNumericIndex++);
             $this->children[] = $element;
         }
+
         return $this;
     }
 
-    public function remove($element)
+    public function remove($element): static
     {
         if ($element != null && !is_string($element)) {
             $this->children[$element->getIndex()] = null;
         }
+
+		return $this;
     }
 
-    public function setFirst($element)
+    public function setFirst($element): static
     {
         if ($element != null && !is_string($element)) {
             $index = $element->getIndex();
@@ -96,6 +101,7 @@ class Nested extends Base implements ArrayAccess
             array_filter($this->children);
             $this->children = array_merge($temp, $this->children);
         }
+
         return $this;
     }
 
@@ -153,7 +159,7 @@ class Nested extends Base implements ArrayAccess
         unset($this->children[$offset]);
     }
 
-    public function __call($name, $arguments)
+    public function __call($name, $arguments): mixed
     {
         if (property_exists(get_class($this), $name)) {
             $result = $this;

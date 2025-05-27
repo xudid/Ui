@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Base;
+namespace Xudid\Ui\HTML\Element\Base;
 /**
  * Class Small
  * @package Ui\HTML\Elements\Bases
@@ -14,6 +14,5 @@ class Small extends Base
         if (isset($text)) {
             $this->setContentString($text);
         }
-        return $this;
     }
 }

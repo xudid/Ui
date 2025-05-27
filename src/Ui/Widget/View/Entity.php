@@ -1,14 +1,14 @@
 <?php
 
-namespace Ui\Widget\View;
+namespace Xudid\Ui\Widget\View;
 
-use Ui\HTML\Element\Nested\Section;
-use Ui\Widget\Button\Add;
-use Ui\Widget\Button\Delete;
-use Ui\Widget\Button\Details;
-use Ui\Widget\Button\Edit;
-use Ui\Widget\Button\ListButton;
-use Ui\Widget\Button\Search;
+use Xudid\Ui\HTML\Element\Nested\Section;
+use Xudid\Ui\Widget\Button\Add;
+use Xudid\Ui\Widget\Button\Delete;
+use Xudid\Ui\Widget\Button\Details;
+use Xudid\Ui\Widget\Button\Edit;
+use Xudid\Ui\Widget\Button\ListButton;
+use Xudid\Ui\Widget\Button\Search;
 
 /**
  * Class Entity

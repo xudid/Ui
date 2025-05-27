@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Nested;
+namespace Xudid\Ui\HTML\Element\Nested;
 
 /**
  * Class Form
@@ -13,24 +13,28 @@ class Form extends Nested
     {
         parent::__construct("form");
         $this->startTag->setAttribute("method", 'POST');
+
         return $this;
     }
 
     public function setAction(string $action): static
     {
         $this->startTag->setAttribute("action", $action);
+
         return $this;
     }
 
     public function setMethod(string $method): static
     {
         $this->startTag->setAttribute("method", $method);
+
         return $this;
     }
 
     public function setName(string $name):static
     {
         $this->startTag->setAttribute("name", $name);
+
         return $this;
     }
 }

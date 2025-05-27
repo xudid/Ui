@@ -1,10 +1,9 @@
 <?php
-namespace Ui\HTML\Attribute;
-use Ui\HTML\Attribute\GlobalAttribute;
+namespace Xudid\Ui\HTML\Attribute;
 
 /**
  * This file contains AAttribute class and its methods.
- * @package X\HTML\Attributes
+ * @package Xudid\Ui\HTML\Attributes
  * @author Didier Moindreau
  * AAttribute class contains A element attributes and common attributes
  *

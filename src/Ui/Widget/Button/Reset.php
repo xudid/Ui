@@ -1,5 +1,5 @@
 <?php
-namespace Ui\Widget\Button;
+namespace Xudid\Ui\Widget\Button;
 
 /**
  * Class Reset

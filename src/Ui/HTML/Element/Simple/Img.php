@@ -1,6 +1,6 @@
 <?php
 
-namespace Ui\HTML\Element\Simple;
+namespace Xudid\Ui\HTML\Element\Simple;
 
 /**
  * Class Img
@@ -19,6 +19,7 @@ class Img extends Simple
     public function useMap($map)
     {
         $this->setAttribute("usemap", $map);
+
         return $this;
     }
 }

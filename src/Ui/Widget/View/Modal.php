@@ -1,14 +1,13 @@
 <?php
 
 
-namespace Ui\Widgets\View;
+namespace Xudid\Ui\Widget\View;
 
 
-use Ui\HTML\Element\Base\H2;
-use Ui\HTML\Element\Base\Span;
-use Ui\HTML\Element\Nested\Div;
-use Ui\HTML\Element\Nested\Nested;
-use Ui\Widgets\Button\Button;
+use Xudid\Ui\HTML\Element\Base\Span;
+use Xudid\Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Nested\Nested;
+use Xudid\Ui\Widget\Button\Button;
 
 class Modal extends Nested
 {
@@ -66,32 +65,36 @@ class Modal extends Nested
 		$this->add($this->modal);
 	}
 
-	public function setTriggerText(string $triggerText): Modal
+	public function setTriggerText(string $triggerText): static
 	{
 		$this->triggerText = $triggerText;
 		$this->trigger->setContentString($this->triggerText);
+
 		return $this;
 	}
 
-	public function setContentText(string $contentText): Modal
+	public function setContentText(string $contentText): static
 	{
 		$this->contentText = $contentText;
 		$this->contentContainer->setContentString($this->contentText);
+
 		return $this;
 	}
 
-	public function setHeaderText(string $headerText): Modal
+	public function setHeaderText(string $headerText): static
 	{
 		$this->headerText->setContentString($headerText);
+
 		return $this;
 	}
 
-	public function setId($id): Modal
+	public function setId($id): static
 	{
 		$this->id = $id;
 		$this->modal->setId($this->id);
 		$this->trigger->setAttribute('data-target',$id);
 		$this->close->setAttribute('data-target',$id);
+
 		return $this;
 	}
 

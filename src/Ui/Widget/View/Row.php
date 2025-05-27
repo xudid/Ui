@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Ui\Widget\View;
+namespace Xudid\Ui\Widget\View;
 
 
-use Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Nested\Div;
 
 class Row extends Div
 {

@@ -1,7 +1,7 @@
 <?php
-namespace Ui\Widget\View;
+namespace Xudid\Ui\Widget\View;
 
-use Ui\HTML\Element\Base\{Base, H1, H2, H3, H4, H5, H6};
+use Xudid\Ui\HTML\Element\Base\{Base, H1, H2, H3, H4, H5, H6};
 
 /**
  * @author Didier Moindreau <dmoindreau@gmail.com>
@@ -14,7 +14,6 @@ class Title extends Base
     {
         $elementname = 'X\HTML\Elements\Bases\H'.$level;
         $this->element = new $elementname($text);
-        return $this;
     }
 
     public function  __toString()

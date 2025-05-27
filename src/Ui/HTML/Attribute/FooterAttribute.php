@@ -1,5 +1,5 @@
 <?php
-namespace Ui\HTML\Attribute;
+namespace Xudid\Ui\HTML\Attribute;
 /**
  * This file contains FooterAttribute class and its methods.
  * @package X\HTML\Attributes

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ui\Widget\View;
+namespace Xudid\Ui\Widget\View;
 
-use Ui\HTML\Element\Nested\Div;
-use Ui\Widget\Lists\ItemList;
+use Xudid\Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\Widget\Lists\ItemList;
 
 /**
  * Class Sidebar
@@ -22,18 +22,20 @@ class Sidebar extends Div
 		$this->add($this->itemList);
 	}
 
-	public function setClass(string $class):static
+	public function setClass(string $class): static
 	{
 		parent::setClass('sidebar '.$class);
+
 		return $this;
 	}
 
-	public function feed(...$elements):self
+	public function feed(...$elements): static
 	{
 		foreach ($elements as $element) {
 			$element->setClass(' d-block text-dark');
 			$this->itemList->add($element);
 		}
+
 		return $this;
 	}
 }

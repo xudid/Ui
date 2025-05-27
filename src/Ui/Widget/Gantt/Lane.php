@@ -1,28 +1,22 @@
 <?php
 
 
-namespace Ui\Widgets\Gantt;
+namespace Xudid\Ui\Widget\Gantt;
 
 
-use Ui\HTML\Element\Nested\Div;
+use Xudid\Ui\HTML\Element\Nested\Div;
 
 class Lane extends Div
 {
     private $resourceName = 'Test';
     private array $tasks = [];
-    /**
-     * @var int
-     */
+
     private int $width;
-    /**
-     * @var \Ui\HTML\Element\Base\Base
-     */
+
     private Div $container;
 
     private Div $lineContainer;
-    /**
-     * @var int
-     */
+
     private int $spendTime;
 
     /**
@@ -41,30 +35,28 @@ class Lane extends Div
         }
         $this->spendTime = $this->tasks[0]->getStart();
         $this->header = (new Div())->setClass('flex-col justify-content-center pr-2 large-30');
-        parent::__construct();
+
+		parent::__construct();
+
         $this->setClass('flex-row ');
         $this->add($this->header);
         $this->container = (new Div())->setClass('flex-col flex-grow-1 py-2');
         $this->add($this->container);
     }
 
-    /**
-     * @param int $width
-     */
-    public function setWidth(int $width)
+    public function setWidth(int $width): static
     {
         $this->width = $width;
+
+		return $this;
     }
 
-    /**
-     * @param string $resourceName
-     */
-    public function setResourceName(string $resourceName): void
+    public function setResourceName(string $resourceName): static
     {
         $this->resourceName = $resourceName;
+
+		return $this;
     }
-
-
 
     public function getLane()
     {
@@ -93,7 +85,10 @@ class Lane extends Div
 
 
         }
-       $this->header->add($this->resourceName);
-        return $this;
+
+		$this->header->add($this->resourceName);
+
+		return $this;
+
     }
 }

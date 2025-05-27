@@ -1,10 +1,10 @@
 <?php
 
-namespace Ui\Widget\Button;
+namespace Xudid\Ui\Widget\Button;
 
-use Ui\HTML\Element\Base\Span;
-use Ui\HTML\Element\Simple\Input;
-use Ui\HTML\Element\Nested\Label;
+use Xudid\Ui\HTML\Element\Base\Span;
+use Xudid\Ui\HTML\Element\Simple\Input;
+use Xudid\Ui\HTML\Element\Nested\Label;
 
 class Toggle extends Label
 {
@@ -23,8 +23,10 @@ class Toggle extends Label
         $this->feed($this->checkbox, $this->span);
     }
 
-    public function on()
+    public function on(): static
     {
         $this->checkbox->setAttribute('checked', true);
+
+		return $this;
     }
 }
