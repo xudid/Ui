@@ -81,16 +81,20 @@ class Page extends Html
         return $this;
     }
 
-    public function addScript(Script $script): static
+    public function addScript(Script|string $script): static
     {
-        $position = $script->getPosition();
-        if ($script instanceof Script &&
-            strcmp($position, Script::SCRIPT_TO_END) == 0) {
+		if (is_string($script)) {
+			$script = new Script($script, false);
+		}
+
+		$position = $script->getPosition();
+        if (strcmp($position, Script::SCRIPT_TO_END) == 0) {
                 $this->scriptToEnd[] = $script;
-        } elseif ($script instanceof Script
-            && strcmp($position, Script::SCRIPT_TO_HEAD) == 0) {
+        } elseif (strcmp($position, Script::SCRIPT_TO_HEAD) == 0) {
                 $this->head->addScript($script);
-        }
+        } else {
+			$this->scriptToEnd[] = $script;
+		}
 
         return $this;
     }
@@ -112,17 +116,18 @@ class Page extends Html
 
     public function importScript(...$scripts): static
     {
+		$this->addScript(new Script("
+    		document.addEventListener('DOMContentLoaded',
+				function(event)
+				{
+				  console.log('DOM fully loaded and parsed');
+				  InitCollapsible();
+				}
+			);"
+		,false)
+		);
         foreach ($scripts as $script) {
-            $this->addScript(new Script($script));
-            $this->addScript(new Script("
-    document.addEventListener('DOMContentLoaded',
-    function(event)
-    {
-      console.log('DOM fully loaded and parsed');
-      InitCollapsible();
-    }
-    );",
-                false));
+            $this->addScript($script);
         }
 
         return $this;
