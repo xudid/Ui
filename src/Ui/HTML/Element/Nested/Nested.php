@@ -161,25 +161,27 @@ class Nested extends Base implements ArrayAccess
 
     public function __call($name, $arguments): mixed
     {
-        if (property_exists(get_class($this), $name)) {
-            $result = $this;
-            $ro = new ReflectionObject($this);
-            $property = $ro->getProperty($name);
-            $propertyAccessModified = false;
-            if ($property->isPrivate() || $property->isProtected()) {
-                $propertyAccessModified = true;
-                $property->setAccessible(true);
-            }
-            if ($arguments) {
-                $property->setValue($arguments);
-            } else {
-                $result = $property->getValue($this);
-            }
-            if ($propertyAccessModified) {
-                $property->setAccessible(false);
-            }
+		if (!property_exists(get_class($this), $name)) {
+			throw new \InvalidArgumentException("Method doesn't exist");
+		}
 
-            return $result;
-        }
-    }
+		$result = $this;
+		$ro = new ReflectionObject($this);
+		$property = $ro->getProperty($name);
+		$propertyAccessModified = false;
+		if ($property->isPrivate() || $property->isProtected()) {
+			$propertyAccessModified = true;
+			$property->setAccessible(true);
+		}
+		if ($arguments) {
+			$property->setValue($arguments);
+		} else {
+			$result = $property->getValue($this);
+		}
+		if ($propertyAccessModified) {
+			$property->setAccessible(false);
+		}
+
+		return $result;
+	}
 }

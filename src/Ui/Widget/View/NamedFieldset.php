@@ -1,6 +1,6 @@
 <?php
 
-namespace Xudid\Ui\Widgets\View;
+namespace Xudid\Ui\Widget\View;
 
 use Xudid\Ui\HTML\Element\Nested\{Fieldset,Legend};
 
