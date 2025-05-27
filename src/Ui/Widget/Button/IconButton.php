@@ -40,11 +40,7 @@ class IconButton extends  Button
         $this->startTag->setAttribute("type", "button");
     }
 
-    /**
-     * @param string $size
-     * @return $this
-     */
-    public function size(string $size)
+    public function size(string $size): static
     {
         if (in_array($size, array_keys($this->sizes))) {
             $this->iconSize = $size;
@@ -53,34 +49,25 @@ class IconButton extends  Button
         return $this;
     }
 
-    /**
-     * @param string $color
-     */
-    public function bg(string $color)
+    public function bg(string $color): static
     {
-
+		return $this;
     }
 
-    /**
-     * @param string $color
-     * @return $this
-     */
-    public function color(string $color)
+    public function color(string $color): static
     {
         $this->color = $color;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         $size = $this->sizes[$this->iconSize];
         $this->setClass("btn btn-$this->iconSize btn-$this->color");
         $style = sprintf('font-size:%spx; color:%s;', $size, $this->iconColor);
         $this->icon->setAttribute('style', $style);
+
         return parent::__toString();
     }
 }
