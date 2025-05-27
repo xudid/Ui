@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Xudid\Ui\Widgets\View;
+namespace Xudid\Ui\Widget\View;
 
 
 use Xudid\Ui\HTML\Element\Base\Span;
@@ -9,9 +9,6 @@ use Xudid\Ui\HTML\Element\Nested\Div;
 
 class FieldInfo extends Div
 {
-	/**
-	 * @var Xudid\Ui\HTML\Element\Base\Base
-	 */
 	private $fieldGroup;
 
 	/**

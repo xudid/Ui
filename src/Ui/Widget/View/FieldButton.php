@@ -11,14 +11,7 @@ use Xudid\Ui\HTML\Element\Nested\Div;
 
 class FieldButton extends Div
 {
-
-	/**
-	 * @var Xudid\Ui\HTML\Element\Base\Base
-	 */
 	private $fieldGroup;
-	/**
-	 * @var Xudid\Ui\HTML\Element\Base\Base
-	 */
 	private $inputGroupAppend;
 
 	/**
